@@ -1,0 +1,266 @@
+{
+  "title": "Неизвестное блюдо",
+  "clean_recipe_text": "?????? ????? ? ????? ? ????????\n\n???????????:\n???? ? 2 ??.\n???????? ????? ? 150 ?\n????? ?????? ? 150 ?\n????? ???? ? 60 ?\n????????? ????? ? 15 ??\n???????? ??? ? 10 ??\n???? ? ?? ?????\n\n?????????????:\n1. ???????? ???? ?? ?????????? ? ???????? ????????.\n2. ????????? ????? ???? ?? ????? ????????? ??? ? ??????? ?? ????????? ?????????.\n3. ???????? ????? ?????? ? ???????? ?????.\n4. ???????? ???? ? ????????.\n5. ????????? ????? ????????? ??????, ???????? ????? ? ????????? ??????????? ????.",
+  "structured_recipe": {
+    "title": "Неизвестное блюдо",
+    "servings_declared": null,
+    "ingredients": [
+      {
+        "name_raw": "Неизвестные ингредиенты",
+        "name_canonical": "неизвестные ингредиенты",
+        "name_en": "unknown ingredients",
+        "amount_value": null,
+        "amount_text": null,
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "llm_normalized",
+        "confidence": "medium"
+      }
+    ],
+    "steps": [
+      "???????? ???? ?? ?????????? ? ???????? ????????.",
+      "????????? ????? ???? ?? ????? ????????? ??? ? ??????? ?? ????????? ?????????.",
+      "???????? ????? ?????? ? ???????? ?????.",
+      "???????? ???? ? ????????.",
+      "????????? ????? ????????? ??????, ???????? ????? ? ????????? ??????????? ????."
+    ],
+    "notes": [],
+    "source_recipe_text": "?????? ????? ? ????? ? ????????\n\n???????????:\n???? ? 2 ??.\n???????? ????? ? 150 ?\n????? ?????? ? 150 ?\n????? ???? ? 60 ?\n????????? ????? ? 15 ??\n???????? ??? ? 10 ??\n???? ? ?? ?????\n\n?????????????:\n1. ???????? ???? ?? ?????????? ? ???????? ????????.\n2. ????????? ????? ???? ?? ????? ????????? ??? ? ??????? ?? ????????? ?????????.\n3. ???????? ????? ?????? ? ???????? ?????.\n4. ???????? ???? ? ????????.\n5. ????????? ????? ????????? ??????, ???????? ????? ? ????????? ??????????? ????."
+  },
+  "matched_ingredients": [
+    {
+      "ingredient": {
+        "name_raw": "Неизвестные ингредиенты",
+        "name_canonical": "неизвестные ингредиенты",
+        "name_en": "unknown ingredients",
+        "amount_value": null,
+        "amount_text": null,
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "llm_normalized",
+        "confidence": "medium"
+      },
+      "match_status": "unresolved",
+      "matched_name": null,
+      "matched_source": null,
+      "match_method": "unresolved",
+      "match_confidence": "low",
+      "selection_reason": "Кандидаты USDA не найдены.",
+      "nutrition_source": "unknown",
+      "nutrition_confidence": "low",
+      "matched_product": null,
+      "top_candidates": [],
+      "usda_queries": [
+        "unknown ingredients",
+        "неизвестные ингредиенты"
+      ],
+      "canonical_query_en": "unknown ingredients"
+    }
+  ],
+  "nutrition_total": {
+    "calories": {
+      "value": 0.0,
+      "target": 2000.0,
+      "percent_of_target": 0.0
+    },
+    "protein": {
+      "value": 0.0,
+      "target": 100.0,
+      "percent_of_target": 0.0
+    },
+    "fat": {
+      "value": 0.0,
+      "target": 70.0,
+      "percent_of_target": 0.0
+    },
+    "carbs": {
+      "value": 0.0,
+      "target": 300.0,
+      "percent_of_target": 0.0
+    },
+    "fiber": {
+      "value": 0.0,
+      "target": 25.0,
+      "percent_of_target": 0.0
+    },
+    "sodium": {
+      "value": 0.0,
+      "target": 1500.0,
+      "percent_of_target": 0.0
+    }
+  },
+  "nutrition_per_serving": {
+    "calories": {
+      "value": 0.0,
+      "target": 2000.0,
+      "percent_of_target": 0.0
+    },
+    "protein": {
+      "value": 0.0,
+      "target": 100.0,
+      "percent_of_target": 0.0
+    },
+    "fat": {
+      "value": 0.0,
+      "target": 70.0,
+      "percent_of_target": 0.0
+    },
+    "carbs": {
+      "value": 0.0,
+      "target": 300.0,
+      "percent_of_target": 0.0
+    },
+    "fiber": {
+      "value": 0.0,
+      "target": 25.0,
+      "percent_of_target": 0.0
+    },
+    "sodium": {
+      "value": 0.0,
+      "target": 1500.0,
+      "percent_of_target": 0.0
+    }
+  },
+  "detailed_ingredients": [
+    {
+      "ingredient": {
+        "name_raw": "Неизвестные ингредиенты",
+        "name_canonical": "неизвестные ингредиенты",
+        "name_en": "unknown ingredients",
+        "amount_value": null,
+        "amount_text": null,
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "llm_normalized",
+        "confidence": "medium"
+      },
+      "matched_name": null,
+      "matched_source": null,
+      "match_method": "unresolved",
+      "match_confidence": "low",
+      "nutrition_source": "unknown",
+      "nutrition_confidence": "low",
+      "nutrition_resolution_status": "unresolved",
+      "matched_product": null,
+      "estimated_grams": 50.0,
+      "grams_reason": "эвристика:amount_missing",
+      "used_fallback_grams": true,
+      "selection_reason": "Кандидаты USDA не найдены.",
+      "top_candidates": [],
+      "nutrients": {
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "fiber": null,
+        "sodium": null
+      }
+    }
+  ],
+  "analysis_quality": {
+    "score": 0.0,
+    "status": "degraded",
+    "explicit_amount_ratio": 0.0,
+    "matched_ratio": 0.0,
+    "trusted_nutrition_ratio": 0.0,
+    "unresolved_ratio": 1.0,
+    "meaningful_fallback_ratio": 1.0
+  },
+  "resolution_stats": {
+    "ingredient_count": 1,
+    "explicit_amount_count": 0,
+    "matched_count": 0,
+    "trusted_nutrition_count": 0,
+    "fallback_grams_count": 1,
+    "meaningful_fallback_count": 1,
+    "unresolved_count": 1
+  },
+  "unresolved_ingredients": [
+    "неизвестные ингредиенты"
+  ],
+  "rag_context": [
+    {
+      "id": "kb_new_71",
+      "source": "kb_vegetarian.txt",
+      "text": "Что учитывать: - вегетарианские практики бывают разными; для MVP принять базовое правило lacto-ovo vegetarian - яйца и молочные продукты можно считать совместимыми с vegetarian, если пользователь отдельно не выбрал vegan - скрытые животные компоненты в соусах и бульонах могут быть важны - при замене мяса нужно смотреть не только на вкус, но и на белковую роль ингредиента",
+      "tags": [
+        "diet",
+        "vegetarian"
+      ],
+      "score": 0.125
+    },
+    {
+      "id": "kb_new_70",
+      "source": "kb_vegetarian.txt",
+      "text": "Тема: Вегетарианское питание Назначение для MVP: Файл нужен для проверки совместимости рецепта с вегетарианским профилем и генерации замен. Считать несовместимыми: - мясо - птица - рыба и морепродукты - желатин на животной основе - мясные бульоны и некоторые соусы на основе мяса/рыбы",
+      "tags": [
+        "diet",
+        "vegetarian"
+      ],
+      "score": 0.075
+    },
+    {
+      "id": "kb_new_72",
+      "source": "kb_vegetarian.txt",
+      "text": "Рекомендации: - заменять мясо на бобовые, тофу, темпе, яйца, сыр или растительные аналоги в зависимости от рецепта - проверять бульоны и соусы - усиливать белковую часть блюда за счет фасоли, чечевицы, нута, соевых продуктов Что учитывать по питательной части: - при длительном вегетарианском рационе важно следить за достаточным поступлением белка, железа и витамина B12, особенно если рацион беден обогащенными продуктами",
+      "tags": [
+        "diet",
+        "vegetarian"
+      ],
+      "score": 0.075
+    },
+    {
+      "id": "kb_new_73",
+      "source": "kb_vegetarian.txt",
+      "text": "Шаблоны интерпретации: - Совместимо: нет мяса, рыбы и явных животных бульонов - Частично совместимо после замены: есть мясо/рыба, но замена реалистична - Несовместимо без существенной переработки: животный белок является центральной основой блюда Источниковая опора: - CDC: Healthy Eating Tips - Harvard T.H. Chan Nutrition Source: Vitamin B12",
+      "tags": [
+        "diet",
+        "vegetarian"
+      ],
+      "score": 0.075
+    },
+    {
+      "id": "kb_new_11",
+      "source": "kb_diabetes.txt",
+      "text": "Шаблоны интерпретации: - Высокая углеводная нагрузка: много сахара и/или большая порция рафинированных углеводов - Умеренная нагрузка: крахмалистое блюдо без избытка сахара, но порция может требовать контроля - Более благоприятный профиль: есть овощи, белок, клетчатка и умеренная углеводная плотность",
+      "tags": [
+        "diabetes"
+      ],
+      "score": 0.05
+    },
+    {
+      "id": "kb_new_13",
+      "source": "kb_gluten_free.txt",
+      "text": "Тема: Безглютеновое питание / целиакия Назначение для MVP: Файл нужен для выявления ингредиентов, содержащих глютен, и построения строгих предупреждений для профиля gluten_free / celiac-safe. Опасные ингредиенты: - пшеница - рожь - ячмень - обычная мука - манка - булгур - кускус - обычные макароны - хлебные крошки - панировка - соевый соус на основе пшеницы - выпечка из обычной муки",
+      "tags": [
+        "free",
+        "gluten"
+      ],
+      "score": 0.05
+    }
+  ],
+  "summary": "Рецепт «Неизвестное блюдо» проанализирован для выбранного профиля. Точность расчета снижена, потому что часть ингредиентов не была надежно сопоставлена с USDA FoodData Central. Критичных конфликтов с профилем не выявлено. Ориентировочная калорийность на порцию: 0.0.",
+  "detected_issues": [],
+  "recommendations": [
+    "Уточнить состав и количество ингредиентов, чтобы улучшить точность расчета БЖУ."
+  ],
+  "warnings": [
+    "Нет данных о нутриентах для ингредиента 'неизвестные ингредиенты'.",
+    "Качество расчета снижено: часть ключевых ингредиентов не была надежно сопоставлена с продуктовой базой.",
+    "Не удалось надежно определить нутриенты для: неизвестные ингредиенты."
+  ],
+  "compatibility": {
+    "diet": "medium",
+    "restriction": "medium",
+    "goal": "medium"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "recipe": {
+    "title": "Салат «Цезарь» с курицей",
+    "ingredients": [
+      {
+        "name": "Куриное филе",
+        "name_en": "chicken breast"
+      },
+      {
+        "name": "Салат романо (или айсберг)",
+        "name_en": "romaine lettuce"
+      },
+      {
+        "name": "Помидоры черри",
+        "name_en": "cherry tomatoes"
+      },
+      {
+        "name": "Белый хлеб",
+        "name_en": "white bread"
+      },
+      {
+        "name": "Оливковое масло",
+        "name_en": "olive oil"
+      },
+      {
+        "name": "Соль, перец",
+        "name_en": "salt, black pepper"
+      },
+      {
+        "name": "Горчица",
+        "name_en": "mustard"
+      },
+      {
+        "name": "Лимонный сок",
+        "name_en": "lemon juice"
+      }
+    ]
+  }
+}

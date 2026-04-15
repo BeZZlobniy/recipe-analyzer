@@ -1,0 +1,3353 @@
+{
+  "title": "Салат «Цезарь» с курицей",
+  "clean_recipe_text": "﻿Салат «Цезарь» с курицей\n🧾 Ингредиенты (на 2 порции):\n\nДля салата:\n\nКуриное филе — 1 шт.\nСалат романо (или айсберг) — 1 кочан\nПомидоры черри — 8–10 шт.\nПармезан — 40–50 г\nБелый хлеб — 2–3 ломтика (для сухариков)\nОливковое масло — 2–3 ст. л.\nСоль, перец — по вкусу\n\nДля соуса (ключевая часть):\n\nЯйцо — 1 шт.\nЧеснок — 1 зубчик\nАнчоусы — 2–3 филе (по желанию, но желательно)\nГорчица — 1 ч. л.\nЛимонный сок — 1–2 ст. л.\nОливковое масло — 3–4 ст. л.\nПармезан — 20 г\n👨‍🍳 Приготовление:\n\n1. Курица\nОбжарь филе на сковороде с солью и перцем до золотистой корочки (примерно 5–7 минут с каждой стороны). Остуди и нарежь ломтиками.\n\n2. Сухарики\nНарежь хлеб кубиками, сбрызни оливковым маслом, добавь немного чеснока и подсуши в духовке при 180°C ~10 минут.\n\n3. Соус\n\nЯйцо опусти в кипяток на 1 минуту (оно должно остаться полусырым)\nВзбей яйцо с горчицей, лимонным соком и чесноком\nДобавь анчоусы и измельчи\nПостепенно вливай оливковое масло до эмульсии\nДобавь тёртый пармезан\n\n4. Сборка\n\nЛистья салата порви руками\nДобавь курицу, черри, сухарики\nПолей соусом и аккуратно перемешай\nПосыпь пармезаном",
+  "structured_recipe": {
+    "title": "Салат «Цезарь» с курицей",
+    "servings_declared": "2",
+    "ingredients": [
+      {
+        "name_raw": "Куриное филе",
+        "name_canonical": "куриное филе",
+        "name_en": "chicken breast",
+        "amount_value": 1.0,
+        "amount_text": "1 шт.",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Салат романо (или айсберг)",
+        "name_canonical": "салат романо",
+        "name_en": "romaine lettuce",
+        "amount_value": 1.0,
+        "amount_text": "1 кочан",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Помидоры черри",
+        "name_canonical": "помидоры черри",
+        "name_en": "cherry tomatoes",
+        "amount_value": 9.0,
+        "amount_text": "8–10 шт.",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Пармезан",
+        "name_canonical": "пармезан",
+        "name_en": "parmesan cheese",
+        "amount_value": 50.0,
+        "amount_text": "40 - 50 г",
+        "unit": "г",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Белый хлеб",
+        "name_canonical": "белый хлеб",
+        "name_en": "white bread",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ломтика",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Оливковое масло",
+        "name_canonical": "оливковое масло",
+        "name_en": "olive oil",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ст.л.",
+        "unit": "ст. л.",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "соль",
+        "name_canonical": "соль",
+        "name_en": "salt",
+        "amount_value": null,
+        "amount_text": "по вкусу",
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "перец",
+        "name_canonical": "перец",
+        "name_en": "black pepper",
+        "amount_value": null,
+        "amount_text": "по вкусу",
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Яйцо",
+        "name_canonical": "яйцо",
+        "name_en": "egg",
+        "amount_value": 1.0,
+        "amount_text": "1 шт",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Чеснок",
+        "name_canonical": "чеснок",
+        "name_en": "garlic",
+        "amount_value": 1.0,
+        "amount_text": "1 зубчик",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Анчоусы",
+        "name_canonical": "анчоусы",
+        "name_en": "anchovies",
+        "amount_value": 3.0,
+        "amount_text": "2 - 3 филе (по желанию, но желательно)",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Горчица",
+        "name_canonical": "горчица",
+        "name_en": "mustard",
+        "amount_value": 1.0,
+        "amount_text": "1 ч. л",
+        "unit": "ч. л",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Лимонный сок",
+        "name_canonical": "лимонный сок",
+        "name_en": "lemon juice",
+        "amount_value": 2.0,
+        "amount_text": "1 - 2 ст. л",
+        "unit": "ст. л",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Оливковое масло",
+        "name_canonical": "оливковое масло",
+        "name_en": "olive oil",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ст.л.",
+        "unit": "ст. л.",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      {
+        "name_raw": "Пармезан",
+        "name_canonical": "пармезан",
+        "name_en": "parmesan cheese",
+        "amount_value": 20.0,
+        "amount_text": "20 г",
+        "unit": "г",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      }
+    ],
+    "steps": [
+      "Курица Обжарь филе на сковороде с солью и перцем до золотистой корочки (примерно 5–7 минут с каждой стороны). Остуди и нарежь ломтиками.",
+      "Сухарики Нарежь хлеб кубиками, сбрызни оливковым маслом, добавь немного чеснока и подсуши в духовке при 180°C ~10 минут.",
+      "Соус Яйцо опусти в кипяток на 1 минуту (оно должно остаться полусырым) Взбей яйцо с горчицей, лимонным соком и чесноком Добавь анчоусы и измельчи Постепенно вливай оливковое масло до эмульсии Добавь тёртый пармезан",
+      "Сборка Листья салата порви руками Добавь курицу, черри, сухарики Полей соусом и аккуратно перемешай Посыпь пармезаном"
+    ],
+    "notes": [],
+    "source_recipe_text": "﻿Салат «Цезарь» с курицей\n🧾 Ингредиенты (на 2 порции):\n\nДля салата:\n\nКуриное филе — 1 шт.\nСалат романо (или айсберг) — 1 кочан\nПомидоры черри — 8–10 шт.\nПармезан — 40–50 г\nБелый хлеб — 2–3 ломтика (для сухариков)\nОливковое масло — 2–3 ст. л.\nСоль, перец — по вкусу\n\nДля соуса (ключевая часть):\n\nЯйцо — 1 шт.\nЧеснок — 1 зубчик\nАнчоусы — 2–3 филе (по желанию, но желательно)\nГорчица — 1 ч. л.\nЛимонный сок — 1–2 ст. л.\nОливковое масло — 3–4 ст. л.\nПармезан — 20 г\n👨‍🍳 Приготовление:\n\n1. Курица\nОбжарь филе на сковороде с солью и перцем до золотистой корочки (примерно 5–7 минут с каждой стороны). Остуди и нарежь ломтиками.\n\n2. Сухарики\nНарежь хлеб кубиками, сбрызни оливковым маслом, добавь немного чеснока и подсуши в духовке при 180°C ~10 минут.\n\n3. Соус\n\nЯйцо опусти в кипяток на 1 минуту (оно должно остаться полусырым)\nВзбей яйцо с горчицей, лимонным соком и чесноком\nДобавь анчоусы и измельчи\nПостепенно вливай оливковое масло до эмульсии\nДобавь тёртый пармезан\n\n4. Сборка\n\nЛистья салата порви руками\nДобавь курицу, черри, сухарики\nПолей соусом и аккуратно перемешай\nПосыпь пармезаном"
+  },
+  "matched_ingredients": [
+    {
+      "ingredient": {
+        "name_raw": "Куриное филе",
+        "name_canonical": "куриное филе",
+        "name_en": "chicken breast",
+        "amount_value": 1.0,
+        "amount_text": "1 шт.",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "CHICKEN BREAST",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 71,
+        "source": "usda",
+        "source_product_id": "2187885",
+        "display_name_ru": "CHICKEN BREAST",
+        "display_name_en": "CHICKEN BREAST",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 165.0,
+          "protein": 20.42,
+          "fat": 8.1,
+          "carbs": 1.06,
+          "fiber": 0.0,
+          "sodium": 433.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 71,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 72,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 73,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 74,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 75,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 76,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "chicken breast",
+        "куриное филе"
+      ],
+      "canonical_query_en": "chicken breast"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Салат романо (или айсберг)",
+        "name_canonical": "салат романо",
+        "name_en": "romaine lettuce",
+        "amount_value": 1.0,
+        "amount_text": "1 кочан",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "ROMAINE LETTUCE",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 83,
+        "source": "usda",
+        "source_product_id": "373763",
+        "display_name_ru": "ROMAINE LETTUCE",
+        "display_name_en": "ROMAINE LETTUCE",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 18.0,
+          "protein": 1.18,
+          "fat": 0.0,
+          "carbs": 3.53,
+          "fiber": 2.4,
+          "sodium": 6.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 83,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 87,
+          "score": 3.9,
+          "strategy": "usda_search",
+          "display_name_ru": "Romaine lettuce, raw",
+          "display_name_en": "Romaine lettuce, raw",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 84,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 85,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 86,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "romaine lettuce",
+        "салат романо"
+      ],
+      "canonical_query_en": "romaine lettuce"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Помидоры черри",
+        "name_canonical": "помидоры черри",
+        "name_en": "cherry tomatoes",
+        "amount_value": 9.0,
+        "amount_text": "8–10 шт.",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "CHERRY TOMATOES",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 95,
+        "source": "usda",
+        "source_product_id": "2281663",
+        "display_name_ru": "CHERRY TOMATOES",
+        "display_name_en": "CHERRY TOMATOES",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 21.0,
+          "protein": 0.0,
+          "fat": 0.0,
+          "carbs": 4.64,
+          "fiber": null,
+          "sodium": 643.0
+        },
+        "grams_per_piece_estimate": 120.0,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 95,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 96,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 97,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 98,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 99,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "cherry tomatoes",
+        "помидоры черри"
+      ],
+      "canonical_query_en": "cherry tomatoes"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Пармезан",
+        "name_canonical": "пармезан",
+        "name_en": "parmesan cheese",
+        "amount_value": 50.0,
+        "amount_text": "40 - 50 г",
+        "unit": "г",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "PARMESAN CHEESE",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 24,
+        "source": "usda",
+        "source_product_id": "2096212",
+        "display_name_ru": "PARMESAN CHEESE",
+        "display_name_en": "PARMESAN CHEESE",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 400.0,
+          "protein": 40.0,
+          "fat": 30.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2000.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 24,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 25,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 26,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 27,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 28,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 29,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "parmesan cheese",
+        "parmesan",
+        "пармезан"
+      ],
+      "canonical_query_en": "parmesan cheese"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Белый хлеб",
+        "name_canonical": "белый хлеб",
+        "name_en": "white bread",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ломтика",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "WHITE BREAD",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 110,
+        "source": "usda",
+        "source_product_id": "2056941",
+        "display_name_ru": "WHITE BREAD",
+        "display_name_en": "WHITE BREAD",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 260.0,
+          "protein": 8.0,
+          "fat": 3.0,
+          "carbs": 48.0,
+          "fiber": 2.0,
+          "sodium": 460.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 110,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 111,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 112,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 113,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 114,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 115,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "white bread",
+        "белый хлеб"
+      ],
+      "canonical_query_en": "white bread"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Оливковое масло",
+        "name_canonical": "оливковое масло",
+        "name_en": "olive oil",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ст.л.",
+        "unit": "ст. л.",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "Olive oil",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 121,
+        "source": "usda",
+        "source_product_id": "2710186",
+        "display_name_ru": "Olive oil",
+        "display_name_en": "Olive oil",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 900.0,
+          "protein": 0.0,
+          "fat": 100.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "top_candidates": [
+        {
+          "product_id": 121,
+          "score": 6.0,
+          "strategy": "usda_search",
+          "display_name_ru": "Olive oil",
+          "display_name_en": "Olive oil",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 122,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 123,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 124,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 125,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 126,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "olive oil",
+        "оливковое масло"
+      ],
+      "canonical_query_en": "olive oil"
+    },
+    {
+      "ingredient": {
+        "name_raw": "соль",
+        "name_canonical": "соль",
+        "name_en": "salt",
+        "amount_value": null,
+        "amount_text": "по вкусу",
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "SALT",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 48,
+        "source": "usda",
+        "source_product_id": "2059475",
+        "display_name_ru": "SALT",
+        "display_name_en": "SALT",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 0.0,
+          "protein": 0.0,
+          "fat": 0.0,
+          "carbs": 0.0,
+          "fiber": null,
+          "sodium": 39333.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 48,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 49,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 50,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 51,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 52,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 53,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "salt",
+        "соль"
+      ],
+      "canonical_query_en": "salt"
+    },
+    {
+      "ingredient": {
+        "name_raw": "перец",
+        "name_canonical": "перец",
+        "name_en": "black pepper",
+        "amount_value": null,
+        "amount_text": "по вкусу",
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "Pepper steak",
+      "matched_source": "usda",
+      "match_method": "usda_rank_fallback",
+      "match_confidence": "medium",
+      "selection_reason": "Выбран лучший релевантный USDA-кандидат без необходимости LLM-разрешения.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 59,
+        "source": "usda",
+        "source_product_id": "2706747",
+        "display_name_ru": "Pepper steak",
+        "display_name_en": "Pepper steak",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 145.0,
+          "protein": 11.9,
+          "fat": 9.12,
+          "carbs": 4.34,
+          "fiber": 0.7,
+          "sodium": 244.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "top_candidates": [
+        {
+          "product_id": 59,
+          "score": 5.75,
+          "strategy": "usda_search",
+          "display_name_ru": "Pepper steak",
+          "display_name_en": "Pepper steak",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 56,
+          "score": 4.2,
+          "strategy": "usda_search",
+          "display_name_ru": "Black Russian",
+          "display_name_en": "Black Russian",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 55,
+          "score": 4.15,
+          "strategy": "usda_search",
+          "display_name_ru": "Spices, pepper, black",
+          "display_name_en": "Spices, pepper, black",
+          "category": "SR Legacy",
+          "source": "usda"
+        },
+        {
+          "product_id": 57,
+          "score": 4.05,
+          "strategy": "usda_search",
+          "display_name_ru": "Bread, black",
+          "display_name_en": "Bread, black",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 54,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "BLACK PEPPER",
+          "display_name_en": "BLACK PEPPER",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 58,
+          "score": 3.9,
+          "strategy": "usda_search",
+          "display_name_ru": "Olives, black",
+          "display_name_en": "Olives, black",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "black pepper",
+        "pepper",
+        "перец"
+      ],
+      "canonical_query_en": "black pepper"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Яйцо",
+        "name_canonical": "яйцо",
+        "name_en": "egg",
+        "amount_value": 1.0,
+        "amount_text": "1 шт",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "EGG",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 41,
+        "source": "usda",
+        "source_product_id": "2575290",
+        "display_name_ru": "EGG",
+        "display_name_en": "EGG",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 513.0,
+          "protein": 6.41,
+          "fat": 28.85,
+          "carbs": 57.69,
+          "fiber": 3.2,
+          "sodium": 176.0
+        },
+        "grams_per_piece_estimate": 50.0,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 41,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "EGG",
+          "display_name_en": "EGG",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 42,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "EGG",
+          "display_name_en": "EGG",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 43,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "EGG",
+          "display_name_en": "EGG",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "egg",
+        "whole egg",
+        "яйцо"
+      ],
+      "canonical_query_en": "egg"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Чеснок",
+        "name_canonical": "чеснок",
+        "name_en": "garlic",
+        "amount_value": 1.0,
+        "amount_text": "1 зубчик",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "unresolved",
+      "matched_name": null,
+      "matched_source": null,
+      "match_method": "unresolved",
+      "match_confidence": "low",
+      "selection_reason": "LLM не выбрала надежный USDA-кандидат.",
+      "nutrition_source": "unknown",
+      "nutrition_confidence": "low",
+      "matched_product": null,
+      "top_candidates": [
+        {
+          "product_id": 142,
+          "score": 4.05,
+          "strategy": "usda_search",
+          "display_name_ru": "Garlic sauce",
+          "display_name_en": "Garlic sauce",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 139,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "GARLIC",
+          "display_name_en": "GARLIC",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 140,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "GARLIC",
+          "display_name_en": "GARLIC",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 141,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "GARLIC",
+          "display_name_en": "GARLIC",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "garlic",
+        "чеснок"
+      ],
+      "canonical_query_en": "garlic"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Анчоусы",
+        "name_canonical": "анчоусы",
+        "name_en": "anchovies",
+        "amount_value": 3.0,
+        "amount_text": "2 - 3 филе (по желанию, но желательно)",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "ANCHOVIES",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 151,
+        "source": "usda",
+        "source_product_id": "1850783",
+        "display_name_ru": "ANCHOVIES",
+        "display_name_en": "ANCHOVIES",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 167.0,
+          "protein": 20.0,
+          "fat": 10.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 5867.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 151,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "ANCHOVIES",
+          "display_name_en": "ANCHOVIES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 152,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "ANCHOVIES",
+          "display_name_en": "ANCHOVIES",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "anchovies",
+        "анчоусы"
+      ],
+      "canonical_query_en": "anchovies"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Горчица",
+        "name_canonical": "горчица",
+        "name_en": "mustard",
+        "amount_value": 1.0,
+        "amount_text": "1 ч. л",
+        "unit": "ч. л",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "Mustard",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 160,
+        "source": "usda",
+        "source_product_id": "2710085",
+        "display_name_ru": "Mustard",
+        "display_name_en": "Mustard",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 69.0,
+          "protein": 4.25,
+          "fat": 3.38,
+          "carbs": 5.3,
+          "fiber": 4.3,
+          "sodium": 1100.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "top_candidates": [
+        {
+          "product_id": 160,
+          "score": 6.0,
+          "strategy": "usda_search",
+          "display_name_ru": "Mustard",
+          "display_name_en": "Mustard",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 161,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 162,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 163,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 164,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 165,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "mustard",
+        "горчица"
+      ],
+      "canonical_query_en": "mustard"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Лимонный сок",
+        "name_canonical": "лимонный сок",
+        "name_en": "lemon juice",
+        "amount_value": 2.0,
+        "amount_text": "1 - 2 ст. л",
+        "unit": "ст. л",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "Lemon juice from concentrate, bottled, REAL LEMON",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 171,
+        "source": "usda",
+        "source_product_id": "167802",
+        "display_name_ru": "Lemon juice from concentrate, bottled, REAL LEMON",
+        "display_name_en": "Lemon juice from concentrate, bottled, REAL LEMON",
+        "category": "SR Legacy",
+        "nutrients_per_100g": {
+          "calories": 73.0,
+          "protein": 0.47,
+          "fat": 0.07,
+          "carbs": 5.66,
+          "fiber": 0.7,
+          "sodium": 26.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "top_candidates": [
+        {
+          "product_id": 171,
+          "score": 5.05,
+          "strategy": "usda_search",
+          "display_name_ru": "Lemon juice from concentrate, bottled, REAL LEMON",
+          "display_name_en": "Lemon juice from concentrate, bottled, REAL LEMON",
+          "category": "SR Legacy",
+          "source": "usda"
+        },
+        {
+          "product_id": 166,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 167,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 168,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 170,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "Lemon juice, raw",
+          "display_name_en": "Lemon juice, raw",
+          "category": "SR Legacy",
+          "source": "usda"
+        },
+        {
+          "product_id": 169,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "lemon juice",
+        "лимонный сок"
+      ],
+      "canonical_query_en": "lemon juice"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Оливковое масло",
+        "name_canonical": "оливковое масло",
+        "name_en": "olive oil",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ст.л.",
+        "unit": "ст. л.",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "Olive oil",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 121,
+        "source": "usda",
+        "source_product_id": "2710186",
+        "display_name_ru": "Olive oil",
+        "display_name_en": "Olive oil",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 900.0,
+          "protein": 0.0,
+          "fat": 100.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "top_candidates": [
+        {
+          "product_id": 121,
+          "score": 6.0,
+          "strategy": "usda_search",
+          "display_name_ru": "Olive oil",
+          "display_name_en": "Olive oil",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 122,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 123,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 124,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 125,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 126,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "olive oil",
+        "оливковое масло"
+      ],
+      "canonical_query_en": "olive oil"
+    },
+    {
+      "ingredient": {
+        "name_raw": "Пармезан",
+        "name_canonical": "пармезан",
+        "name_en": "parmesan cheese",
+        "amount_value": 20.0,
+        "amount_text": "20 г",
+        "unit": "г",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "match_status": "matched",
+      "matched_name": "PARMESAN CHEESE",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "matched_product": {
+        "id": 24,
+        "source": "usda",
+        "source_product_id": "2096212",
+        "display_name_ru": "PARMESAN CHEESE",
+        "display_name_en": "PARMESAN CHEESE",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 400.0,
+          "protein": 40.0,
+          "fat": 30.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2000.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "top_candidates": [
+        {
+          "product_id": 24,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 25,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 26,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 27,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 28,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 29,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "usda_queries": [
+        "parmesan cheese",
+        "parmesan",
+        "пармезан"
+      ],
+      "canonical_query_en": "parmesan cheese"
+    }
+  ],
+  "nutrition_total": {
+    "calories": {
+      "value": 2508.37,
+      "target": 2000.0,
+      "percent_of_target": 125.42
+    },
+    "protein": {
+      "value": 112.6,
+      "target": 100.0,
+      "percent_of_target": 112.6
+    },
+    "fat": {
+      "value": 146.99,
+      "target": 70.0,
+      "percent_of_target": 209.99
+    },
+    "carbs": {
+      "value": 178.8,
+      "target": 300.0,
+      "percent_of_target": 59.6
+    },
+    "fiber": {
+      "value": 7.57,
+      "target": 25.0,
+      "percent_of_target": 30.28
+    },
+    "sodium": {
+      "value": 24388.64,
+      "target": 1500.0,
+      "percent_of_target": 1625.91
+    }
+  },
+  "nutrition_per_serving": {
+    "calories": {
+      "value": 1254.19,
+      "target": 2000.0,
+      "percent_of_target": 62.71
+    },
+    "protein": {
+      "value": 56.3,
+      "target": 100.0,
+      "percent_of_target": 56.3
+    },
+    "fat": {
+      "value": 73.5,
+      "target": 70.0,
+      "percent_of_target": 104.99
+    },
+    "carbs": {
+      "value": 89.4,
+      "target": 300.0,
+      "percent_of_target": 29.8
+    },
+    "fiber": {
+      "value": 3.78,
+      "target": 25.0,
+      "percent_of_target": 15.14
+    },
+    "sodium": {
+      "value": 12194.32,
+      "target": 1500.0,
+      "percent_of_target": 812.95
+    }
+  },
+  "detailed_ingredients": [
+    {
+      "ingredient": {
+        "name_raw": "Куриное филе",
+        "name_canonical": "куриное филе",
+        "name_en": "chicken breast",
+        "amount_value": 1.0,
+        "amount_text": "1 шт.",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "CHICKEN BREAST",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 71,
+        "source": "usda",
+        "source_product_id": "2187885",
+        "display_name_ru": "CHICKEN BREAST",
+        "display_name_en": "CHICKEN BREAST",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 165.0,
+          "protein": 20.42,
+          "fat": 8.1,
+          "carbs": 1.06,
+          "fiber": 0.0,
+          "sodium": 433.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 80.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 71,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 72,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 73,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 74,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 75,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 76,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "CHICKEN BREAST",
+          "display_name_en": "CHICKEN BREAST",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 132.0,
+        "protein": 16.34,
+        "fat": 6.48,
+        "carbs": 0.85,
+        "fiber": 0.0,
+        "sodium": 346.4
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Салат романо (или айсберг)",
+        "name_canonical": "салат романо",
+        "name_en": "romaine lettuce",
+        "amount_value": 1.0,
+        "amount_text": "1 кочан",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "ROMAINE LETTUCE",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 83,
+        "source": "usda",
+        "source_product_id": "373763",
+        "display_name_ru": "ROMAINE LETTUCE",
+        "display_name_en": "ROMAINE LETTUCE",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 18.0,
+          "protein": 1.18,
+          "fat": 0.0,
+          "carbs": 3.53,
+          "fiber": 2.4,
+          "sodium": 6.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 80.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 83,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 87,
+          "score": 3.9,
+          "strategy": "usda_search",
+          "display_name_ru": "Romaine lettuce, raw",
+          "display_name_en": "Romaine lettuce, raw",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 84,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 85,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 86,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "ROMAINE LETTUCE",
+          "display_name_en": "ROMAINE LETTUCE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 14.4,
+        "protein": 0.94,
+        "fat": 0.0,
+        "carbs": 2.82,
+        "fiber": 1.92,
+        "sodium": 4.8
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Помидоры черри",
+        "name_canonical": "помидоры черри",
+        "name_en": "cherry tomatoes",
+        "amount_value": 9.0,
+        "amount_text": "8–10 шт.",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "CHERRY TOMATOES",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 95,
+        "source": "usda",
+        "source_product_id": "2281663",
+        "display_name_ru": "CHERRY TOMATOES",
+        "display_name_en": "CHERRY TOMATOES",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 21.0,
+          "protein": 0.0,
+          "fat": 0.0,
+          "carbs": 4.64,
+          "fiber": null,
+          "sodium": 643.0
+        },
+        "grams_per_piece_estimate": 120.0,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 1080.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 95,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 96,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 97,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 98,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 99,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "CHERRY TOMATOES",
+          "display_name_en": "CHERRY TOMATOES",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 226.8,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbs": 50.11,
+        "fiber": null,
+        "sodium": 6944.4
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Пармезан",
+        "name_canonical": "пармезан",
+        "name_en": "parmesan cheese",
+        "amount_value": 50.0,
+        "amount_text": "40 - 50 г",
+        "unit": "г",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "PARMESAN CHEESE",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 24,
+        "source": "usda",
+        "source_product_id": "2096212",
+        "display_name_ru": "PARMESAN CHEESE",
+        "display_name_en": "PARMESAN CHEESE",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 400.0,
+          "protein": 40.0,
+          "fat": 30.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2000.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 50.0,
+      "grams_reason": "explicit_unit",
+      "used_fallback_grams": false,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 24,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 25,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 26,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 27,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 28,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 29,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 200.0,
+        "protein": 20.0,
+        "fat": 15.0,
+        "carbs": 0.0,
+        "fiber": 0.0,
+        "sodium": 1000.0
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Белый хлеб",
+        "name_canonical": "белый хлеб",
+        "name_en": "white bread",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ломтика",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "WHITE BREAD",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 110,
+        "source": "usda",
+        "source_product_id": "2056941",
+        "display_name_ru": "WHITE BREAD",
+        "display_name_en": "WHITE BREAD",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 260.0,
+          "protein": 8.0,
+          "fat": 3.0,
+          "carbs": 48.0,
+          "fiber": 2.0,
+          "sodium": 460.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 200.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 110,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 111,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 112,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 113,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 114,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 115,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "WHITE BREAD",
+          "display_name_en": "WHITE BREAD",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 520.0,
+        "protein": 16.0,
+        "fat": 6.0,
+        "carbs": 96.0,
+        "fiber": 4.0,
+        "sodium": 920.0
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Оливковое масло",
+        "name_canonical": "оливковое масло",
+        "name_en": "olive oil",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ст.л.",
+        "unit": "ст. л.",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "Olive oil",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "high",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 121,
+        "source": "usda",
+        "source_product_id": "2710186",
+        "display_name_ru": "Olive oil",
+        "display_name_en": "Olive oil",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 900.0,
+          "protein": 0.0,
+          "fat": 100.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "estimated_grams": 37.5,
+      "grams_reason": "explicit_unit",
+      "used_fallback_grams": false,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 121,
+          "score": 6.0,
+          "strategy": "usda_search",
+          "display_name_ru": "Olive oil",
+          "display_name_en": "Olive oil",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 122,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 123,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 124,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 125,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 126,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 337.5,
+        "protein": 0.0,
+        "fat": 37.5,
+        "carbs": 0.0,
+        "fiber": 0.0,
+        "sodium": 0.75
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "соль",
+        "name_canonical": "соль",
+        "name_en": "salt",
+        "amount_value": null,
+        "amount_text": "по вкусу",
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "SALT",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 48,
+        "source": "usda",
+        "source_product_id": "2059475",
+        "display_name_ru": "SALT",
+        "display_name_en": "SALT",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 0.0,
+          "protein": 0.0,
+          "fat": 0.0,
+          "carbs": 0.0,
+          "fiber": null,
+          "sodium": 39333.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 1.5,
+      "grams_reason": "эвристика:по вкусу",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 48,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 49,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 50,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 51,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 52,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 53,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "SALT",
+          "display_name_en": "SALT",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 0.0,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbs": 0.0,
+        "fiber": null,
+        "sodium": 590.0
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "перец",
+        "name_canonical": "перец",
+        "name_en": "black pepper",
+        "amount_value": null,
+        "amount_text": "по вкусу",
+        "unit": null,
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "Pepper steak",
+      "matched_source": "usda",
+      "match_method": "usda_rank_fallback",
+      "match_confidence": "medium",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "high",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 59,
+        "source": "usda",
+        "source_product_id": "2706747",
+        "display_name_ru": "Pepper steak",
+        "display_name_en": "Pepper steak",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 145.0,
+          "protein": 11.9,
+          "fat": 9.12,
+          "carbs": 4.34,
+          "fiber": 0.7,
+          "sodium": 244.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "estimated_grams": 0.5,
+      "grams_reason": "эвристика:по вкусу",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран лучший релевантный USDA-кандидат без необходимости LLM-разрешения.",
+      "top_candidates": [
+        {
+          "product_id": 59,
+          "score": 5.75,
+          "strategy": "usda_search",
+          "display_name_ru": "Pepper steak",
+          "display_name_en": "Pepper steak",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 56,
+          "score": 4.2,
+          "strategy": "usda_search",
+          "display_name_ru": "Black Russian",
+          "display_name_en": "Black Russian",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 55,
+          "score": 4.15,
+          "strategy": "usda_search",
+          "display_name_ru": "Spices, pepper, black",
+          "display_name_en": "Spices, pepper, black",
+          "category": "SR Legacy",
+          "source": "usda"
+        },
+        {
+          "product_id": 57,
+          "score": 4.05,
+          "strategy": "usda_search",
+          "display_name_ru": "Bread, black",
+          "display_name_en": "Bread, black",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 54,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "BLACK PEPPER",
+          "display_name_en": "BLACK PEPPER",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 58,
+          "score": 3.9,
+          "strategy": "usda_search",
+          "display_name_ru": "Olives, black",
+          "display_name_en": "Olives, black",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 0.72,
+        "protein": 0.06,
+        "fat": 0.05,
+        "carbs": 0.02,
+        "fiber": 0.0,
+        "sodium": 1.22
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Яйцо",
+        "name_canonical": "яйцо",
+        "name_en": "egg",
+        "amount_value": 1.0,
+        "amount_text": "1 шт",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "EGG",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 41,
+        "source": "usda",
+        "source_product_id": "2575290",
+        "display_name_ru": "EGG",
+        "display_name_en": "EGG",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 513.0,
+          "protein": 6.41,
+          "fat": 28.85,
+          "carbs": 57.69,
+          "fiber": 3.2,
+          "sodium": 176.0
+        },
+        "grams_per_piece_estimate": 50.0,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 50.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 41,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "EGG",
+          "display_name_en": "EGG",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 42,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "EGG",
+          "display_name_en": "EGG",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 43,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "EGG",
+          "display_name_en": "EGG",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 256.5,
+        "protein": 3.21,
+        "fat": 14.43,
+        "carbs": 28.84,
+        "fiber": 1.6,
+        "sodium": 88.0
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Чеснок",
+        "name_canonical": "чеснок",
+        "name_en": "garlic",
+        "amount_value": 1.0,
+        "amount_text": "1 зубчик",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": null,
+      "matched_source": null,
+      "match_method": "unresolved",
+      "match_confidence": "low",
+      "nutrition_source": "unknown",
+      "nutrition_confidence": "low",
+      "nutrition_resolution_status": "unresolved",
+      "matched_product": null,
+      "estimated_grams": 4.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "LLM не выбрала надежный USDA-кандидат.",
+      "top_candidates": [
+        {
+          "product_id": 142,
+          "score": 4.05,
+          "strategy": "usda_search",
+          "display_name_ru": "Garlic sauce",
+          "display_name_en": "Garlic sauce",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 139,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "GARLIC",
+          "display_name_en": "GARLIC",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 140,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "GARLIC",
+          "display_name_en": "GARLIC",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 141,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "GARLIC",
+          "display_name_en": "GARLIC",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "fiber": null,
+        "sodium": null
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Анчоусы",
+        "name_canonical": "анчоусы",
+        "name_en": "anchovies",
+        "amount_value": 3.0,
+        "amount_text": "2 - 3 филе (по желанию, но желательно)",
+        "unit": "шт",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "ANCHOVIES",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 151,
+        "source": "usda",
+        "source_product_id": "1850783",
+        "display_name_ru": "ANCHOVIES",
+        "display_name_en": "ANCHOVIES",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 167.0,
+          "protein": 20.0,
+          "fat": 10.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 5867.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 240.0,
+      "grams_reason": "piece_estimate",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 151,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "ANCHOVIES",
+          "display_name_en": "ANCHOVIES",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 152,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "ANCHOVIES",
+          "display_name_en": "ANCHOVIES",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 400.8,
+        "protein": 48.0,
+        "fat": 24.0,
+        "carbs": 0.0,
+        "fiber": 0.0,
+        "sodium": 14080.8
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Горчица",
+        "name_canonical": "горчица",
+        "name_en": "mustard",
+        "amount_value": 1.0,
+        "amount_text": "1 ч. л",
+        "unit": "ч. л",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "Mustard",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "high",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 160,
+        "source": "usda",
+        "source_product_id": "2710085",
+        "display_name_ru": "Mustard",
+        "display_name_en": "Mustard",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 69.0,
+          "protein": 4.25,
+          "fat": 3.38,
+          "carbs": 5.3,
+          "fiber": 4.3,
+          "sodium": 1100.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "estimated_grams": 1.0,
+      "grams_reason": "numeric_without_unit",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 160,
+          "score": 6.0,
+          "strategy": "usda_search",
+          "display_name_ru": "Mustard",
+          "display_name_en": "Mustard",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 161,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 162,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 163,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 164,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 165,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "MUSTARD",
+          "display_name_en": "MUSTARD",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 0.69,
+        "protein": 0.04,
+        "fat": 0.03,
+        "carbs": 0.05,
+        "fiber": 0.04,
+        "sodium": 11.0
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Лимонный сок",
+        "name_canonical": "лимонный сок",
+        "name_en": "lemon juice",
+        "amount_value": 2.0,
+        "amount_text": "1 - 2 ст. л",
+        "unit": "ст. л",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "Lemon juice from concentrate, bottled, REAL LEMON",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "high",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 171,
+        "source": "usda",
+        "source_product_id": "167802",
+        "display_name_ru": "Lemon juice from concentrate, bottled, REAL LEMON",
+        "display_name_en": "Lemon juice from concentrate, bottled, REAL LEMON",
+        "category": "SR Legacy",
+        "nutrients_per_100g": {
+          "calories": 73.0,
+          "protein": 0.47,
+          "fat": 0.07,
+          "carbs": 5.66,
+          "fiber": 0.7,
+          "sodium": 26.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "estimated_grams": 2.0,
+      "grams_reason": "numeric_without_unit",
+      "used_fallback_grams": true,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 171,
+          "score": 5.05,
+          "strategy": "usda_search",
+          "display_name_ru": "Lemon juice from concentrate, bottled, REAL LEMON",
+          "display_name_en": "Lemon juice from concentrate, bottled, REAL LEMON",
+          "category": "SR Legacy",
+          "source": "usda"
+        },
+        {
+          "product_id": 166,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 167,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 168,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 170,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "Lemon juice, raw",
+          "display_name_en": "Lemon juice, raw",
+          "category": "SR Legacy",
+          "source": "usda"
+        },
+        {
+          "product_id": 169,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "LEMON JUICE",
+          "display_name_en": "LEMON JUICE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 1.46,
+        "protein": 0.01,
+        "fat": 0.0,
+        "carbs": 0.11,
+        "fiber": 0.01,
+        "sodium": 0.52
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Оливковое масло",
+        "name_canonical": "оливковое масло",
+        "name_en": "olive oil",
+        "amount_value": 2.5,
+        "amount_text": "2–3 ст.л.",
+        "unit": "ст. л.",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "Olive oil",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "high",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 121,
+        "source": "usda",
+        "source_product_id": "2710186",
+        "display_name_ru": "Olive oil",
+        "display_name_en": "Olive oil",
+        "category": "Survey (FNDDS)",
+        "nutrients_per_100g": {
+          "calories": 900.0,
+          "protein": 0.0,
+          "fat": 100.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "high"
+      },
+      "estimated_grams": 37.5,
+      "grams_reason": "explicit_unit",
+      "used_fallback_grams": false,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 121,
+          "score": 6.0,
+          "strategy": "usda_search",
+          "display_name_ru": "Olive oil",
+          "display_name_en": "Olive oil",
+          "category": "Survey (FNDDS)",
+          "source": "usda"
+        },
+        {
+          "product_id": 122,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 123,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 124,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 125,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 126,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "OLIVE OIL",
+          "display_name_en": "OLIVE OIL",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 337.5,
+        "protein": 0.0,
+        "fat": 37.5,
+        "carbs": 0.0,
+        "fiber": 0.0,
+        "sodium": 0.75
+      }
+    },
+    {
+      "ingredient": {
+        "name_raw": "Пармезан",
+        "name_canonical": "пармезан",
+        "name_en": "parmesan cheese",
+        "amount_value": 20.0,
+        "amount_text": "20 г",
+        "unit": "г",
+        "llm_grams": null,
+        "gram_confidence": null,
+        "form": null,
+        "prep_state": null,
+        "source": "heuristic_fallback",
+        "confidence": "high"
+      },
+      "matched_name": "PARMESAN CHEESE",
+      "matched_source": "usda",
+      "match_method": "usda_exact_name",
+      "match_confidence": "high",
+      "nutrition_source": "usda",
+      "nutrition_confidence": "medium",
+      "nutrition_resolution_status": "resolved",
+      "matched_product": {
+        "id": 24,
+        "source": "usda",
+        "source_product_id": "2096212",
+        "display_name_ru": "PARMESAN CHEESE",
+        "display_name_en": "PARMESAN CHEESE",
+        "category": "Branded",
+        "nutrients_per_100g": {
+          "calories": 400.0,
+          "protein": 40.0,
+          "fat": 30.0,
+          "carbs": 0.0,
+          "fiber": 0.0,
+          "sodium": 2000.0
+        },
+        "grams_per_piece_estimate": null,
+        "data_confidence": "medium"
+      },
+      "estimated_grams": 20.0,
+      "grams_reason": "explicit_unit",
+      "used_fallback_grams": false,
+      "selection_reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
+      "top_candidates": [
+        {
+          "product_id": 24,
+          "score": 4.0,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 25,
+          "score": 3.85,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 26,
+          "score": 3.7,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 27,
+          "score": 3.55,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 28,
+          "score": 3.4,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        },
+        {
+          "product_id": 29,
+          "score": 3.25,
+          "strategy": "usda_search",
+          "display_name_ru": "PARMESAN CHEESE",
+          "display_name_en": "PARMESAN CHEESE",
+          "category": "Branded",
+          "source": "usda"
+        }
+      ],
+      "nutrients": {
+        "calories": 80.0,
+        "protein": 8.0,
+        "fat": 6.0,
+        "carbs": 0.0,
+        "fiber": 0.0,
+        "sodium": 400.0
+      }
+    }
+  ],
+  "analysis_quality": {
+    "score": 86.67,
+    "status": "degraded",
+    "explicit_amount_ratio": 0.87,
+    "matched_ratio": 0.93,
+    "trusted_nutrition_ratio": 0.93,
+    "unresolved_ratio": 0.07,
+    "meaningful_fallback_ratio": 0.6
+  },
+  "resolution_stats": {
+    "ingredient_count": 15,
+    "explicit_amount_count": 13,
+    "matched_count": 14,
+    "trusted_nutrition_count": 14,
+    "fallback_grams_count": 11,
+    "meaningful_fallback_count": 9,
+    "unresolved_count": 1
+  },
+  "unresolved_ingredients": [
+    "чеснок"
+  ],
+  "rag_context": [
+    {
+      "id": "kb_new_58",
+      "source": "kb_recipe_substitutions.txt",
+      "text": "Тема: База типовых замен ингредиентов Назначение для MVP: Файл нужен для генерации практических рекомендаций по адаптации рецепта под профиль пользователя. Типовые замены: - молоко -> безлактозное молоко / несладкий растительный напиток - сливки -> более легкий молочный или растительный аналог - сливочное масло -> оливковое масло или другой подходящий растительный жир - жирный сыр -> менее жирный сыр / уменьшить количество / пищевые дрожжи в части веганских кейсов - красное мясо -> птица / рыба / бобовые / тофу - переработанное мясо -> менее соленый и менее жирный белковый компонент - обычная мука -> безглютеновая смесь при gluten-free профиле - обычные макароны -> бобовые или другие альтернативы, если цель low-carb или higher-protein - соль / соевый соус -> уменьшить количество, использовать low-sodium варианты, усиливать вкус травами и кислотой - сахар / сироп -> уменьшить количество, особенно если рецепт и так содержит сладкие компоненты - жарка во фритюре -> запекание, тушение, гриль, варка, air frying",
+      "tags": [
+        "recipe",
+        "recommendations",
+        "substitutions"
+      ],
+      "score": 0.09090909090909091
+    },
+    {
+      "id": "kb_new_30",
+      "source": "kb_hypertension.txt",
+      "text": "Что учитывать: - American Heart Association рекомендует не более 2300 мг натрия в день и идеальную цель 1500 мг для большинства взрослых - значительная часть натрия поступает не из солонки, а из готовых, упакованных и ресторанных продуктов - для MVP важно выявлять как явную соль, так и высокосолевые ингредиенты - сочетание нескольких соленых компонентов резко повышает риск",
+      "tags": [
+        "hypertension"
+      ],
+      "score": 0.06818181818181818
+    },
+    {
+      "id": "kb_new_46",
+      "source": "kb_low_sodium.txt",
+      "text": "Рекомендации: - выбирать варианты reduced sodium / low sodium - промывать консервированные бобовые и овощи - уменьшать соевый соус, бульонные кубики и готовые соусы - использовать травы, чеснок, лимонный сок и специи для вкуса Шаблоны интерпретации: - Высокий натрий: несколько обработанных соленых ингредиентов - Умеренный натрий: один выраженный источник соли - Более благоприятный профиль: преимущественно цельные продукты и минимально обработанные ингредиенты",
+      "tags": [
+        "low",
+        "nutrition",
+        "sodium"
+      ],
+      "score": 0.06818181818181818
+    },
+    {
+      "id": "kb_new_66",
+      "source": "kb_vegan.txt",
+      "text": "Что учитывать: - для MVP vegan трактуется строго: любые ингредиенты животного происхождения делают рецепт несовместимым - скрытые животные компоненты могут встречаться в выпечке, соусах, бульонах, десертах и полуфабрикатах - растительные альтернативы могут отличаться по сахару, соли и степени переработки; это важно для дополнительных профилей, но не отменяет их веганскую совместимость",
+      "tags": [
+        "diet",
+        "vegan"
+      ],
+      "score": 0.06818181818181818
+    },
+    {
+      "id": "kb_new_13",
+      "source": "kb_gluten_free.txt",
+      "text": "Тема: Безглютеновое питание / целиакия Назначение для MVP: Файл нужен для выявления ингредиентов, содержащих глютен, и построения строгих предупреждений для профиля gluten_free / celiac-safe. Опасные ингредиенты: - пшеница - рожь - ячмень - обычная мука - манка - булгур - кускус - обычные макароны - хлебные крошки - панировка - соевый соус на основе пшеницы - выпечка из обычной муки",
+      "tags": [
+        "free",
+        "gluten"
+      ],
+      "score": 0.045454545454545456
+    },
+    {
+      "id": "kb_new_21",
+      "source": "kb_high_protein.txt",
+      "text": "Что учитывать: - высокий белок не равен автоматически «здорово»; нужно учитывать соль, насыщенные жиры и общую калорийность - для MVP не стоит вводить универсальный порог «high protein» без контекста порции - лучше оценивать по относительной роли белковых ингредиентов в блюде и по белку на порцию - бобовые, соя, рыба, йогурт без избытка сахара и постные источники белка обычно более универсальны",
+      "tags": [
+        "high",
+        "protein"
+      ],
+      "score": 0.045454545454545456
+    }
+  ],
+  "summary": "Рецепт «Салат «Цезарь» с курицей» проанализирован для выбранного профиля. Точность расчета снижена, потому что часть ингредиентов не была надежно сопоставлена с USDA FoodData Central. Выявлены ограничения: Натрий на порцию близок к верхней границе нормы.; Доля жиров на порцию высокая.. Ориентировочная калорийность на порцию: 1254.19.",
+  "detected_issues": [
+    "Натрий на порцию близок к верхней границе нормы.",
+    "Доля жиров на порцию высокая.",
+    "Калорийность порции высокая для выбранной цели."
+  ],
+  "recommendations": [
+    "Уточнить состав и количество ингредиентов, чтобы улучшить точность расчета БЖУ.",
+    "Уменьшить размер порции или скорректировать наиболее калорийные ингредиенты."
+  ],
+  "warnings": [
+    "Нет данных о нутриентах для ингредиента 'чеснок'.",
+    "Качество расчета снижено: часть ключевых ингредиентов не была надежно сопоставлена с продуктовой базой.",
+    "Для части значимых ингредиентов масса определена эвристически, а не по явному количеству.",
+    "Не удалось надежно определить нутриенты для: чеснок."
+  ],
+  "compatibility": {
+    "diet": "medium",
+    "restriction": "medium",
+    "goal": "medium"
+  }
+}

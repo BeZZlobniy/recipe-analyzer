@@ -1,0 +1,18 @@
+{
+  "title": "Салат «Цезарь» с курицей",
+  "ingredient_count": 15,
+  "matched_count": 13,
+  "unresolved": [
+    "чеснок"
+  ],
+  "kcal_per_serving": 1254.46,
+  "quality": {
+    "score": 82.0,
+    "status": "degraded",
+    "explicit_amount_ratio": 0.87,
+    "matched_ratio": 0.87,
+    "trusted_nutrition_ratio": 0.87,
+    "unresolved_ratio": 0.07,
+    "meaningful_fallback_ratio": 0.6
+  }
+}

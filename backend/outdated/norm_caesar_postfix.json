@@ -1,0 +1,140 @@
+{
+  "title": "Салат «Цезарь» с курицей",
+  "ingredients": [
+    {
+      "canonical": "куриное филе",
+      "name_en": "chicken breast",
+      "amount_value": 1.0,
+      "amount_text": "1 шт.",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "салат романо",
+      "name_en": "romaine lettuce",
+      "amount_value": 1.0,
+      "amount_text": "1 кочан",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "помидоры черри",
+      "name_en": "cherry tomatoes",
+      "amount_value": 9.0,
+      "amount_text": "8–10 шт.",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "пармезан",
+      "name_en": "parmesan cheese",
+      "amount_value": 50.0,
+      "amount_text": "40 - 50 г",
+      "unit": "г",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "белый хлеб",
+      "name_en": "white bread",
+      "amount_value": 2.5,
+      "amount_text": "2–3 ломтика",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "оливковое масло",
+      "name_en": "olive oil",
+      "amount_value": 2.5,
+      "amount_text": "2–3 ст.л.",
+      "unit": "ст. л.",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "соль",
+      "name_en": "salt",
+      "amount_value": null,
+      "amount_text": "по вкусу",
+      "unit": null,
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "перец",
+      "name_en": "black pepper",
+      "amount_value": null,
+      "amount_text": "по вкусу",
+      "unit": null,
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "яйцо",
+      "name_en": "egg",
+      "amount_value": 1.0,
+      "amount_text": "1 шт",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "чеснок",
+      "name_en": "garlic",
+      "amount_value": 1.0,
+      "amount_text": "1 зубчик",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "анчоусы",
+      "name_en": "anchovies",
+      "amount_value": 3.0,
+      "amount_text": "2 - 3 филе (по желанию, но желательно)",
+      "unit": "шт",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "горчица",
+      "name_en": "mustard",
+      "amount_value": 1.0,
+      "amount_text": "1 ч. л",
+      "unit": "ч. л",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "лимонный сок",
+      "name_en": "lemon juice",
+      "amount_value": 2.0,
+      "amount_text": "1 - 2 ст. л",
+      "unit": "ст. л",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "оливковое масло",
+      "name_en": "olive oil",
+      "amount_value": 2.5,
+      "amount_text": "2–3 ст.л.",
+      "unit": "ст. л.",
+      "llm_grams": null,
+      "gram_confidence": null
+    },
+    {
+      "canonical": "пармезан",
+      "name_en": "parmesan cheese",
+      "amount_value": 20.0,
+      "amount_text": "20 г",
+      "unit": "г",
+      "llm_grams": null,
+      "gram_confidence": null
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "ingredient": "куриное филе",
+    "amount": "1 шт",
+    "query_en": null,
+    "status": "unresolved",
+    "matched": null,
+    "method": "unresolved",
+    "reason": "Кандидаты USDA не найдены.",
+    "top": []
+  },
+  {
+    "ingredient": "салат романо",
+    "amount": "1 кочан",
+    "query_en": null,
+    "status": "unresolved",
+    "matched": null,
+    "method": "unresolved",
+    "reason": "Кандидаты USDA не найдены.",
+    "top": []
+  },
+  {
+    "ingredient": "помидоры черри",
+    "amount": "8 - 10 шт",
+    "query_en": null,
+    "status": "unresolved",
+    "matched": null,
+    "method": "unresolved",
+    "reason": "Кандидаты USDA не найдены.",
+    "top": []
+  },
+  {
+    "ingredient": "пармезан",
+    "amount": "40 - 50 г",
+    "query_en": null,
+    "status": "unresolved",
+    "matched": null,
+    "method": "unresolved",
+    "reason": "Кандидаты USDA не найдены.",
+    "top": []
+  },
+  {
+    "ingredient": "белый хлеб",
+    "amount": "2 - 3 ломтика (для сухариков)",
+    "query_en": null,
+    "status": "unresolved",
+    "matched": null,
+    "method": "unresolved",
+    "reason": "Кандидаты USDA не найдены.",
+    "top": []
+  }
+]

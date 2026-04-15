@@ -1,0 +1,244 @@
+﻿[
+  {
+    "id": "canonical_pasta",
+    "name_ru": "паста",
+    "name_en": "pasta, dry",
+    "aliases_ru": ["паста", "спагетти", "макароны", "лапша"],
+    "aliases_en": ["pasta", "spaghetti", "dry pasta", "noodles"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 371.0,
+      "protein": 13.0,
+      "fat": 1.5,
+      "carbs": 75.0,
+      "fiber": 3.2,
+      "sodium": 6.0
+    }
+  },
+  {
+    "id": "canonical_butter",
+    "name_ru": "сливочное масло",
+    "name_en": "butter",
+    "aliases_ru": ["сливочное масло", "масло сливочное", "масло"],
+    "aliases_en": ["butter"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 717.0,
+      "protein": 0.9,
+      "fat": 81.0,
+      "carbs": 0.1,
+      "fiber": 0.0,
+      "sodium": 11.0
+    }
+  },
+  {
+    "id": "canonical_egg",
+    "name_ru": "яйцо",
+    "name_en": "egg, whole",
+    "aliases_ru": ["яйцо", "яйца", "куриное яйцо"],
+    "aliases_en": ["egg", "eggs", "whole egg"],
+    "category": "Canonical",
+    "grams_per_piece_estimate": 50.0,
+    "nutrients_per_100g": {
+      "calories": 143.0,
+      "protein": 12.6,
+      "fat": 9.5,
+      "carbs": 0.7,
+      "fiber": 0.0,
+      "sodium": 142.0
+    }
+  },
+  {
+    "id": "canonical_salt",
+    "name_ru": "соль",
+    "name_en": "salt",
+    "aliases_ru": ["соль", "поваренная соль"],
+    "aliases_en": ["salt", "table salt"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 0.0,
+      "protein": 0.0,
+      "fat": 0.0,
+      "carbs": 0.0,
+      "fiber": 0.0,
+      "sodium": 40000.0
+    }
+  },
+  {
+    "id": "canonical_pepper",
+    "name_ru": "черный перец",
+    "name_en": "black pepper, ground",
+    "aliases_ru": ["перец", "черный перец", "молотый перец"],
+    "aliases_en": ["pepper", "black pepper", "ground black pepper"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 251.0,
+      "protein": 10.0,
+      "fat": 3.3,
+      "carbs": 64.8,
+      "fiber": 25.0,
+      "sodium": 20.0
+    }
+  },
+  {
+    "id": "canonical_basil",
+    "name_ru": "базилик",
+    "name_en": "basil, fresh",
+    "aliases_ru": ["базилик", "листики базилика", "зелень"],
+    "aliases_en": ["basil", "fresh basil", "herbs"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 23.0,
+      "protein": 3.2,
+      "fat": 0.6,
+      "carbs": 2.7,
+      "fiber": 1.6,
+      "sodium": 4.0
+    }
+  },
+  {
+    "id": "canonical_buckwheat",
+    "name_ru": "гречневая крупа",
+    "name_en": "buckwheat groats",
+    "aliases_ru": ["гречка", "гречневая крупа", "гречневой крупы"],
+    "aliases_en": ["buckwheat", "buckwheat groats"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 308.0,
+      "protein": 13.0,
+      "fat": 3.0,
+      "carbs": 57.0,
+      "fiber": 10.0,
+      "sodium": 3.0
+    }
+  },
+  {
+    "id": "canonical_parmesan",
+    "name_ru": "сыр пармезан",
+    "name_en": "parmesan cheese",
+    "aliases_ru": ["сыр пармезан", "пармезан", "твердого сыра пармезан", "сыра пармезан"],
+    "aliases_en": ["parmesan", "parmesan cheese", "grated parmesan"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 392.0,
+      "protein": 35.8,
+      "fat": 25.0,
+      "carbs": 3.2,
+      "fiber": 0.0,
+      "sodium": 1529.0
+    }
+  },
+  {
+    "id": "canonical_water",
+    "name_ru": "вода",
+    "name_en": "water",
+    "aliases_ru": ["вода", "ст. воды", "стакан воды"],
+    "aliases_en": ["water"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 0.0,
+      "protein": 0.0,
+      "fat": 0.0,
+      "carbs": 0.0,
+      "fiber": 0.0,
+      "sodium": 0.0
+    }
+  },
+  {
+    "id": "canonical_mushrooms",
+    "name_ru": "шампиньоны",
+    "name_en": "mushrooms",
+    "aliases_ru": ["шампиньоны", "шампиньонов", "грибы"],
+    "aliases_en": ["mushrooms", "champignon mushrooms", "champignons"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 27.0,
+      "protein": 4.5,
+      "fat": 1.0,
+      "carbs": 0.0,
+      "fiber": 1.0,
+      "sodium": 5.0
+    }
+  },
+  {
+    "id": "canonical_onion",
+    "name_ru": "лук",
+    "name_en": "onion",
+    "aliases_ru": ["лук", "луковица", "луковицы", "лук репчатый"],
+    "aliases_en": ["onion", "yellow onion"],
+    "category": "Canonical",
+    "grams_per_piece_estimate": 60.0,
+    "nutrients_per_100g": {
+      "calories": 42.0,
+      "protein": 1.0,
+      "fat": 0.1,
+      "carbs": 8.3,
+      "fiber": 1.7,
+      "sodium": 4.0
+    }
+  },
+  {
+    "id": "canonical_olive_oil",
+    "name_ru": "оливковое масло",
+    "name_en": "olive oil",
+    "aliases_ru": ["оливковое масло", "оливкового масла"],
+    "aliases_en": ["olive oil", "extra virgin olive oil"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 884.0,
+      "protein": 0.0,
+      "fat": 100.0,
+      "carbs": 0.0,
+      "fiber": 0.0,
+      "sodium": 2.0
+    }
+  },
+  {
+    "id": "canonical_breadcrumbs",
+    "name_ru": "панировочные сухари",
+    "name_en": "breadcrumbs",
+    "aliases_ru": ["панировочные сухари", "панировочных сухарей", "сухари панировочные"],
+    "aliases_en": ["breadcrumbs", "bread crumbs"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 336.0,
+      "protein": 15.7,
+      "fat": 1.4,
+      "carbs": 70.0,
+      "fiber": 4.5,
+      "sodium": 430.0
+    }
+  },
+  {
+    "id": "canonical_dill",
+    "name_ru": "укроп",
+    "name_en": "dill",
+    "aliases_ru": ["укроп", "укропа", "зелень"],
+    "aliases_en": ["dill", "fresh dill", "herbs"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 43.0,
+      "protein": 3.5,
+      "fat": 1.1,
+      "carbs": 7.0,
+      "fiber": 2.1,
+      "sodium": 61.0
+    }
+  },
+  {
+    "id": "canonical_parsley",
+    "name_ru": "петрушка",
+    "name_en": "parsley",
+    "aliases_ru": ["петрушка", "петрушки", "зелень"],
+    "aliases_en": ["parsley", "fresh parsley", "herbs"],
+    "category": "Canonical",
+    "nutrients_per_100g": {
+      "calories": 36.0,
+      "protein": 3.0,
+      "fat": 0.8,
+      "carbs": 6.3,
+      "fiber": 3.3,
+      "sodium": 56.0
+    }
+  }
+]

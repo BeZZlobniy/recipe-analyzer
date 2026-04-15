@@ -1,0 +1,147 @@
+{
+  "title": "﻿Салат «Цезарь» с курицей",
+  "ingredient_count": 15,
+  "ingredients": [
+    {
+      "raw": "Куриное филе",
+      "canonical": "куриное филе",
+      "name_en": null,
+      "amount_text": "1 шт",
+      "unit": "шт",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Салат романо (или айсберг)",
+      "canonical": "салат романо",
+      "name_en": null,
+      "amount_text": "1 кочан",
+      "unit": "шт",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Помидоры черри",
+      "canonical": "помидоры черри",
+      "name_en": null,
+      "amount_text": "8 - 10 шт",
+      "unit": "шт",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Пармезан",
+      "canonical": "пармезан",
+      "name_en": null,
+      "amount_text": "40 - 50 г",
+      "unit": "г",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Белый хлеб",
+      "canonical": "белый хлеб",
+      "name_en": null,
+      "amount_text": "2 - 3 ломтика (для сухариков)",
+      "unit": "л",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Оливковое масло",
+      "canonical": "оливковое масло",
+      "name_en": null,
+      "amount_text": "2 - 3 ст. л",
+      "unit": "ст. л",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "соль",
+      "canonical": "соль",
+      "name_en": "salt",
+      "amount_text": "по вкусу",
+      "unit": null,
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "перец",
+      "canonical": "перец",
+      "name_en": "black pepper",
+      "amount_text": "по вкусу",
+      "unit": null,
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Яйцо",
+      "canonical": "яйцо",
+      "name_en": null,
+      "amount_text": "1 шт",
+      "unit": "шт",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Чеснок",
+      "canonical": "чеснок",
+      "name_en": null,
+      "amount_text": "1 зубчик",
+      "unit": "шт",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Анчоусы",
+      "canonical": "анчоусы",
+      "name_en": null,
+      "amount_text": "2 - 3 филе (по желанию, но желательно)",
+      "unit": "шт",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Горчица",
+      "canonical": "горчица",
+      "name_en": null,
+      "amount_text": "1 ч. л",
+      "unit": "ч. л",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Лимонный сок",
+      "canonical": "лимонный сок",
+      "name_en": null,
+      "amount_text": "1 - 2 ст. л",
+      "unit": "ст. л",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Оливковое масло",
+      "canonical": "оливковое масло",
+      "name_en": null,
+      "amount_text": "3 - 4 ст. л",
+      "unit": "ст. л",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    },
+    {
+      "raw": "Пармезан",
+      "canonical": "пармезан",
+      "name_en": null,
+      "amount_text": "20 г",
+      "unit": "г",
+      "confidence": "high",
+      "source": "heuristic_fallback"
+    }
+  ],
+  "steps": [
+    "Курица Обжарь филе на сковороде с солью и перцем до золотистой корочки (примерно 5–7 минут с каждой стороны). Остуди и нарежь ломтиками.",
+    "Сухарики Нарежь хлеб кубиками, сбрызни оливковым маслом, добавь немного чеснока и подсуши в духовке при 180°C ~10 минут.",
+    "Соус Яйцо опусти в кипяток на 1 минуту (оно должно остаться полусырым) Взбей яйцо с горчицей, лимонным соком и чесноком Добавь анчоусы и измельчи Постепенно вливай оливковое масло до эмульсии Добавь тёртый пармезан",
+    "Сборка Листья салата порви руками Добавь курицу, черри, сухарики Полей соусом и аккуратно перемешай Посыпь пармезаном"
+  ]
+}
