@@ -5,4 +5,7 @@ __pycache__/
 .venv/
 node_modules/
 dist/
+app.db
 backend/app.db
+backend/.env
+frontend/tsconfig.app.tsbuildinfo
