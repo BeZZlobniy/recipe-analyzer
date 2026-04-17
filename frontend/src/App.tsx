@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./auth/AuthContext";
 import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AuthProvider } from "./features/auth/AuthContext";
 import { AnalysisDetailsPage } from "./pages/AnalysisDetailsPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { HistoryPage } from "./pages/HistoryPage";

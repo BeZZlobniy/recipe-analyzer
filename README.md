@@ -1,67 +1,100 @@
 # Recipe Analyzer MVP
 
-Локальное MVP веб-приложения для персонализированного анализа рецептов с учетом пользовательского профиля.
+Локальное веб-приложение для персонализированного анализа рецептов с учетом профиля пользователя.
 
-## Что реализовано
+## Что умеет система
 
-Система принимает свободный текст рецепта, преобразует его в структурированную форму, сопоставляет ингредиенты с пищевыми данными, рассчитывает ориентировочную пищевую ценность и формирует аналитический отчет с учетом профиля пользователя.
+- принимает рецепт в свободной текстовой форме;
+- извлекает ингредиенты, количества и единицы измерения;
+- сопоставляет ингредиенты с USDA FoodData Central;
+- детерминированно рассчитывает калорийность и БЖУ;
+- формирует персонализированный аналитический отчет через RAG;
+- сохраняет историю анализов и показывает сводную статистику на dashboard.
 
-## Актуальная архитектура backend
-
-Backend работает по конвейеру:
+## Backend pipeline
 
 1. `Normalization`
    - очистка текста рецепта;
-   - извлечение названия блюда;
-   - выделение ингредиентов, количеств и единиц измерения;
-   - получение `name_en` для дальнейшего поиска по USDA.
-
+   - извлечение ингредиентов;
+   - получение `name_ru`, `name_en`, количества и единиц.
 2. `Ingredient Resolution`
-   - построение поисковых запросов для каждого ингредиента;
-   - поиск кандидатов сначала в локальном USDA Foundation JSON, затем через USDA API;
-   - ранжирование кандидатов;
-   - при необходимости LLM-разрешение неоднозначности.
-
+   - поиск кандидатов сначала в локальном USDA Foundation JSON;
+   - fallback в USDA API;
+   - ранжирование и выбор наиболее подходящего продукта.
 3. `Deterministic Nutrition`
-   - расчет массы ингредиентов;
-   - расчет БЖУ и калорийности;
-   - вычисление показателей на весь рецепт и на порцию;
+   - перевод количества ингредиента в массу;
+   - расчет калорий, белков, жиров, углеводов, клетчатки и натрия;
    - оценка качества анализа.
-
 4. `Final RAG Analysis`
-   - извлечение релевантного контекста из базы знаний;
-   - генерация краткого вывода, предупреждений и рекомендаций;
-   - оценка совместимости рецепта с типом питания, ограничениями и целью.
+   - извлечение релевантного контекста из локальной базы знаний;
+   - генерация summary, warnings, recommendations и compatibility.
 
 ## Технологический стек
 
-- `backend/`: FastAPI, SQLAlchemy, SQLite
-- `frontend/`: Vite, React, TypeScript
+- `backend`: FastAPI, SQLAlchemy, SQLite
+- `frontend`: React, TypeScript, Vite
 - `LLM`: Ollama, `qwen2.5:7b`
 - `nutrition source`: USDA Foundation JSON + USDA API fallback
-- `knowledge base`: локальные TXT-источники, агрегированные в JSON
+- `RAG knowledge base`: локальные `.txt` источники, агрегированные в JSON
 
-## Структура проекта
+## Актуальная структура проекта
 
 ```text
 recipe-analyzer/
   backend/
     app/
-      api/
-      core/
-      data/
-      models/
+      api/routes/           # REST endpoints
+      core/                 # config, db, schemas, utils
+      data/                 # USDA dataset, KB, active data
+      models/               # SQLAlchemy models
       modules/
-        analysis/
-        rag/
-        structuring/
-      services/
+        analysis/           # orchestration, nutrition, portions
+        rag/                # normalization, resolution, retrieval, final analysis
+        structuring/        # fallback parsing and schemas
+      services/             # Ollama and KB support services
       main.py
-    app.db
+    demo/
+      recipes/              # demo recipe texts
+      results/              # saved demo analysis JSON
+    scripts/                # service scripts and CLI helpers
+    user_profiles/          # sample JSON profiles for CLI
     requirements.txt
   frontend/
     src/
+      api/                  # API client and request wrappers
+      auth/                 # auth context
+      components/           # shared visual and layout components
+      pages/                # route pages
+      types/                # API-facing TS types
+      utils/                # labels and formatting helpers
+      App.tsx
+      main.tsx
+      styles.css
+    package.json
+    tsconfig.json
+    vite.config.ts
+  run-app.ps1
+  setup-app.ps1
 ```
+
+## Ключевые файлы реализации
+
+### Backend
+
+- `backend/app/modules/analysis/service.py`
+- `backend/app/modules/rag/normalization.py`
+- `backend/app/modules/rag/ingredient_resolution.py`
+- `backend/app/modules/analysis/nutrition.py`
+- `backend/app/modules/rag/service.py`
+
+### Frontend
+
+- `frontend/src/App.tsx`
+- `frontend/src/auth/AuthContext.tsx`
+- `frontend/src/pages/NewAnalysisPage.tsx`
+- `frontend/src/pages/AnalysisDetailsPage.tsx`
+- `frontend/src/pages/DashboardPage.tsx`
+- `frontend/src/pages/ProfilesPage.tsx`
 
 ## Запуск
 
@@ -72,7 +105,7 @@ recipe-analyzer/
 .\run-app.ps1
 ```
 
-Или вручную:
+Ручной запуск backend:
 
 ```powershell
 cd backend
@@ -82,6 +115,8 @@ pip install -r requirements.txt
 copy .env.example .env
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
+
+Ручной запуск frontend:
 
 ```powershell
 cd frontend
@@ -94,35 +129,13 @@ npm run dev
 - username: `admin`
 - password: `admin`
 
-## Демонстрационные рецепты
+## Demo recipes
 
-В истории анализов сохранены четыре показательных кейса:
+В истории анализов сохранены показательные кейсы, а их исходные тексты и JSON-результаты лежат в `backend/demo/`:
 
 1. полезный рецепт с высокой совместимостью;
-2. калорийный и “вредный” рецепт с низкой совместимостью по ограничениям и цели;
-3. рецепт со средней совместимостью по ограничениям и цели;
-4. еще один рецепт со средней совместимостью по ограничениям и цели.
+2. калорийный рецепт с низкой совместимостью по ограничениям и цели;
+3. два промежуточных рецепта со средней совместимостью.
 
-## Ключевые файлы реализации
 
-- [backend/app/modules/analysis/service.py](backend/app/modules/analysis/service.py)
-- [backend/app/modules/rag/normalization.py](backend/app/modules/rag/normalization.py)
-- [backend/app/modules/rag/ingredient_resolution.py](backend/app/modules/rag/ingredient_resolution.py)
-- [backend/app/modules/analysis/nutrition.py](backend/app/modules/analysis/nutrition.py)
-- [backend/app/modules/rag/service.py](backend/app/modules/rag/service.py)
-- [frontend/src/pages/NewAnalysisPage.tsx](frontend/src/pages/NewAnalysisPage.tsx)
-- [frontend/src/pages/AnalysisDetailsPage.tsx](frontend/src/pages/AnalysisDetailsPage.tsx)
-- [frontend/src/pages/DashboardPage.tsx](frontend/src/pages/DashboardPage.tsx)
-
-## Что важно для ВКР
-
-Для технологического раздела удобно опираться на следующие артефакты:
-
-- backend pipeline и описание модулей;
-- структура БД SQLite;
-- описание интеграции USDA;
-- описание использования LLM и RAG;
-- демонстрационные рецепты и сохраненные результаты анализа;
-- скриншоты страниц frontend;
-- метрики качества анализа (`analysis_quality`, `matched_ratio`, `unresolved_ratio`);
-- сравнение показательных рецептов по совместимости и пищевой ценности.
+Файлы локальных отчетов, временных баз данных и сгенерированных embedding-артефактов в репозиторий не включаются.

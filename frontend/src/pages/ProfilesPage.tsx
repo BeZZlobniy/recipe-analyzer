@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { profilesApi } from "../api";
 import type { Profile } from "../types/api";
-import { useAuth } from "../features/auth/AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 type ProfileFormState = {
   name: string;

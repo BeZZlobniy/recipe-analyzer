@@ -24,15 +24,12 @@ class RetrievalService:
         kb = self._load_kb()
         if not kb:
             return []
-        embedding_results = self._embedding_search(queries, top_k) if settings.enable_embedding_retrieval else []
-        lexical_results = self._lexical_search(queries, top_k * 2)
-        merged: dict[str, dict[str, Any]] = {}
-        for item in embedding_results + lexical_results:
-            key = item["id"]
-            if key not in merged or item["score"] > merged[key]["score"]:
-                merged[key] = item
+        candidate_window = max(top_k * 3, 6)
+        embedding_results = self._embedding_search(queries, candidate_window) if settings.enable_embedding_retrieval else []
+        lexical_results = self._lexical_search(queries, candidate_window)
+        merged = self._merge_rankings(embedding_results, lexical_results)
         filtered = self._filter_relevance(list(merged.values()), queries)
-        return sorted(filtered, key=lambda item: item["score"], reverse=True)[:top_k]
+        return self._select_balanced_results(filtered, lexical_results, top_k)
 
     def _embedding_search(self, queries: list[str], top_k: int) -> list[dict[str, Any]]:
         try:
@@ -85,6 +82,79 @@ class RetrievalService:
             if overlap >= 2 or item["score"] >= 0.55:
                 filtered.append(item)
         return filtered or results
+
+    def _merge_rankings(
+        self,
+        embedding_results: list[dict[str, Any]],
+        lexical_results: list[dict[str, Any]],
+    ) -> dict[str, dict[str, Any]]:
+        merged: dict[str, dict[str, Any]] = {}
+
+        for item in lexical_results:
+            merged[item["id"]] = {
+                "id": item["id"],
+                "source": item["source"],
+                "text": item["text"],
+                "tags": item.get("tags", []),
+                "lexical_score": float(item["score"]),
+                "embedding_score": 0.0,
+            }
+
+        for item in embedding_results:
+            current = merged.get(item["id"])
+            if current is None:
+                merged[item["id"]] = {
+                    "id": item["id"],
+                    "source": item["source"],
+                    "text": item["text"],
+                    "tags": item.get("tags", []),
+                    "lexical_score": 0.0,
+                    "embedding_score": float(item["score"]),
+                }
+                continue
+            current["embedding_score"] = max(float(item["score"]), float(current.get("embedding_score", 0.0)))
+
+        for item in merged.values():
+            lexical_score = float(item.pop("lexical_score", 0.0))
+            embedding_score = float(item.pop("embedding_score", 0.0))
+            hybrid_bonus = 0.08 if lexical_score > 0 and embedding_score > 0 else 0.0
+            # Keep semantic retrieval additive, but do not let it drown obvious lexical matches.
+            item["score"] = round(lexical_score + embedding_score * 0.35 + hybrid_bonus, 4)
+
+        return merged
+
+    def _select_balanced_results(
+        self,
+        results: list[dict[str, Any]],
+        lexical_results: list[dict[str, Any]],
+        top_k: int,
+    ) -> list[dict[str, Any]]:
+        ranked = sorted(results, key=lambda item: item["score"], reverse=True)
+        if not settings.enable_embedding_retrieval:
+            return ranked[:top_k]
+
+        by_id = {item["id"]: item for item in ranked}
+        lexical_ranked = [by_id[item["id"]] for item in lexical_results if item["id"] in by_id]
+        lexical_anchor_count = min(max(2, top_k // 2), len(lexical_ranked), top_k)
+
+        selected: list[dict[str, Any]] = []
+        seen: set[str] = set()
+
+        for item in lexical_ranked[:lexical_anchor_count]:
+            if item["id"] in seen:
+                continue
+            selected.append(item)
+            seen.add(item["id"])
+
+        for item in ranked:
+            if item["id"] in seen:
+                continue
+            selected.append(item)
+            seen.add(item["id"])
+            if len(selected) >= top_k:
+                break
+
+        return selected[:top_k]
 
     def _load_kb(self) -> list[dict[str, Any]]:
         if self._kb is None:
