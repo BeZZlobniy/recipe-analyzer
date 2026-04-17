@@ -234,7 +234,7 @@ class FallbackRecipeParser:
         return None
 
     def make_ingredient_entries(self, name_text: str, quantity_text: str | None) -> list[SimpleRecipeIngredient]:
-        name_text = normalize_spaces(name_text).strip(" ,.;:")
+        name_text = normalize_spaces(name_text).lstrip("-*вЂў ").strip(" ,.;:")
         quantity_text = normalize_spaces(quantity_text or "").strip(" ,.;:") or None
         low = normalize_text(name_text)
         if low in {"соль, перец", "соль и перец"}:
