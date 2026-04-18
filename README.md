@@ -40,41 +40,158 @@
 ## Актуальная структура проекта
 
 ```text
+Листинг Б — Актуальная структура приложения
+
 recipe-analyzer/
+  README.md                              # общее описание проекта, стек, запуск
+  .gitignore                             # исключения Git
+  app.db                                 # локальная SQLite БД, создается/обновляется при работе
+  setup-app.ps1                          # первичная настройка окружения
+  run-app.ps1                            # запуск backend и frontend
+  run-app.bat                            # альтернативный запуск в Windows
+
   backend/
+    README.md                            # описание backend-части
+    requirements.txt                     # Python-зависимости
+    pytest.ini                           # конфигурация pytest
+
     app/
-      api/routes/           # REST endpoints
-      core/                 # config, db, schemas, utils
-      data/                 # USDA dataset, KB, active data
-      models/               # SQLAlchemy models
+      main.py                            # create_app(), startup, подключение роутов
+
+      api/
+        routes/
+          auth.py                        # авторизация: login/logout/me
+          profiles.py                    # CRUD профилей пользователя
+          analyze.py                     # запуск анализа рецепта
+          history.py                     # история и детали анализов
+          dashboard.py                   # агрегаты и статистика dashboard
+
+      core/
+        config.py                        # настройки приложения, .env, пути, модели, флаги
+        db.py                            # engine, SessionLocal, bootstrap_database()
+        deps.py                          # зависимости FastAPI, доступ к БД/пользователю
+        schemas.py                       # Pydantic-схемы API
+        security.py                      # хеширование паролей, работа с auth
+        utils.py                         # нормализация текста, вспомогательные функции
+
+      data/
+        FoodData_Central_foundation_food_json_2025-12-18.json
+                                          # локальный USDA Foundation dataset
+        knowledge_base.json              # собранная локальная база знаний для retrieval
+        kb_sources/                      # исходные текстовые документы базы знаний
+          kb_common_allergens.txt        # распространенные аллергены
+          kb_hidden_allergen_sources.txt # скрытые источники аллергенов
+          kb_lactose_intolerance.txt     # непереносимость лактозы
+          kb_gluten_free.txt             # безглютеновое питание
+          kb_diabetes.txt                # диабет и ограничения
+          kb_hypertension.txt            # гипертония и натрий
+          kb_hyperlipidemia.txt          # липидный профиль и жиры
+          kb_low_sodium.txt              # низкосолевая диета
+          kb_low_carb.txt                # низкоуглеводное питание
+          kb_high_protein.txt            # высокобелковое питание
+          kb_mediterranean_diet.txt      # средиземноморская диета
+          kb_vegetarian.txt              # вегетарианство
+          kb_vegan.txt                   # веганство
+          kb_weight_loss.txt             # снижение веса
+          kb_nutrition_thresholds.txt    # пороги и ориентиры по нутриентам
+          kb_portion_size_rules.txt      # правила интерпретации порций
+          kb_recipe_substitutions.txt    # возможные замены ингредиентов
+          kb_sat_fat_and_sodium_rules.txt
+                                          # насыщенные жиры и натрий
+          kb_cooking_method_health_impact.txt
+                                          # влияние способа приготовления
+
+      models/
+        user.py                          # модель пользователя
+        profile.py                       # модель профиля пользователя
+        recipe_analysis.py               # модель результата анализа рецепта
+        product.py                       # каноническая карточка продукта
+        product_alias.py                 # альтернативные названия продукта
+        product_search_entry.py          # поисковые ключи продукта
+        external_lookup_cache.py         # кэш внешних USDA-запросов
+
       modules/
-        analysis/           # orchestration, nutrition, portions
-        rag/                # normalization, resolution, retrieval, final analysis
-        structuring/        # fallback parsing and schemas
-      services/             # Ollama and KB support services
-      main.py
-    demo/
-      recipes/              # demo recipe texts
-      results/              # saved demo analysis JSON
-    scripts/                # service scripts and CLI helpers
-    user_profiles/          # sample JSON profiles for CLI
-    requirements.txt
+        analysis/
+          service.py                     # оркестрация backend-пайплайна анализа
+          nutrition.py                   # расчет нутриентов и метрик качества
+          nutrition_rules.py             # правила перевода единиц, оценка массы, fallback
+          portions.py                    # оценка числа порций
+
+        rag/
+          normalization.py               # объединение эвристик и LLM-нормализации
+          ingredient_catalog.py          # нормализация и англоязычные варианты ингредиентов
+          ingredient_resolution.py       # сопоставление ингредиентов с USDA
+          usda_client.py                 # работа с USDA API
+          usda_resolution_utils.py       # вспомогательная логика ранжирования кандидатов
+          retrieval.py                   # lexical/embedding retrieval по knowledge base
+          service.py                     # формирование контекста и итогового анализа
+
+        structuring/
+          input_cleaner.py               # очистка входного текста рецепта
+          fallback_parser.py             # эвристический разбор рецепта
+          schemas.py                     # внутренние структуры SimpleRecipe/StructuredRecipe
+
+      services/
+        ollama_service.py                # взаимодействие с Ollama / Qwen
+        kb_catalog_service.py            # сборка knowledge_base.json из kb_sources
+
+    scripts/
+      cli_analyze.py                     # CLI-запуск анализа рецепта
+      generate_thesis_artifacts.py       # генерация артефактов для ВКР
+
+    tests/
+      conftest.py                        # тестовые фикстуры
+      integration/
+        test_api.py                      # интеграционные тесты API-сценариев
+      unit/
+        test_parsing.py                  # unit-тесты парсинга рецепта
+        test_nutrition.py                # unit-тесты расчета нутриентов
+
+    user_profiles/
+      sample_user.json                   # пример профиля для CLI/демо
+
+    reports/                             # локально генерируемые отчеты (обычно не versioned)
+
   frontend/
+    index.html                           # HTML-шаблон Vite
+    package.json                         # зависимости и npm-скрипты
+    package-lock.json                    # lockfile npm
+    tsconfig.json                        # базовая TS-конфигурация
+    tsconfig.app.json                    # TS-конфигурация приложения
+    vite.config.ts                       # конфигурация Vite
+
     src/
-      api/                  # API client and request wrappers
-      auth/                 # auth context
-      components/           # shared visual and layout components
-      pages/                # route pages
-      types/                # API-facing TS types
-      utils/                # labels and formatting helpers
-      App.tsx
-      main.tsx
-      styles.css
-    package.json
-    tsconfig.json
-    vite.config.ts
-  run-app.ps1
-  setup-app.ps1
+      main.tsx                           # точка входа frontend
+      App.tsx                            # маршрутизация приложения
+      styles.css                         # глобальные стили
+
+      api/
+        client.ts                        # базовый HTTP-клиент
+        index.ts                         # функции работы с backend API
+
+      auth/
+        AuthContext.tsx                  # контекст аутентификации и сессии
+
+      components/
+        Layout.tsx                       # общий layout приложения
+        ProtectedRoute.tsx               # защита приватных маршрутов
+        StatCard.tsx                     # карточки статистики
+        Charts.tsx                       # визуализация агрегированных данных
+
+      pages/
+        LoginPage.tsx                    # страница входа
+        DashboardPage.tsx                # dashboard и сводная аналитика
+        ProfilesPage.tsx                 # управление профилями
+        NewAnalysisPage.tsx              # запуск нового анализа
+        HistoryPage.tsx                  # история анализов
+        AnalysisDetailsPage.tsx          # детальный просмотр результата
+
+      types/
+        api.ts                           # TypeScript-типы API
+
+      utils/
+        labels.ts                        # подписи, отображение служебных значений
+
 ```
 
 ## Ключевые файлы реализации
