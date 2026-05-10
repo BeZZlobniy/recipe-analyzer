@@ -276,14 +276,3 @@ recipe-analyzer/
       styles.css
 ```
 
-## Что Не Коммитить
-
-Обычно не нужно включать в VCS:
-
-- `backend/.env`
-- `backend/.venv/`
-- `frontend/node_modules/`
-- `backend/reports/`
-- локальные SQLite базы (`*.db`, `*.sqlite`)
-- сгенерированные embedding-артефакты `knowledge_base_embeddings.npy` и `knowledge_base_embeddings_meta.json`
-
