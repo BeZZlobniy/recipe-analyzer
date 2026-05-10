@@ -3,92 +3,28 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from app.core.utils import dedupe_texts, normalize_spaces, normalize_text
+from app.core.utils import dedupe_texts, load_data_json, normalize_spaces, normalize_text, parse_range
 from app.modules.rag.ingredient_catalog import normalize_name_en
 from app.modules.structuring.schemas import SimpleRecipeIngredient, SimpleRecipePayload, StructuredIngredient
 
 
+_PARSER_DATA = load_data_json("fallback/parser_fallbacks.json")
+
+
 class FallbackRecipeParser:
     QUANTITY_PATTERN = re.compile(
-        r"(?P<value>\d+(?:[.,]\d+)?)\s*(?P<unit>кг|г|гр|мл|л|шт|стакан(?:а|ов)?|пучок(?:а|ов)?|ст\.?\s*л\.?|ч\.?\s*л\.?|луковица|луковицы|зубчик|зубчика|кочан|ломтик(?:а|ов)?|филе)",
+        r"(?P<value>\d+(?:[.,]\d+)?(?:/\d+(?:[.,]\d+)?)?)\s*(?:[-–]\s*\d+(?:[.,]\d+)?(?:/\d+(?:[.,]\d+)?)?\s*)?(?P<unit>кг|г|гр|мл|л|шт|стакан(?:а|ов)?|пучок(?:а|ов)?|веточк(?:а|и)?|ст\.?\s*л\.?|ст\.?\s*ложк(?:а|и)?|ч\.?\s*л\.?|ч\.?\s*ложк(?:а|и)?|щепотк(?:а|и)?|луковица|луковицы|зубчик|зубчика|зубка|кочан|ломтик(?:а|ов)?|филе)",
         flags=re.IGNORECASE,
     )
     STEP_START_PATTERN = re.compile(r"^\s*(?:\d+[.)]|шаг\s*\d+)", flags=re.IGNORECASE)
-    SECTION_INGREDIENTS = {
-        "ингредиенты",
-        "ингредиенты:",
-        "состав",
-        "состав:",
-        "потребуется",
-        "потребуется:",
-        "для салата",
-        "для салата:",
-        "для соуса",
-        "для соуса:",
-    }
-    SECTION_STEPS = {
-        "приготовление",
-        "приготовление:",
-        "инструкции",
-        "инструкции:",
-        "шаги",
-        "шаги:",
-        "способ приготовления",
-        "способ приготовления:",
-        "сборка",
-        "сборка:",
-        "сухарики",
-        "сухарики:",
-        "курица",
-        "курица:",
-        "соус",
-        "соус:",
-    }
-    UNIT_ALIASES = {
-        "г": "г",
-        "гр": "г",
-        "кг": "кг",
-        "мл": "мл",
-        "л": "л",
-        "шт": "шт",
-        "ст. л.": "ст. л.",
-        "ст.л.": "ст. л.",
-        "ч. л.": "ч. л.",
-        "ч.л.": "ч. л.",
-        "стакан": "стакан",
-        "стакана": "стакан",
-        "стаканов": "стакан",
-        "пучок": "пучок",
-        "пучка": "пучок",
-        "луковица": "шт",
-        "луковицы": "шт",
-        "зубчик": "шт",
-        "зубчика": "шт",
-        "кочан": "шт",
-        "ломтик": "шт",
-        "ломтика": "шт",
-        "ломтиков": "шт",
-        "филе": "шт",
-    }
-    NAME_REPLACEMENTS = {
-        "твердого сыра пармезан": "сыр пармезан",
-        "сыра пармезан": "сыр пармезан",
-        "пармезан": "пармезан",
-        "сливочного масла": "сливочное масло",
-        "оливкового масла": "оливковое масло",
-        "лапши": "лапша",
-        "яйца": "яйцо",
-        "листики базилика": "базилик",
-        "базилика": "базилик",
-        "помидоры черри": "помидоры черри",
-        "салат романо": "салат романо",
-        "куриное филе": "куриное филе",
-        "белый хлеб": "белый хлеб",
-        "лимонный сок": "лимонный сок",
-        "анчоусы": "анчоусы",
-        "горчица": "горчица",
-        "чеснок": "чеснок",
-    }
+    SECTION_INGREDIENTS = set(_PARSER_DATA.get("section_ingredients", []))
+    SECTION_STEPS = set(_PARSER_DATA.get("section_steps", []))
+    UNIT_ALIASES = dict(_PARSER_DATA.get("unit_aliases", {}))
+    NAME_REPLACEMENTS = dict(_PARSER_DATA.get("name_replacements", {}))
+    GENERIC_QUALIFIER_BASES = set(_PARSER_DATA.get("generic_qualifier_bases", []))
+    SEMANTIC_QUALIFIER_KEYWORDS = tuple(_PARSER_DATA.get("semantic_qualifier_keywords", []))
+    NAME_DROP_TOKENS = tuple(_PARSER_DATA.get("name_drop_tokens", []))
+    AMOUNTLESS_INGREDIENTS = set(_PARSER_DATA.get("amountless_ingredients", []))
 
     def build_recipe(self, clean_recipe_text: str) -> SimpleRecipePayload:
         lines = self.prepare_lines(clean_recipe_text)
@@ -119,6 +55,11 @@ class FallbackRecipeParser:
             if ingredient_candidate and (in_ingredients or not in_steps):
                 ingredients.extend(ingredient_candidate)
                 continue
+            if in_ingredients:
+                amountless = self.parse_amountless_ingredient_line(line)
+                if amountless:
+                    ingredients.append(amountless)
+                    continue
 
             if in_steps:
                 cleaned_step = self.clean_step(line)
@@ -182,7 +123,9 @@ class FallbackRecipeParser:
                 continue
             source_name_en = normalize_name_en(cleaned, getattr(item, "name_en", None))
             inferred_unit = unit
-            if inferred_unit is None and any(token in cleaned for token in ("яйц", "луковиц", "зубчик", "кочан", "ломтик")) and amount_value is not None:
+            if inferred_unit is None and any(
+                token in cleaned for token in ("яйц", "луковиц", "зубчик", "кочан", "ломтик")
+            ) and amount_value is not None:
                 inferred_unit = "шт"
             result.append(
                 StructuredIngredient(
@@ -234,22 +177,32 @@ class FallbackRecipeParser:
         return None
 
     def make_ingredient_entries(self, name_text: str, quantity_text: str | None) -> list[SimpleRecipeIngredient]:
-        name_text = normalize_spaces(name_text).lstrip("-*вЂў ").strip(" ,.;:")
+        name_text = normalize_spaces(name_text).lstrip("-*• ").strip(" ,.;:")
         quantity_text = normalize_spaces(quantity_text or "").strip(" ,.;:") or None
         low = normalize_text(name_text)
         if low in {"соль, перец", "соль и перец"}:
             return [
-                SimpleRecipeIngredient(name="соль", name_en="salt", quantity=quantity_text, optional=False),
-                SimpleRecipeIngredient(name="перец", name_en="black pepper", quantity=quantity_text, optional=False),
+                SimpleRecipeIngredient(name="Соль", name_en="salt", quantity=quantity_text, optional=False),
+                SimpleRecipeIngredient(name="Перец", name_en="black pepper", quantity=quantity_text, optional=False),
             ]
         return [SimpleRecipeIngredient(name=name_text, name_en=None, quantity=quantity_text, optional=False)]
+
+    def parse_amountless_ingredient_line(self, line: str) -> SimpleRecipeIngredient | None:
+        name = normalize_spaces(line).strip(" -*•,.;:")
+        low = normalize_text(name)
+        if not low or len(low.split()) > 3:
+            return None
+        cleaned = self.sanitize_name(low)
+        if cleaned in self.AMOUNTLESS_INGREDIENTS or any(cleaned.startswith(item + " ") for item in self.AMOUNTLESS_INGREDIENTS):
+            return SimpleRecipeIngredient(name=name, name_en=normalize_name_en(cleaned, None), quantity=None, optional=False)
+        return None
 
     def looks_like_quantity(self, text: str) -> bool:
         low = normalize_text(text)
         return bool(
             self.QUANTITY_PATTERN.search(low)
-            or low in {"по вкусу", "по желанию"}
-            or re.match(r"^\d+\s*[-–]\s*\d+\s*(шт|г|гр|ст\.?\s*л\.?|ч\.?\s*л\.?|ломтик(?:а|ов)?)?$", low)
+            or low in {"по вкусу", "по желанию", "для подачи", "для жарки", "щепотка"}
+            or re.match(r"^\d+(?:[.,]\d+)?(?:/\d+(?:[.,]\d+)?)?\s*[-–]\s*\d+(?:[.,]\d+)?(?:/\d+(?:[.,]\d+)?)?\s*(шт|г|гр|ст\.?\s*л\.?|ст\.?\s*ложк(?:а|и)?|ч\.?\s*л\.?|ч\.?\s*ложк(?:а|и)?|ломтик(?:а|ов)?)?$", low)
         )
 
     def looks_like_quantity_prefix(self, text: str) -> bool:
@@ -281,7 +234,10 @@ class FallbackRecipeParser:
         match = self.QUANTITY_PATTERN.search(low)
         if not match:
             return quantity_value_hint, text, quantity_unit_hint
-        value = quantity_value_hint if quantity_value_hint is not None else float(match.group("value").replace(",", "."))
+        value = quantity_value_hint
+        if value is None:
+            parsed_range = parse_range(low)
+            value = round(sum(parsed_range) / 2, 3) if parsed_range else self.parse_number(match.group("value"))
         unit_raw = (quantity_unit_hint or match.group("unit") or "").strip()
         unit = self.UNIT_ALIASES.get(unit_raw, unit_raw or None)
         return value, text, unit
@@ -292,11 +248,23 @@ class FallbackRecipeParser:
         match = self.QUANTITY_PATTERN.match(low)
         if not match:
             return None, None, None, low
-        value = float(match.group("value").replace(",", "."))
+        parsed_range = parse_range(low)
+        value = round(sum(parsed_range) / 2, 3) if parsed_range else self.parse_number(match.group("value"))
         unit_raw = (match.group("unit") or "").strip()
         unit = self.UNIT_ALIASES.get(unit_raw, unit_raw or None)
         remainder = low[match.end() :].strip(" ,.;:-")
         return value, match.group(0).strip(), unit, remainder or low
+
+    @staticmethod
+    def parse_number(value: str) -> float:
+        normalized = value.replace(",", ".")
+        if "/" not in normalized:
+            return float(normalized)
+        numerator, denominator = normalized.split("/", 1)
+        denominator_value = float(denominator)
+        if denominator_value == 0:
+            return 0.0
+        return float(numerator) / denominator_value
 
     def split_combined_ingredients(self, canonical: str) -> list[str]:
         low = normalize_text(canonical)
@@ -306,7 +274,9 @@ class FallbackRecipeParser:
 
     def sanitize_name(self, value: str) -> str:
         low = normalize_text(value)
+        qualifiers = self._extract_parenthetical_qualifiers(low)
         low = re.sub(r"\([^)]*\)", " ", low)
+        low = re.sub(r"\b\d+(?:[.,]\d+)?\s*%", " ", low)
         for phrase in (
             "обычно используется",
             "для украшения",
@@ -317,20 +287,52 @@ class FallbackRecipeParser:
             "ключевая часть",
         ):
             low = low.replace(phrase, " ")
-        for token in ("листики", "листочки", "небольшой", "небольшая", "небольшие", "тертый", "тёртый"):
+        for token in self.NAME_DROP_TOKENS:
             low = re.sub(rf"\b{token}\b", " ", low)
-        low = re.sub(r"\s+", " ", low).strip(" ,.;:-")
+        low = self._apply_parenthetical_qualifiers(low, qualifiers)
+        low = re.sub(r"\s+", " ", low).strip(" ,.;:-()")
         return self.NAME_REPLACEMENTS.get(low, low)
+
+    def _extract_parenthetical_qualifiers(self, value: str) -> list[str]:
+        qualifiers: list[str] = []
+        for match in re.findall(r"\(([^)]*)\)", value):
+            cleaned = self._sanitize_fragment(match)
+            if cleaned:
+                qualifiers.append(cleaned)
+        return qualifiers
+
+    def _sanitize_fragment(self, value: str) -> str:
+        fragment = normalize_text(value)
+        for phrase in ("по вкусу", "по желанию", "для подачи", "для жарки", "для работы с тестом"):
+            fragment = fragment.replace(phrase, " ")
+        fragment = re.sub(r"[^a-zа-яё\s-]", " ", fragment)
+        fragment = re.sub(r"\s+", " ", fragment).strip(" ,.;:-")
+        return fragment
+
+    def _apply_parenthetical_qualifiers(self, base: str, qualifiers: list[str]) -> str:
+        cleaned_base = re.sub(r"\s+", " ", base).strip(" ,.;:-")
+        if not qualifiers:
+            return cleaned_base
+
+        semantic_qualifiers = [item for item in qualifiers if self._is_semantic_qualifier(item)]
+        if cleaned_base in self.GENERIC_QUALIFIER_BASES and semantic_qualifiers:
+            return f"{cleaned_base} {' '.join(semantic_qualifiers)}".strip()
+        if semantic_qualifiers:
+            return f"{cleaned_base} {' '.join(semantic_qualifiers)}".strip()
+        return cleaned_base
+
+    def _is_semantic_qualifier(self, value: str) -> bool:
+        return any(keyword in value for keyword in self.SEMANTIC_QUALIFIER_KEYWORDS)
 
     def is_noise_line(self, low: str) -> bool:
         if self.is_ingredient_section(low) or self.is_step_section(low):
             return True
-        if any(token in low for token in ("приятного аппетита", "вкусные и питательные", "подавать лучше всего")):
+        if any(token in low for token in ("приятного аппетита", "подавать лучше всего", "фото приготовления рецепта")):
             return True
-        return len(low) > 120
+        return len(low) > 160
 
     def is_ingredient_section(self, low: str) -> bool:
-        return low in self.SECTION_INGREDIENTS or "ингредиент" in low or "потребуется" in low or low.startswith("для ")
+        return low in self.SECTION_INGREDIENTS or "ингредиент" in low or low.startswith("продукты") or "потребуется" in low or low.startswith("для ")
 
     def is_step_section(self, low: str) -> bool:
         return low in self.SECTION_STEPS or "приготов" in low or "инструкц" in low or "способ приготовления" in low
@@ -343,7 +345,7 @@ class FallbackRecipeParser:
     def guess_title(self, lines: list[str]) -> str:
         for line in lines[:8]:
             low = normalize_text(line)
-            if low in self.SECTION_INGREDIENTS or low in self.SECTION_STEPS:
+            if low in self.SECTION_INGREDIENTS or low in self.SECTION_STEPS or low.startswith("продукты"):
                 continue
             if re.fullmatch(r"\d+", low):
                 continue

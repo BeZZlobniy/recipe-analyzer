@@ -81,6 +81,46 @@
   },
   {
     "id": "kb_new_8",
+    "source": "kb_custom_food_restrictions.txt",
+    "text": "Custom food restrictions and preferences in recipe personalization. Free-text restrictions must be matched semantically against recipe ingredients and cooking methods. Examples: \"не ем свинину\", \"без свинины\", \"no pork\" conflict with pork, bacon, ham, lard, salo, pancetta, sausages containing pork, and mixed minced meat if pork is included. This is a restriction/preference conflict, not a diet-type conflict, unless the diet type itself is halal, kosher, vegetarian, vegan or another strict pattern.",
+    "tags": [
+      "custom",
+      "food",
+      "restrictions"
+    ]
+  },
+  {
+    "id": "kb_new_9",
+    "source": "kb_custom_food_restrictions.txt",
+    "text": "\"Не люблю острое\", \"без острого\", \"острое нельзя\" conflict with chili, hot pepper, red hot pepper, adjika, tabasco, wasabi, hot sauce, spicy seasoning and large amounts of pepper. Black pepper in small amounts is usually a mild caution rather than a hard conflict unless the profile says pepper is forbidden.",
+    "tags": [
+      "custom",
+      "food",
+      "restrictions"
+    ]
+  },
+  {
+    "id": "kb_new_10",
+    "source": "kb_custom_food_restrictions.txt",
+    "text": "\"Меньше жареного\", \"минимум жареного\", \"без фритюра\" should be evaluated by cooking method. Pan-frying in a lot of oil, deep-frying, and repeated frying are conflicts. Sauteing a small amount of onion can be a mild caution, not a major conflict, unless the user asked to avoid all fried foods.",
+    "tags": [
+      "custom",
+      "food",
+      "restrictions"
+    ]
+  },
+  {
+    "id": "kb_new_11",
+    "source": "kb_custom_food_restrictions.txt",
+    "text": "\"Меньше соли\" or \"малосольное\" should be evaluated through sodium, added salt, pickles, marinades, salty cheese, processed meat, bouillon cubes and seasoning mixes. Explain the source and suggest reducing salt or replacing salty products. Recommendations should be concrete: replace the conflicting ingredient, reduce the amount, change the cooking method, or split the recipe into more portions. Do not mark unrelated profile sections as incompatible just because a custom restriction was found.",
+    "tags": [
+      "custom",
+      "food",
+      "restrictions"
+    ]
+  },
+  {
+    "id": "kb_new_12",
     "source": "kb_diabetes.txt",
     "text": "Тема: Питание при диабете / контроль углеводов Назначение для MVP: Файл нужен для интерпретации рецептов с учетом углеводной нагрузки, добавленного сахара и баланса блюда. Он не заменяет индивидуальные назначения врача. Что считать потенциально проблемным: - большое количество добавленного сахара - сладкие напитки и сиропы - десертный профиль блюда - большие порции белой муки, белого риса, картофельного пюре, сладкой выпечки - сочетание быстроусвояемых углеводов с большой порцией",
     "tags": [
@@ -88,7 +128,7 @@
     ]
   },
   {
-    "id": "kb_new_9",
+    "id": "kb_new_13",
     "source": "kb_diabetes.txt",
     "text": "Что учитывать: - людям с диабетом часто полезны регулярные и сбалансированные приемы пищи - примерно одинаковое количество углеводов от приема к приему может помогать контролю глюкозы - подсчет углеводов и plate method полезны как практические инструменты - углеводы не запрещены полностью; важны их количество, источник и размер порции - цель MVP — сигнализировать о высокой углеводной и сахарной нагрузке, а не назначать лечение",
     "tags": [
@@ -96,7 +136,7 @@
     ]
   },
   {
-    "id": "kb_new_10",
+    "id": "kb_new_14",
     "source": "kb_diabetes.txt",
     "text": "Смягчающие признаки: - наличие клетчатки, бобовых, овощей, цельных зерен - наличие источника белка - умеренная порция - отсутствие добавленного сахара Рекомендации: - уменьшить сахар, мед, сиропы, сладкие соусы - уменьшить размер порции крахмалистой части блюда - заменить часть рафинированных углеводов на овощи, бобовые или более цельные варианты - сочетать углеводы с белком и клетчаткой",
     "tags": [
@@ -104,7 +144,7 @@
     ]
   },
   {
-    "id": "kb_new_11",
+    "id": "kb_new_15",
     "source": "kb_diabetes.txt",
     "text": "Шаблоны интерпретации: - Высокая углеводная нагрузка: много сахара и/или большая порция рафинированных углеводов - Умеренная нагрузка: крахмалистое блюдо без избытка сахара, но порция может требовать контроля - Более благоприятный профиль: есть овощи, белок, клетчатка и умеренная углеводная плотность",
     "tags": [
@@ -112,7 +152,7 @@
     ]
   },
   {
-    "id": "kb_new_12",
+    "id": "kb_new_16",
     "source": "kb_diabetes.txt",
     "text": "Источниковая опора: - CDC: Diabetes Meal Planning - CDC: Choosing Healthy Carbs - CDC: Carb Counting / Carb Choices",
     "tags": [
@@ -120,7 +160,37 @@
     ]
   },
   {
-    "id": "kb_new_13",
+    "id": "kb_new_17",
+    "source": "kb_diet_patterns_extended.txt",
+    "text": "Extended diet pattern context for recipe personalization. Halal or \"халяль\": pork, bacon, ham, lard, gelatin from pork, alcohol and non-halal meat are conflicts. If the recipe contains generic meat or mixed minced meat, ask to verify the source. Poultry, fish, eggs and dairy can be acceptable if other profile restrictions do not conflict.",
+    "tags": [
+      "diet",
+      "extended",
+      "patterns"
+    ]
+  },
+  {
+    "id": "kb_new_18",
+    "source": "kb_diet_patterns_extended.txt",
+    "text": "Kosher or \"кошер\": pork and shellfish are conflicts. Mixing meat and dairy can be an issue for strict kosher users. If the profile mentions kosher, note dairy-meat combinations such as meat with cheese, sour cream or cream as a possible conflict. Pescatarian: fish and seafood can be acceptable, but meat and poultry conflict. Vegetarian: meat, poultry, fish and seafood conflict. Vegan: meat, poultry, fish, seafood, dairy, eggs and honey conflict.",
+    "tags": [
+      "diet",
+      "extended",
+      "patterns"
+    ]
+  },
+  {
+    "id": "kb_new_19",
+    "source": "kb_diet_patterns_extended.txt",
+    "text": "Gluten-free: wheat flour, pasta, bread, breadcrumbs, semolina, wheat groats, regular soy sauce and breaded products can conflict. Lactose-free or dairy-free: milk, cream, sour cream, cheese, yogurt, cottage cheese, butter, whey and casein can conflict depending on strictness. Low-carb or keto: sugar, honey, flour, bread, pasta, rice, potatoes and sweet desserts are usually the main carbohydrate sources to evaluate. High-protein: evaluate protein per portion and whether the main dish has a meaningful protein source. Weight loss: evaluate calories per recommended portion, fat-dense ingredients and frying oil.",
+    "tags": [
+      "diet",
+      "extended",
+      "patterns"
+    ]
+  },
+  {
+    "id": "kb_new_20",
     "source": "kb_gluten_free.txt",
     "text": "Тема: Безглютеновое питание / целиакия Назначение для MVP: Файл нужен для выявления ингредиентов, содержащих глютен, и построения строгих предупреждений для профиля gluten_free / celiac-safe. Опасные ингредиенты: - пшеница - рожь - ячмень - обычная мука - манка - булгур - кускус - обычные макароны - хлебные крошки - панировка - соевый соус на основе пшеницы - выпечка из обычной муки",
     "tags": [
@@ -129,7 +199,7 @@
     ]
   },
   {
-    "id": "kb_new_14",
+    "id": "kb_new_21",
     "source": "kb_gluten_free.txt",
     "text": "Что учитывать: - при целиакии глютен следует исключать строго - даже небольшие количества глютена могут быть значимы - многие готовые продукты и соусы могут содержать скрытые источники глютена - овес требует осторожности: сам по себе может не содержать глютен, но возможна перекрестная контаминация; для MVP считать безопасным только явно помеченный gluten-free oats - если в рецепте есть мука, панировка, хлеб, обычные макароны или соус с пшеницей, совместимость считать низкой",
     "tags": [
@@ -138,7 +208,7 @@
     ]
   },
   {
-    "id": "kb_new_15",
+    "id": "kb_new_22",
     "source": "kb_gluten_free.txt",
     "text": "Относительно безопасные альтернативы: - рис - гречка - кукуруза - киноа - картофель - бобовые - безглютеновая мука - продукты с маркировкой gluten-free Рекомендации: - заменять обычную муку на безглютеновые смеси, рисовую, кукурузную или гречневую муку - заменять панировку на безглютеновую - проверять состав соусов, приправ и полуфабрикатов - при строгом режиме не предлагать «немного можно»",
     "tags": [
@@ -147,7 +217,7 @@
     ]
   },
   {
-    "id": "kb_new_16",
+    "id": "kb_new_23",
     "source": "kb_gluten_free.txt",
     "text": "Шаблоны интерпретации: - Несовместимо: присутствуют явные источники пшеницы, ржи или ячменя - Под вопросом: есть соусы, приправы, полуфабрикаты или овес без явной пометки gluten-free - Совместимо: явных источников глютена нет и основные крахмалистые компоненты безглютеновые Источниковая опора: - NIDDK: Definition & Facts for Celiac Disease - NIDDK: Eating, Diet, & Nutrition for Celiac Disease - NIDDK: Treatment for Celiac Disease",
     "tags": [
@@ -156,7 +226,34 @@
     ]
   },
   {
-    "id": "kb_new_17",
+    "id": "kb_new_24",
+    "source": "kb_gout_and_purines.txt",
+    "text": "Gout, high uric acid, podagra, подагра, высокий уровень мочевой кислоты. For recipe personalization, gout-related context is mainly about purine load and alcohol, not sodium by itself. Main food risks: large portions of red meat, pork, beef, lamb, organ meats, rich meat broths, some fish, anchovies, sardines, mackerel, shellfish, and beer/alcohol. Poultry is usually a lower-risk meat option than red meat, but portion size still matters.",
+    "tags": [
+      "gout",
+      "purines"
+    ]
+  },
+  {
+    "id": "kb_new_25",
+    "source": "kb_gout_and_purines.txt",
+    "text": "If a recipe contains pork, beef, mixed minced meat, organ meats, rich broth, or oily fish, mark it as a disease-related caution for gout when the profile mentions gout, uric acid, purines, подагра, мочевая кислота or пурины. Do not describe sodium as the main gout risk unless the same profile also mentions hypertension, kidney disease, edema, low sodium, or salt restriction.",
+    "tags": [
+      "gout",
+      "purines"
+    ]
+  },
+  {
+    "id": "kb_new_26",
+    "source": "kb_gout_and_purines.txt",
+    "text": "Practical substitutions: replace pork or beef with smaller portions of chicken, turkey, tofu, legumes if tolerated, mushrooms or vegetables depending on the user's other restrictions. Prefer stewing, baking, or boiling over frying in much oil. For a strict gout-focused recommendation, suggest smaller meat portions and more vegetables rather than only reducing salt.",
+    "tags": [
+      "gout",
+      "purines"
+    ]
+  },
+  {
+    "id": "kb_new_27",
     "source": "kb_hidden_allergen_sources.txt",
     "text": "Тема: Скрытые источники аллергенов Назначение для MVP: Файл нужен для обработки ингредиентов, в которых аллерген может быть неочевиден по простому русскому названию. Скрытые или менее очевидные формы: - whey, casein, buttermilk, curds -> молочные белки - albumin, meringue, egg wash -> яйца - fish sauce, Worcestershire sauce (иногда с анчоусами) -> рыба - tahini -> кунжут - soy lecithin, textured vegetable protein, miso, tofu -> соя - seitan -> пшеница / глютен - marzipan -> миндаль - pesto -> часто содержит древесные орехи и/или сыр - surimi -> может содержать рыбу и добавки с аллергенами - natural flavors, sauces, breading mixes -> требуют осторожности при неполном составе",
     "tags": [
@@ -166,7 +263,7 @@
     ]
   },
   {
-    "id": "kb_new_18",
+    "id": "kb_new_28",
     "source": "kb_hidden_allergen_sources.txt",
     "text": "Что учитывать: - «Contains» и «may contain» не одно и то же - если на этикетке есть Contains, это означает наличие соответствующего основного аллергена среди ингредиентов - advisory statements типа may contain интерпретируются отдельно и не должны смешиваться с прямым составом - для MVP можно поддерживать два уровня риска: explicit ingredient и possible hidden source",
     "tags": [
@@ -176,7 +273,7 @@
     ]
   },
   {
-    "id": "kb_new_19",
+    "id": "kb_new_29",
     "source": "kb_hidden_allergen_sources.txt",
     "text": "Рекомендации: - хранить словарь скрытых аллергенных синонимов - для полуфабрикатов, соусов и готовых смесей помечать риск как «требует проверки состава» - не делать ложное заверение безопасности, если состав неполный Источниковая опора: - FDA: Have Food Allergies? Read the Label - FDA: Questions and Answers Regarding Food Allergen Labeling",
     "tags": [
@@ -186,7 +283,7 @@
     ]
   },
   {
-    "id": "kb_new_20",
+    "id": "kb_new_30",
     "source": "kb_high_protein.txt",
     "text": "Тема: Высокобелковый профиль Назначение для MVP: Файл нужен для оценки того, является ли рецепт относительно белковым и какие есть способы повысить белковую насыщенность блюда без чрезмерного роста соли и насыщенных жиров. Белковые ингредиенты: - мясо - птица - рыба - яйца - творог, йогурт, сыр - бобовые - тофу, темпе, соевые продукты - орехи и семена",
     "tags": [
@@ -195,7 +292,7 @@
     ]
   },
   {
-    "id": "kb_new_21",
+    "id": "kb_new_31",
     "source": "kb_high_protein.txt",
     "text": "Что учитывать: - высокий белок не равен автоматически «здорово»; нужно учитывать соль, насыщенные жиры и общую калорийность - для MVP не стоит вводить универсальный порог «high protein» без контекста порции - лучше оценивать по относительной роли белковых ингредиентов в блюде и по белку на порцию - бобовые, соя, рыба, йогурт без избытка сахара и постные источники белка обычно более универсальны",
     "tags": [
@@ -204,7 +301,7 @@
     ]
   },
   {
-    "id": "kb_new_22",
+    "id": "kb_new_32",
     "source": "kb_high_protein.txt",
     "text": "Рекомендации: - усиливать белковую часть блюда за счет бобовых, рыбы, яиц, тофу, нежирных молочных продуктов или постной птицы - избегать ситуации, когда «высокобелковое» блюдо строится в основном на переработанном мясе и соли - для перекусов и завтраков полезно сочетать белок с клетчаткой",
     "tags": [
@@ -213,7 +310,7 @@
     ]
   },
   {
-    "id": "kb_new_23",
+    "id": "kb_new_33",
     "source": "kb_high_protein.txt",
     "text": "Шаблоны интерпретации: - Высокобелковый профиль: белок — центральный компонент блюда и его достаточно на порцию - Умеренный белковый профиль: белок есть, но он не доминирует - Низкий белковый профиль: блюдо преимущественно крахмалистое или десертное Источниковая опора: - CDC: Healthy Eating Tips - CDC: Tips for Healthy Eating for a Healthy Weight",
     "tags": [
@@ -222,7 +319,7 @@
     ]
   },
   {
-    "id": "kb_new_24",
+    "id": "kb_new_34",
     "source": "kb_hyperlipidemia.txt",
     "text": "Тема: Гиперлипидемия / контроль насыщенных жиров и сердечно-здоровый профиль Назначение для MVP: Файл нужен для интерпретации рецептов при высоком LDL-холестерине или общем запросе на снижение атерогенной нагрузки. Потенциально проблемные ингредиенты: - жирные сорта красного мяса - переработанное мясо - сливочное масло - сливки - жирные сыры - большое количество кокосового и пальмового жира - жарка во фритюре - десерты с высоким содержанием насыщенных жиров",
     "tags": [
@@ -230,7 +327,7 @@
     ]
   },
   {
-    "id": "kb_new_25",
+    "id": "kb_new_35",
     "source": "kb_hyperlipidemia.txt",
     "text": "Что учитывать: - при высоком LDL обычно рекомендуют снижать насыщенные жиры и делать рацион более сердечно-здоровым - полезными признаками являются овощи, бобовые, орехи, цельные зерна, рыба и источники растворимой клетчатки - рецепт может быть калорийным, но не одинаково проблемным по липидному профилю; для MVP лучше отдельно оценивать saturated fat risk - наличие переработанного мяса и жирных молочных продуктов усиливает риск",
     "tags": [
@@ -238,7 +335,7 @@
     ]
   },
   {
-    "id": "kb_new_26",
+    "id": "kb_new_36",
     "source": "kb_hyperlipidemia.txt",
     "text": "Смягчающие признаки: - запекание, тушение, варка вместо фритюра - использование растительных масел вместо сливочного масла - наличие овса, бобовых, овощей - рыба или более постные источники белка Рекомендации: - уменьшить сливочное масло, сливки и жирные сыры - заменить часть красного мяса на рыбу, птицу без кожи, бобовые - использовать оливковое или другое растительное масло - уменьшить долю переработанных мясных продуктов",
     "tags": [
@@ -246,7 +343,7 @@
     ]
   },
   {
-    "id": "kb_new_27",
+    "id": "kb_new_37",
     "source": "kb_hyperlipidemia.txt",
     "text": "Шаблоны интерпретации: - Неблагоприятный липидный профиль: много насыщенных жиров и/или переработанного мяса - Умеренно неблагоприятный: один-два жирных компонента, но есть и нейтральные элементы - Более благоприятный: мало насыщенных жиров, больше растительных и цельных компонентов",
     "tags": [
@@ -254,7 +351,7 @@
     ]
   },
   {
-    "id": "kb_new_28",
+    "id": "kb_new_38",
     "source": "kb_hyperlipidemia.txt",
     "text": "Источниковая опора: - NHLBI: Therapeutic Lifestyle Changes (TLC) - NHLBI: Your Guide to Lowering Your Cholesterol With TLC - NHLBI: Choose Heart-Healthy Foods",
     "tags": [
@@ -262,7 +359,7 @@
     ]
   },
   {
-    "id": "kb_new_29",
+    "id": "kb_new_39",
     "source": "kb_hypertension.txt",
     "text": "Тема: Артериальная гипертензия / ограничение натрия Назначение для MVP: Файл нужен для оценки рецептов с точки зрения соли, натрия и кулинарных решений, которые повышают нагрузку на сердечно-сосудистую систему. Потенциально проблемные ингредиенты: - большое количество соли - соевый соус - бульонные кубики - колбасы, бекон, ветчина - копчености - консервированные продукты с солью - соленые сыры - маринады - готовые соусы - фастфудные и полуфабрикатные компоненты",
     "tags": [
@@ -270,7 +367,7 @@
     ]
   },
   {
-    "id": "kb_new_30",
+    "id": "kb_new_40",
     "source": "kb_hypertension.txt",
     "text": "Что учитывать: - American Heart Association рекомендует не более 2300 мг натрия в день и идеальную цель 1500 мг для большинства взрослых - значительная часть натрия поступает не из солонки, а из готовых, упакованных и ресторанных продуктов - для MVP важно выявлять как явную соль, так и высокосолевые ингредиенты - сочетание нескольких соленых компонентов резко повышает риск",
     "tags": [
@@ -278,7 +375,7 @@
     ]
   },
   {
-    "id": "kb_new_31",
+    "id": "kb_new_41",
     "source": "kb_hypertension.txt",
     "text": "Смягчающие признаки: - пометка low sodium / reduced sodium - использование трав и специй вместо соли - выбор несоленых бобовых, овощей и бульонов - промывание консервированных продуктов Рекомендации: - уменьшить соль и соленые соусы - заменить обычный бульон на low-sodium - заменить переработанное мясо на менее соленые источники белка - усиливать вкус травами, чесноком, кислотой, специями",
     "tags": [
@@ -286,7 +383,7 @@
     ]
   },
   {
-    "id": "kb_new_32",
+    "id": "kb_new_42",
     "source": "kb_hypertension.txt",
     "text": "Шаблоны интерпретации: - Высокий риск по натрию: несколько обработанных соленых ингредиентов или явно соленый профиль - Умеренный риск: один выраженный источник натрия или рецепт, где соль играет заметную роль - Более благоприятный профиль: мало обработанных ингредиентов и нет выраженных соленых добавок",
     "tags": [
@@ -294,7 +391,7 @@
     ]
   },
   {
-    "id": "kb_new_33",
+    "id": "kb_new_43",
     "source": "kb_hypertension.txt",
     "text": "Источниковая опора: - American Heart Association: How Much Sodium Should I Eat Per Day? - American Heart Association: How to Reduce Sodium in Your Diet - NHLBI: DASH Eating Plan",
     "tags": [
@@ -302,7 +399,47 @@
     ]
   },
   {
-    "id": "kb_new_34",
+    "id": "kb_new_44",
+    "source": "kb_kidney_and_gi_conditions.txt",
+    "text": "Kidney and digestive conditions in recipe personalization. Kidney disease, renal disease, chronic kidney disease, CKD, ХПН, почечные ограничения: evaluate sodium, very salty products, processed meats, cheese, pickles, marinades, sauces, potassium-rich foods if the profile explicitly mentions potassium, phosphorus-rich foods if the profile explicitly mentions phosphorus, and total protein if the user has a protein restriction. Do not apply kidney restrictions unless the profile mentions kidney, renal, CKD, ХПН, почки, нефрология, potassium, phosphorus or similar terms.",
+    "tags": [
+      "conditions",
+      "gi",
+      "kidney"
+    ]
+  },
+  {
+    "id": "kb_new_45",
+    "source": "kb_kidney_and_gi_conditions.txt",
+    "text": "GERD, reflux, gastritis, heartburn, рефлюкс, гастрит, изжога: common trigger foods are very spicy pepper, chili, hot sauces, large amounts of garlic or onion, high-fat fried foods, tomato-heavy acidic sauces, vinegar, citrus, coffee and chocolate. If these conditions are in the profile, explain the trigger ingredient and suggest a milder cooking method or smaller portion.",
+    "tags": [
+      "conditions",
+      "gi",
+      "kidney"
+    ]
+  },
+  {
+    "id": "kb_new_46",
+    "source": "kb_kidney_and_gi_conditions.txt",
+    "text": "IBS, irritable bowel syndrome, СРК, low FODMAP, FODMAP: common triggers can include onion, garlic, wheat, some dairy with lactose, beans, certain sweeteners and large portions of high-FODMAP vegetables. If IBS or FODMAP is in the profile, flag the ingredient as a possible trigger, not as a universal prohibition, and recommend checking personal tolerance.",
+    "tags": [
+      "conditions",
+      "gi",
+      "kidney"
+    ]
+  },
+  {
+    "id": "kb_new_47",
+    "source": "kb_kidney_and_gi_conditions.txt",
+    "text": "For medical conditions not covered by a specific KB note, reason from the raw profile text and RAG snippets. Separate direct contraindications from soft cautions. If evidence is uncertain, phrase it as \"possible risk\" and recommend checking the user's medical plan.",
+    "tags": [
+      "conditions",
+      "gi",
+      "kidney"
+    ]
+  },
+  {
+    "id": "kb_new_48",
     "source": "kb_lactose_intolerance.txt",
     "text": "Тема: Лактозная непереносимость Назначение для MVP: Этот файл нужен для выявления потенциально проблемных молочных ингредиентов и генерации осторожных рекомендаций. Это не медицинский диагноз, а база правил для пищевой интерпретации рецепта. Потенциально проблемные ингредиенты: - молоко - сливки - сухое молоко - сгущенное молоко - мороженое - мягкие сыры - творог - йогурт - сыворотка - лактоза как ингредиент - сливочное масло (обычно меньше лактозы, но для MVP считать потенциально значимым в чувствительных кейсах)",
     "tags": [
@@ -311,7 +448,7 @@
     ]
   },
   {
-    "id": "kb_new_35",
+    "id": "kb_new_49",
     "source": "kb_lactose_intolerance.txt",
     "text": "Что учитывать: - выраженность симптомов зависит от количества лактозы и индивидуальной переносимости - небольшие порции некоторых молочных продуктов могут переноситься лучше - йогурт и твердые сыры нередко переносятся лучше, чем обычное молоко - для MVP лучше интерпретировать молочные ингредиенты как риск по убыванию: молоко/сливки -> мягкие сыры/йогурт -> твердые сыры -> сливочное масло - если в рецепте несколько молочных ингредиентов одновременно, общий риск повышается - если ингредиент указан как lactose-free / безлактозный, риск следует понижать",
     "tags": [
@@ -320,7 +457,7 @@
     ]
   },
   {
-    "id": "kb_new_36",
+    "id": "kb_new_50",
     "source": "kb_lactose_intolerance.txt",
     "text": "Смягчающие признаки: - безлактозное молоко - безлактозные сливки - безлактозный йогурт - твердый сыр в малом количестве - ферментированные молочные продукты в умеренном количестве Рекомендации: - уменьшить количество молока и сливок - заменить обычные молочные продукты на безлактозные аналоги - рассмотреть растительные альтернативы без добавленного сахара, если это уместно для рецепта - в предупреждениях писать осторожно: «может быть нежелательным при лактозной непереносимости»",
     "tags": [
@@ -329,7 +466,7 @@
     ]
   },
   {
-    "id": "kb_new_37",
+    "id": "kb_new_51",
     "source": "kb_lactose_intolerance.txt",
     "text": "Шаблоны интерпретации: - Высокий риск: рецепт содержит молоко, сливки или несколько молочных ингредиентов - Умеренный риск: рецепт содержит йогурт, мягкий сыр или заметное количество молочных компонентов - Низкий/контекстный риск: рецепт содержит небольшое количество твердого сыра или сливочного масла",
     "tags": [
@@ -338,7 +475,7 @@
     ]
   },
   {
-    "id": "kb_new_38",
+    "id": "kb_new_52",
     "source": "kb_lactose_intolerance.txt",
     "text": "Источниковая опора: - NIDDK: Definition & Facts for Lactose Intolerance - NIDDK: Eating, Diet, & Nutrition for Lactose Intolerance",
     "tags": [
@@ -347,7 +484,7 @@
     ]
   },
   {
-    "id": "kb_new_39",
+    "id": "kb_new_53",
     "source": "kb_low_carb.txt",
     "text": "Тема: Низкоуглеводный профиль Назначение для MVP: Файл нужен для оценки, насколько рецепт соответствует low-carb профилю. Это не лечебный протокол, а мягкая интерпретация состава блюда. Ингредиенты, которые обычно снижают совместимость: - сахар - мед, сиропы - белая мука - хлеб, выпечка - обычные макароны - рис - большое количество картофеля - сладкие десерты",
     "tags": [
@@ -356,7 +493,7 @@
     ]
   },
   {
-    "id": "kb_new_40",
+    "id": "kb_new_54",
     "source": "kb_low_carb.txt",
     "text": "Что учитывать: - низкоуглеводный подход бывает разной строгости - для MVP важно не обещать медицинский эффект, а просто отмечать высокий или низкий вклад углеводных компонентов - размер порции имеет большое значение - «низкоуглеводный» рецепт может все равно быть очень жирным или соленым; это нужно оценивать отдельно - крахмалистая основа блюда обычно делает совместимость низкой",
     "tags": [
@@ -365,7 +502,7 @@
     ]
   },
   {
-    "id": "kb_new_41",
+    "id": "kb_new_55",
     "source": "kb_low_carb.txt",
     "text": "Смягчающие признаки: - много некрахмалистых овощей - выраженная роль белка - умеренное количество бобовых или цельных компонентов вместо рафинированных - отсутствие добавленного сахара Рекомендации: - уменьшить сахар и рафинированные углеводы - заменить часть макарон, риса или картофеля на овощи - делать порцию крахмалистой основы меньше - сохранять баланс по белку и клетчатке",
     "tags": [
@@ -374,7 +511,7 @@
     ]
   },
   {
-    "id": "kb_new_42",
+    "id": "kb_new_56",
     "source": "kb_low_carb.txt",
     "text": "Шаблоны интерпретации: - Низкая совместимость с low-carb: блюдо основано на муке, крупе, макаронах, рисе или сахаре - Средняя совместимость: есть крахмалистая часть, но ее можно уменьшить - Более высокая совместимость: мало сахара и рафинированных углеводов, заметная роль белка и овощей",
     "tags": [
@@ -383,7 +520,7 @@
     ]
   },
   {
-    "id": "kb_new_43",
+    "id": "kb_new_57",
     "source": "kb_low_carb.txt",
     "text": "Источниковая опора: - CDC: Choosing Healthy Carbs - CDC: Diabetes Meal Planning - NHLBI: Your Guide to Lowering Your Cholesterol With TLC",
     "tags": [
@@ -392,7 +529,7 @@
     ]
   },
   {
-    "id": "kb_new_44",
+    "id": "kb_new_58",
     "source": "kb_low_sodium.txt",
     "text": "Тема: Низкосолевой / low-sodium профиль Назначение для MVP: Файл нужен для более общего low-sodium профиля, не обязательно привязанного к диагнозу гипертензии. Источники высокого натрия: - соль - соевый соус - соленые приправы - колбасы и деликатесы - бекон - консервированные супы - бульонные кубики - готовые соусы - соленые сыры - маринованные продукты",
     "tags": [
@@ -402,7 +539,7 @@
     ]
   },
   {
-    "id": "kb_new_45",
+    "id": "kb_new_59",
     "source": "kb_low_sodium.txt",
     "text": "Что учитывать: - большое количество натрия часто приходит из обработанных и ресторанных продуктов - похожие продукты разных брендов могут заметно различаться по натрию - low-sodium лучше оценивать по сочетанию ингредиентов, а не только по наличию соли в списке - если в рецепте несколько готовых соленых компонентов, риск высок",
     "tags": [
@@ -412,7 +549,7 @@
     ]
   },
   {
-    "id": "kb_new_46",
+    "id": "kb_new_60",
     "source": "kb_low_sodium.txt",
     "text": "Рекомендации: - выбирать варианты reduced sodium / low sodium - промывать консервированные бобовые и овощи - уменьшать соевый соус, бульонные кубики и готовые соусы - использовать травы, чеснок, лимонный сок и специи для вкуса Шаблоны интерпретации: - Высокий натрий: несколько обработанных соленых ингредиентов - Умеренный натрий: один выраженный источник соли - Более благоприятный профиль: преимущественно цельные продукты и минимально обработанные ингредиенты",
     "tags": [
@@ -422,7 +559,7 @@
     ]
   },
   {
-    "id": "kb_new_47",
+    "id": "kb_new_61",
     "source": "kb_low_sodium.txt",
     "text": "Источниковая опора: - American Heart Association: How Much Sodium Should I Eat Per Day? - American Heart Association: How to Reduce Sodium in Your Diet",
     "tags": [
@@ -432,7 +569,7 @@
     ]
   },
   {
-    "id": "kb_new_48",
+    "id": "kb_new_62",
     "source": "kb_mediterranean_diet.txt",
     "text": "Тема: Средиземноморский стиль питания Назначение для MVP: Файл нужен для оценки того, насколько рецепт близок к средиземноморскому паттерну питания. Признаки более высокой совместимости: - овощи - бобовые - цельные зерна - оливковое масло - орехи и семена - травы и специи - рыба и морепродукты в умеренной роли",
     "tags": [
@@ -441,7 +578,7 @@
     ]
   },
   {
-    "id": "kb_new_49",
+    "id": "kb_new_63",
     "source": "kb_mediterranean_diet.txt",
     "text": "Признаки более низкой совместимости: - большое количество переработанного мяса - избыток сливочного масла и жирных молочных продуктов - много сладостей и рафинированной выпечки - глубокая жарка как основной способ приготовления Что учитывать: - средиземноморская диета — это не один жесткий список блюд, а общий паттерн - растительные продукты и оливковое масло являются базой - животные продукты обычно играют меньшую роль, чем в западном паттерне питания - для MVP стоит оценивать не «истинно/ложно», а шкалу близости к стилю",
     "tags": [
@@ -450,7 +587,7 @@
     ]
   },
   {
-    "id": "kb_new_50",
+    "id": "kb_new_64",
     "source": "kb_mediterranean_diet.txt",
     "text": "Рекомендации: - увеличить долю овощей и бобовых - заменить часть сливочного масла на оливковое масло - уменьшить переработанное мясо - чаще использовать рыбу, бобовые и цельные зерна - сократить сладкие и сильно переработанные компоненты Шаблоны интерпретации: - Высокая совместимость: много растительных компонентов, оливковое масло, умеренный состав - Средняя совместимость: отдельные хорошие признаки, но есть рафинированные или жирные элементы - Низкая совместимость: доминируют переработанное мясо, жарка, сладости и насыщенные жиры",
     "tags": [
@@ -459,7 +596,7 @@
     ]
   },
   {
-    "id": "kb_new_51",
+    "id": "kb_new_65",
     "source": "kb_mediterranean_diet.txt",
     "text": "Источниковая опора: - Harvard T.H. Chan Nutrition Source: Mediterranean Diet - Harvard T.H. Chan Nutrition Source: Healthy Eating Plate",
     "tags": [
@@ -468,7 +605,7 @@
     ]
   },
   {
-    "id": "kb_new_52",
+    "id": "kb_new_66",
     "source": "kb_nutrition_thresholds.txt",
     "text": "Тема: Пороговая интерпретация нутриентов для MVP Назначение для MVP: Этот файл задает не клинические нормативы, а практические правила интерпретации рецепта на уровне приложения. Правила интерпретации: - calories_per_serving: - low: до 250 - moderate: 251-500 - high: 501-800 - very_high: более 800 - protein_per_serving: - low: < 10 г - moderate: 10-19 г - high: >= 20 г - fiber_per_serving: - low: < 3 г - moderate: 3-6 г - high: > 6 г - added_sugar_risk: - low: нет явных подсластителей - moderate: есть подсластитель, но блюдо не десертное - high: десертный профиль или несколько подсластителей - sodium_risk: - low: нет явных соленых обработанных ингредиентов - moderate: один заметный источник натрия - high: несколько соленых обработанных ингредиентов - sat_fat_risk: - low: мало животных жиров и жирных молочных продуктов - moderate: один заметный источник насыщенных жиров - high: несколько таких источников или жирное/сливочное ядро блюда",
     "tags": [
@@ -477,7 +614,7 @@
     ]
   },
   {
-    "id": "kb_new_53",
+    "id": "kb_new_67",
     "source": "kb_nutrition_thresholds.txt",
     "text": "Что учитывать: - эти пороги предназначены для объяснения результата пользователю - они подходят для MVP и должны быть версионируемыми - при наличии точных нутриентов из SQLite приоритет у числовых данных - при отсутствии части нутриентов можно использовать rule-based risk flags Рекомендации по использованию: - не формулировать выводы как диагноз - писать «высокая калорийность на порцию» вместо «вредно» - отделять нутриентные факты от профильных выводов",
     "tags": [
@@ -486,7 +623,7 @@
     ]
   },
   {
-    "id": "kb_new_54",
+    "id": "kb_new_68",
     "source": "kb_nutrition_thresholds.txt",
     "text": "Источниковая опора: - Пороги составлены как инженерные правила для MVP на основе общеупотребимых nutrition-use-cases; их следует хранить как версионируемую внутреннюю конфигурацию приложения",
     "tags": [
@@ -495,7 +632,7 @@
     ]
   },
   {
-    "id": "kb_new_55",
+    "id": "kb_new_69",
     "source": "kb_portion_size_rules.txt",
     "text": "Тема: Правила по размеру порции Назначение для MVP: Файл нужен для того, чтобы интерпретация не зависела только от total nutrition на весь рецепт. Основные правила: - если servings отсутствует, приложение должно пытаться оценить разумное число порций - итоговая интерпретация должна опираться прежде всего на nutrients_per_serving - large portion warning полезен, если блюдо калорийное или очень углеводное на порцию - маленькое количество ингредиента не должно слишком сильно портить итоговую оценку; для этого нужен ingredient_importance_weight",
     "tags": [
@@ -505,7 +642,7 @@
     ]
   },
   {
-    "id": "kb_new_56",
+    "id": "kb_new_70",
     "source": "kb_portion_size_rules.txt",
     "text": "Эвристики: - супы и рагу обычно делятся на несколько порций - соусы и приправы могут давать калории и натрий, но не всегда являются основой блюда - topping / garnish / optional ingredients должны иметь меньший вес - если ingredient amount очень мал, его вклад в compatibility и warnings можно уменьшать, но не обнулять для аллергенов и strict dietary restrictions",
     "tags": [
@@ -515,7 +652,7 @@
     ]
   },
   {
-    "id": "kb_new_57",
+    "id": "kb_new_71",
     "source": "kb_portion_size_rules.txt",
     "text": "Рекомендации: - показывать пользователю и total, и per-serving - в summary акцент делать на порции - в quality score штрафовать отсутствие данных о порциях, но не ломать весь анализ Источниковая опора: - CDC: Diabetes Meal Planning - CDC: healthy weight guidance",
     "tags": [
@@ -525,7 +662,61 @@
     ]
   },
   {
-    "id": "kb_new_58",
+    "id": "kb_new_72",
+    "source": "kb_profile_personalization.txt",
+    "text": "Personalized recipe analysis should start from the user's raw profile text, not only from normalized labels. Treat diet type, goal, allergies, diseases, preferences, and free-text restrictions as separate constraints. For each constraint, compare the recipe ingredients, hidden ingredient sources, cooking method, sodium, calories, protein, fat, carbohydrates, and recommended portion size.",
+    "tags": [
+      "personalization",
+      "profile"
+    ]
+  },
+  {
+    "id": "kb_new_73",
+    "source": "kb_profile_personalization.txt",
+    "text": "Allergies and strict exclusions require ingredient-level checks. Direct sources and hidden sources both matter: dairy can appear as milk, cream, cheese, sour cream, butter, yogurt, whey, casein, cottage cheese, and processed cheese; gluten can appear as wheat flour, pasta, bread, breadcrumbs, semolina, wheat groats, sauces, and breading; egg can appear in dough, batters, mayonnaise, and baked goods; fish and shellfish should be separated because a person may react to one group but not the other.",
+    "tags": [
+      "personalization",
+      "profile"
+    ]
+  },
+  {
+    "id": "kb_new_74",
+    "source": "kb_profile_personalization.txt",
+    "text": "Medical conditions should be interpreted as risk factors for the recipe, not as a diagnosis. Hypertension and kidney-related salt restrictions usually require attention to sodium, salty seasoning, pickles, marinades, cheese, processed meat, and sauces. Diabetes or insulin resistance requires attention to added sugar, honey, sweet sauces, refined flour, pasta, potatoes, rice, and the total carbohydrate load per portion. Hyperlipidemia and cardiovascular risk require attention to saturated fat, fatty pork, butter, cream, sour cream, cheese, fried foods, and total fat. Gout or high uric acid often requires caution with large amounts of red meat, organ meats, some fish, rich broths, and alcohol.",
+    "tags": [
+      "personalization",
+      "profile"
+    ]
+  },
+  {
+    "id": "kb_new_75",
+    "source": "kb_profile_personalization.txt",
+    "text": "Подагра и высокий уровень мочевой кислоты: основной пищевой риск связан не с натрием, а с пуриновой нагрузкой. В рецептах стоит отдельно отмечать свинину, говядину, красное мясо, субпродукты, крепкие мясные бульоны, некоторые виды рыбы и большие мясные порции. Если одновременно указано \"не ем свинину\", свинина является прямым конфликтом предпочтения/ограничения и дополнительным поводом предложить замену.",
+    "tags": [
+      "personalization",
+      "profile"
+    ]
+  },
+  {
+    "id": "kb_new_76",
+    "source": "kb_profile_personalization.txt",
+    "text": "Free-text preferences and restrictions should be matched semantically. If a user writes that they avoid spicy food, look for chili, hot pepper, adjika, wasabi, tabasco, hot sauces, and large amounts of black or red pepper. If a user writes \"no pork\", pork, bacon, ham, lard, and mixed minced meat can conflict. If a user writes \"less fried food\", deep-frying or pan-frying in much oil should be highlighted even when the ingredients themselves are acceptable.",
+    "tags": [
+      "personalization",
+      "profile"
+    ]
+  },
+  {
+    "id": "kb_new_77",
+    "source": "kb_profile_personalization.txt",
+    "text": "When evidence is uncertain, explain uncertainty and give a practical check instead of claiming a hard conflict. For example, \"seasoning for chicken may contain salt or milk powder; check the label\" is better than a generic warning. Recommendations should be concrete: replace the ingredient, reduce the quantity, change the cooking method, or split the full recipe into more portions.",
+    "tags": [
+      "personalization",
+      "profile"
+    ]
+  },
+  {
+    "id": "kb_new_78",
     "source": "kb_recipe_substitutions.txt",
     "text": "Тема: База типовых замен ингредиентов Назначение для MVP: Файл нужен для генерации практических рекомендаций по адаптации рецепта под профиль пользователя. Типовые замены: - молоко -> безлактозное молоко / несладкий растительный напиток - сливки -> более легкий молочный или растительный аналог - сливочное масло -> оливковое масло или другой подходящий растительный жир - жирный сыр -> менее жирный сыр / уменьшить количество / пищевые дрожжи в части веганских кейсов - красное мясо -> птица / рыба / бобовые / тофу - переработанное мясо -> менее соленый и менее жирный белковый компонент - обычная мука -> безглютеновая смесь при gluten-free профиле - обычные макароны -> бобовые или другие альтернативы, если цель low-carb или higher-protein - соль / соевый соус -> уменьшить количество, использовать low-sodium варианты, усиливать вкус травами и кислотой - сахар / сироп -> уменьшить количество, особенно если рецепт и так содержит сладкие компоненты - жарка во фритюре -> запекание, тушение, гриль, варка, air frying",
     "tags": [
@@ -535,7 +726,7 @@
     ]
   },
   {
-    "id": "kb_new_59",
+    "id": "kb_new_79",
     "source": "kb_recipe_substitutions.txt",
     "text": "Как выбирать замену: - сначала учитывать строгие ограничения: allergen, gluten-free, vegan - затем учитывать health-profile: low sodium, diabetes-friendly, hyperlipidemia, weight loss - не предлагать замену, если она ломает суть блюда сильнее, чем помогает - лучше 1-3 реалистичных замены, чем длинный список",
     "tags": [
@@ -545,7 +736,7 @@
     ]
   },
   {
-    "id": "kb_new_60",
+    "id": "kb_new_80",
     "source": "kb_recipe_substitutions.txt",
     "text": "Шаблоны рекомендаций: - «Можно заменить обычные сливки на более легкий или безлактозный аналог» - «Чтобы снизить натрий, лучше уменьшить соевый соус и использовать low-sodium вариант» - «Для более вегетарианского варианта мясной компонент можно заменить на бобовые или тофу» Источниковая опора: - CDC: Tips for Cutting Calories - American Heart Association: healthy cooking and sodium reduction guidance - NHLBI: heart-healthy eating principles",
     "tags": [
@@ -555,7 +746,7 @@
     ]
   },
   {
-    "id": "kb_new_61",
+    "id": "kb_new_81",
     "source": "kb_sat_fat_and_sodium_rules.txt",
     "text": "Тема: Правила по насыщенным жирам и натрию Назначение для MVP: Файл нужен для отдельного rule-based блока предупреждений даже тогда, когда RAG не нашел много текстового контекста. Правила по насыщенным жирам: - если есть сливочное масло + сливки + сыр -> saturated_fat_risk = high - если есть жирное красное мясо или переработанное мясо -> saturated_fat_risk повышается - если основное масло рецепта оливковое/растительное и нет жирных молочных продуктов -> saturated_fat_risk понижается - фритюр и панировка могут усиливать общий неблагоприятный профиль блюда",
     "tags": [
@@ -567,7 +758,7 @@
     ]
   },
   {
-    "id": "kb_new_62",
+    "id": "kb_new_82",
     "source": "kb_sat_fat_and_sodium_rules.txt",
     "text": "Правила по натрию: - если есть соевый соус, бульонный кубик, колбаса, бекон, соленый сыр, маринад или консервированный суп -> sodium_risk повышается - если несколько таких ингредиентов сочетаются в одном рецепте -> sodium_risk = high - если есть пометка low sodium / reduced sodium -> sodium_risk можно понизить на один уровень - для неявных случаев учитывать cooking notes и готовые соусы",
     "tags": [
@@ -579,7 +770,7 @@
     ]
   },
   {
-    "id": "kb_new_63",
+    "id": "kb_new_83",
     "source": "kb_sat_fat_and_sodium_rules.txt",
     "text": "Приоритеты предупреждений: - allergen warning > strict profile incompatibility > sodium/saturated fat risk > general healthy eating note Шаблоны интерпретации: - «В рецепте несколько источников насыщенных жиров, поэтому блюдо может быть менее подходящим при контроле липидного профиля» - «В рецепте присутствуют несколько выраженных источников натрия, поэтому блюдо может быть менее подходящим для low-sodium профиля»",
     "tags": [
@@ -591,7 +782,7 @@
     ]
   },
   {
-    "id": "kb_new_64",
+    "id": "kb_new_84",
     "source": "kb_sat_fat_and_sodium_rules.txt",
     "text": "Источниковая опора: - American Heart Association: sodium guidance - NHLBI: TLC / DASH principles",
     "tags": [
@@ -603,7 +794,7 @@
     ]
   },
   {
-    "id": "kb_new_65",
+    "id": "kb_new_85",
     "source": "kb_vegan.txt",
     "text": "Тема: Веганское питание Назначение для MVP: Файл нужен для проверки совместимости рецепта со строгим растительным профилем. Считать несовместимыми: - мясо - птица - рыба и морепродукты - яйца - молоко и молочные продукты - сливочное масло - мед - желатин и другие явные животные компоненты",
     "tags": [
@@ -612,7 +803,7 @@
     ]
   },
   {
-    "id": "kb_new_66",
+    "id": "kb_new_86",
     "source": "kb_vegan.txt",
     "text": "Что учитывать: - для MVP vegan трактуется строго: любые ингредиенты животного происхождения делают рецепт несовместимым - скрытые животные компоненты могут встречаться в выпечке, соусах, бульонах, десертах и полуфабрикатах - растительные альтернативы могут отличаться по сахару, соли и степени переработки; это важно для дополнительных профилей, но не отменяет их веганскую совместимость",
     "tags": [
@@ -621,7 +812,7 @@
     ]
   },
   {
-    "id": "kb_new_67",
+    "id": "kb_new_87",
     "source": "kb_vegan.txt",
     "text": "Рекомендации: - заменять молоко на растительные аналоги - заменять сливочное масло на растительные масла или веганские спреды - заменять яйца в зависимости от рецепта: льняное «яйцо», аквафаба, коммерческие egg replacers - заменять мед на альтернативные подсластители, если это уместно",
     "tags": [
@@ -630,7 +821,7 @@
     ]
   },
   {
-    "id": "kb_new_68",
+    "id": "kb_new_88",
     "source": "kb_vegan.txt",
     "text": "Что учитывать по питательной части: - при веганском рационе особенно важно внимание к витамину B12 - для MVP можно использовать мягкое напоминание о желательности обогащенных продуктов или отдельного контроля B12, если профиль пользователя это допускает Шаблоны интерпретации: - Совместимо: все ингредиенты растительного происхождения - Частично совместимо после замен: есть молочные продукты, яйца или мед, но их можно заменить - Несовместимо без глубокой переработки: животные продукты являются основой блюда",
     "tags": [
@@ -639,7 +830,7 @@
     ]
   },
   {
-    "id": "kb_new_69",
+    "id": "kb_new_89",
     "source": "kb_vegan.txt",
     "text": "Источниковая опора: - CDC: Healthy Eating Tips - Harvard T.H. Chan Nutrition Source: Vitamin B12",
     "tags": [
@@ -648,7 +839,7 @@
     ]
   },
   {
-    "id": "kb_new_70",
+    "id": "kb_new_90",
     "source": "kb_vegetarian.txt",
     "text": "Тема: Вегетарианское питание Назначение для MVP: Файл нужен для проверки совместимости рецепта с вегетарианским профилем и генерации замен. Считать несовместимыми: - мясо - птица - рыба и морепродукты - желатин на животной основе - мясные бульоны и некоторые соусы на основе мяса/рыбы",
     "tags": [
@@ -657,7 +848,7 @@
     ]
   },
   {
-    "id": "kb_new_71",
+    "id": "kb_new_91",
     "source": "kb_vegetarian.txt",
     "text": "Что учитывать: - вегетарианские практики бывают разными; для MVP принять базовое правило lacto-ovo vegetarian - яйца и молочные продукты можно считать совместимыми с vegetarian, если пользователь отдельно не выбрал vegan - скрытые животные компоненты в соусах и бульонах могут быть важны - при замене мяса нужно смотреть не только на вкус, но и на белковую роль ингредиента",
     "tags": [
@@ -666,7 +857,7 @@
     ]
   },
   {
-    "id": "kb_new_72",
+    "id": "kb_new_92",
     "source": "kb_vegetarian.txt",
     "text": "Рекомендации: - заменять мясо на бобовые, тофу, темпе, яйца, сыр или растительные аналоги в зависимости от рецепта - проверять бульоны и соусы - усиливать белковую часть блюда за счет фасоли, чечевицы, нута, соевых продуктов Что учитывать по питательной части: - при длительном вегетарианском рационе важно следить за достаточным поступлением белка, железа и витамина B12, особенно если рацион беден обогащенными продуктами",
     "tags": [
@@ -675,7 +866,7 @@
     ]
   },
   {
-    "id": "kb_new_73",
+    "id": "kb_new_93",
     "source": "kb_vegetarian.txt",
     "text": "Шаблоны интерпретации: - Совместимо: нет мяса, рыбы и явных животных бульонов - Частично совместимо после замены: есть мясо/рыба, но замена реалистична - Несовместимо без существенной переработки: животный белок является центральной основой блюда Источниковая опора: - CDC: Healthy Eating Tips - Harvard T.H. Chan Nutrition Source: Vitamin B12",
     "tags": [
@@ -684,7 +875,7 @@
     ]
   },
   {
-    "id": "kb_new_74",
+    "id": "kb_new_94",
     "source": "kb_weight_loss.txt",
     "text": "Тема: Снижение массы тела / контроль калорийности и насыщаемости Назначение для MVP: Файл нужен для мягкой интерпретации блюд при профиле weight_loss. Он не должен превращаться в жесткий «диетический цензор». Что считать менее благоприятным: - очень высокая калорийность на порцию - большое количество масла, сливок, сыра, жирных соусов - жарка, панировка, частое сочетание жира и рафинированных углеводов - сладкие десертные блюда и сладкие напитки - большие порции без овощей и белка",
     "tags": [
@@ -693,7 +884,7 @@
     ]
   },
   {
-    "id": "kb_new_75",
+    "id": "kb_new_95",
     "source": "kb_weight_loss.txt",
     "text": "Что учитывать: - CDC подчеркивает, что устойчивое снижение веса связано с планом, регулярностью, здоровым паттерном питания, физической активностью, сном и управлением стрессом - для рецептов важны размер порции, энергетическая плотность и насыщаемость - блюда с овощами, клетчаткой и разумной долей белка обычно лучше подходят для контроля аппетита - цель MVP — предлагать более легкие модификации рецепта, а не назначать жесткие ограничения",
     "tags": [
@@ -702,7 +893,7 @@
     ]
   },
   {
-    "id": "kb_new_76",
+    "id": "kb_new_96",
     "source": "kb_weight_loss.txt",
     "text": "Смягчающие признаки: - овощи и бобовые - умеренная порция - приготовление без глубокого обжаривания - снижение количества сыра, сливок, масла, сахара - добавление продуктов с высокой насыщаемостью при умеренной калорийности Рекомендации: - уменьшить размер порции - сократить масло, сливки, сыр и сахар - увеличить долю овощей - использовать более легкие способы приготовления - заменять часть высококалорийных ингредиентов на менее плотные по калориям",
     "tags": [
@@ -711,7 +902,7 @@
     ]
   },
   {
-    "id": "kb_new_77",
+    "id": "kb_new_97",
     "source": "kb_weight_loss.txt",
     "text": "Шаблоны интерпретации: - Высокая калорийная плотность: много жира, сыра, сливок, сахара или жарки - Умеренная калорийность: блюдо может вписаться при контроле порции - Более благоприятно для снижения веса: есть овощи, умеренная порция, без избытка жиров и сахара Источниковая опора: - CDC: Steps for Losing Weight - CDC: Tips for Healthy Eating for a Healthy Weight - CDC: Tips for Cutting Calories",
     "tags": [

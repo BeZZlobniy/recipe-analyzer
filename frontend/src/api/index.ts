@@ -16,7 +16,8 @@ export const profilesApi = {
 };
 
 export const analysisApi = {
-  analyze: (payload: { profile_id: number; recipe_text: string }) => apiClient.post<AnalyzeResponse>("/analyze", payload),
+  analyze: (payload: { profile_id: number; recipe_text: string; target_recipe_calories?: number }) =>
+    apiClient.post<AnalyzeResponse>("/analyze", payload),
   history: () => apiClient.get<HistoryItem[]>("/history"),
   historyItem: (id: number) => apiClient.get<AnalysisDetail>(`/history/${id}`),
   dashboard: (profileId?: number) => apiClient.get<DashboardData>(`/dashboard${profileId ? `?profile_id=${profileId}` : ""}`)

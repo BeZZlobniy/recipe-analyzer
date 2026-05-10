@@ -6,44 +6,29 @@ from typing import Any
 import requests
 
 from app.core.config import settings
+from app.services.qwen_prompts import (
+    build_product_candidate_prompt,
+    build_profile_block_prompt,
+    build_recipe_structuring_prompt,
+    PROFILE_ANALYSIS_BLOCK_KEYS,
+)
 
 
 class OllamaService:
     def __init__(self) -> None:
         self.base_url = settings.ollama_base_url.rstrip("/")
         self.model = settings.ollama_model
+        self.analysis_model = settings.ollama_analysis_model
         self.normalization_model = settings.ollama_normalization_model
         self.generate_endpoint = f"{self.base_url}/api/generate"
+        self._unhealthy_analysis_models: set[str] = set()
 
     def structure_recipe_json(self, recipe_text: str) -> dict[str, Any]:
-        prompt = (
-            "Ты извлекаешь из текста рецепта только название блюда и список ингредиентов.\n"
-            "Верни строго один JSON-объект с ключом recipe.\n"
-            "Никакого markdown, комментариев и текста вне JSON.\n"
-            "Нужный формат:\n"
-            '{"recipe":{"title":"...","ingredients":[{"name_ru":"...","name_en":"...","quantity_text":"...","quantity_value":1,"quantity_unit":"шт","optional":false,"llm_grams":180,"gram_confidence":"medium"}],"instructions":[],"tags":[]}}\n'
-            "Правила:\n"
-            "1. Игнорируй обращения к ассистенту, пояснения, эмодзи и весь внешний текст вокруг рецепта.\n"
-            "2. Извлекай только ингредиенты из списка ингредиентов, не из шагов приготовления.\n"
-            "3. Для каждого ингредиента верни короткое русское name_ru и короткое английское name_en для поиска в USDA.\n"
-            "4. quantity_text — нормализованный текст количества.\n"
-            "5. quantity_value — число. Если указан диапазон, верни округленное среднее: 8-10 шт -> 9, 40-50 г -> 45.\n"
-            "6. quantity_unit — одна из: г, кг, мл, л, шт, ст. л., ч. л., стакан, зубчик, кочан, ломтик, пучок. Если количества нет, верни null.\n"
-            "7. Если указано 'по вкусу', верни quantity_text='по вкусу', quantity_value=null, quantity_unit=null.\n"
-            "8. llm_grams заполняй только как оценку массы, если в тексте нет явных граммов, но массу можно разумно оценить по типу ингредиента и контексту. Если оценка ненадежна, верни null.\n"
-            "9. gram_confidence: high|medium|low|null для поля llm_grams.\n"
-            "10. Если ингредиент опционален, optional=true, иначе false.\n"
-            "11. Не придумывай ингредиенты, которых нет в тексте.\n"
-            "12. Не объединяй разные ингредиенты в один, кроме пары 'соль, перец', если они записаны вместе в одной строке.\n"
-            "13. instructions и tags всегда возвращай пустыми массивами.\n"
-            "Пример:\n"
-            '{"recipe":{"title":"Салат Цезарь с курицей","ingredients":[{"name_ru":"Куриное филе","name_en":"chicken breast","quantity_text":"1 шт","quantity_value":1,"quantity_unit":"шт","optional":false,"llm_grams":180,"gram_confidence":"medium"},{"name_ru":"Помидоры черри","name_en":"cherry tomatoes","quantity_text":"9 шт","quantity_value":9,"quantity_unit":"шт","optional":false,"llm_grams":150,"gram_confidence":"medium"},{"name_ru":"Соль, перец","name_en":"salt, black pepper","quantity_text":"по вкусу","quantity_value":null,"quantity_unit":null,"optional":false,"llm_grams":null,"gram_confidence":null}],"instructions":[],"tags":[]}}\n'
-            f"Рецепт:\n{recipe_text}"
-        )
         return self._generate_json(
-            prompt,
+            build_recipe_structuring_prompt(recipe_text),
             {"recipe": {"title": "", "ingredients": [], "instructions": [], "tags": []}},
             model=self.normalization_model,
+            fallback_models=settings.ollama_normalization_fallback_models,
         )
 
     def resolve_product_candidate(
@@ -53,67 +38,144 @@ class OllamaService:
         ingredient_payload: dict[str, Any],
         candidate_products: list[dict[str, Any]],
     ) -> dict[str, Any]:
-        prompt = (
-            "Choose the best candidate product for the recipe ingredient.\n"
-            "You must choose only from the provided candidate list.\n"
-            "If confidence is low, return selected_product_id as null.\n"
-            "Use the full recipe context and neighboring ingredients.\n"
-            'Return JSON only: {"selected_product_id":123,"confidence":"high|medium|low","reason":"..."}\n'
-            f"Recipe title: {recipe_title}\n"
-            f"Recipe text: {recipe_text}\n"
-            f"Ingredient: {json.dumps(ingredient_payload, ensure_ascii=False)}\n"
-            f"Candidates: {json.dumps(candidate_products, ensure_ascii=False)}"
-        )
         return self._generate_json(
-            prompt,
+            build_product_candidate_prompt(recipe_text, recipe_title, ingredient_payload, candidate_products),
             {"selected_product_id": None, "confidence": "low", "reason": ""},
         )
 
     def generate_profile_analysis(self, analysis_input: dict[str, Any]) -> dict[str, Any]:
-        prompt = (
-            "Сформируй аналитический отчет по рецепту строго на русском языке.\n"
-            "Числовые nutrition values уже рассчитаны и являются источником истины.\n"
-            "Не придумывай нутриенты и не противоречь переданным значениям.\n"
-            "Используй текст рецепта, сопоставленные ингредиенты, профиль пользователя и KB-контекст.\n"
-            "Все текстовые поля summary, detected_issues, recommendations и warnings должны быть на русском языке.\n"
-            "Ответ строго JSON без пояснений.\n"
-            '{"summary":"...","detected_issues":["..."],"recommendations":["..."],"warnings":["..."],"compatibility":{"diet":"low|medium|high","restriction":"low|medium|high","goal":"low|medium|high"}}'
-            f"\nINPUT={json.dumps(analysis_input, ensure_ascii=False)}"
-        )
-        return self._generate_json(
-            prompt,
-            {
-                "summary": "",
-                "detected_issues": [],
-                "recommendations": [],
-                "warnings": [],
-                "compatibility": {"diet": "medium", "restriction": "medium", "goal": "medium"},
-            },
-        )
-
-    def _generate_json(self, prompt: str, fallback: dict[str, Any], model: str | None = None) -> dict[str, Any]:
-        raw_timeout = settings.ollama_timeout_sec
-        request_timeout = None if raw_timeout is None or int(raw_timeout) <= 0 else max(int(raw_timeout), 1)
-        try:
-            response = requests.post(
-                self.generate_endpoint,
-                json={
-                    "model": model or self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {"temperature": 0},
+        blocks: dict[str, Any] = {}
+        for block_key in PROFILE_ANALYSIS_BLOCK_KEYS:
+            blocks[block_key] = self._generate_json(
+                build_profile_block_prompt(analysis_input, block_key),
+                {
+                    "summary": "",
+                    "evidence": [],
+                    "recommendations": [],
+                    "compatibility": "medium",
+                    "status": "unknown",
                 },
-                timeout=request_timeout,
+                model=self.analysis_model,
+                fallback_models=settings.ollama_analysis_fallback_models,
+                timeout_sec=settings.ollama_analysis_timeout_sec,
+                num_predict=450,
+                num_ctx=4096,
+                mark_unhealthy_on_failure=True,
             )
-            response.raise_for_status()
-            raw = response.json().get("response", "")
-        except Exception:
-            return fallback
+        return {
+            "summary": "",
+            "detected_issues": [],
+            "recommendations": [],
+            "warnings": [],
+            "compatibility": {"diet": "medium", "restriction": "medium", "goal": "medium"},
+            "profile_assessment": blocks,
+            "mode": "segmented",
+        }
+
+    def _generate_json(
+        self,
+        prompt: str,
+        fallback: dict[str, Any],
+        model: str | None = None,
+        fallback_models: list[str] | None = None,
+        timeout_sec: int | None = None,
+        num_predict: int = 1800,
+        num_ctx: int = 8192,
+        mark_unhealthy_on_failure: bool = False,
+    ) -> dict[str, Any]:
+        models = [model or self.model, *(fallback_models or [])]
+        seen: set[str] = set()
+        for candidate_model in models:
+            if candidate_model in seen:
+                continue
+            if mark_unhealthy_on_failure and candidate_model in self._unhealthy_analysis_models:
+                continue
+            seen.add(candidate_model)
+            payload = self._generate_json_once(
+                prompt,
+                candidate_model,
+                required_keys=set(fallback.keys()),
+                timeout_sec=timeout_sec,
+                num_predict=num_predict,
+                num_ctx=num_ctx,
+            )
+            if payload is not None:
+                return payload
+            if mark_unhealthy_on_failure and candidate_model == self.analysis_model:
+                self._unhealthy_analysis_models.add(candidate_model)
+        return fallback
+
+    def _generate_json_once(
+        self,
+        prompt: str,
+        model: str,
+        required_keys: set[str],
+        timeout_sec: int | None = None,
+        num_predict: int = 1800,
+        num_ctx: int = 8192,
+    ) -> dict[str, Any] | None:
+        raw_timeout = settings.ollama_timeout_sec if timeout_sec is None else timeout_sec
+        request_timeout = None if raw_timeout is None or int(raw_timeout) <= 0 else max(int(raw_timeout), 1)
+        response_payload = self._request_generate(prompt, model, request_timeout, num_predict=num_predict, num_ctx=num_ctx)
+        if response_payload is None:
+            return None
+        for field in ("response", "thinking"):
+            parsed = self._parse_json_text(response_payload.get(field, ""))
+            if parsed is not None and self._has_required_shape(parsed, required_keys):
+                return parsed
+        return None
+
+    def _request_generate(
+        self,
+        prompt: str,
+        model: str,
+        request_timeout: int | None,
+        num_predict: int = 1800,
+        num_ctx: int = 8192,
+    ) -> dict[str, Any] | None:
+        timeout_attempts = 2 if request_timeout else 1
+        for attempt in range(timeout_attempts):
+            try:
+                response = requests.post(
+                    self.generate_endpoint,
+                    json={
+                        "model": model,
+                        "prompt": prompt,
+                        "stream": False,
+                        "format": "json",
+                        "keep_alive": "30m",
+                        "options": {"temperature": 0, "num_predict": num_predict, "num_ctx": num_ctx},
+                    },
+                    timeout=request_timeout,
+                )
+                response.raise_for_status()
+                payload = response.json()
+                return payload if isinstance(payload, dict) else None
+            except requests.Timeout:
+                if attempt + 1 >= timeout_attempts:
+                    return None
+            except Exception:
+                return None
+        return None
+
+    def _parse_json_text(self, raw: Any) -> dict[str, Any] | None:
+        if not isinstance(raw, str) or not raw.strip():
+            return None
         try:
             parsed = json.loads(raw)
         except json.JSONDecodeError:
-            return fallback
-        return parsed if isinstance(parsed, dict) else fallback
+            start = raw.find("{")
+            end = raw.rfind("}")
+            if start < 0 or end <= start:
+                return None
+            try:
+                parsed = json.loads(raw[start : end + 1])
+            except json.JSONDecodeError:
+                return None
+        return parsed if isinstance(parsed, dict) else None
+
+    def _has_required_shape(self, payload: dict[str, Any], required_keys: set[str]) -> bool:
+        return bool(payload) and bool(required_keys & set(payload.keys()))
 
 
 ollama_service = OllamaService()

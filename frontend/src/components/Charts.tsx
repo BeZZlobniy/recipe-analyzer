@@ -32,7 +32,6 @@ export function DonutGroup({
   const total = Object.values(values).reduce((sum, value) => sum + value, 0) || 1;
   const high = Math.round(((values.high ?? 0) / total) * 100);
   const medium = Math.round(((values.medium ?? 0) / total) * 100);
-  const low = Math.round(((values.low ?? 0) / total) * 100);
 
   return (
     <div>

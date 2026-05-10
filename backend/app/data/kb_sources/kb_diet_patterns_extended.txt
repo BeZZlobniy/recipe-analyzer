@@ -1,0 +1,11 @@
+Extended diet pattern context for recipe personalization.
+
+Halal or "халяль": pork, bacon, ham, lard, gelatin from pork, alcohol and non-halal meat are conflicts. If the recipe contains generic meat or mixed minced meat, ask to verify the source. Poultry, fish, eggs and dairy can be acceptable if other profile restrictions do not conflict.
+
+Kosher or "кошер": pork and shellfish are conflicts. Mixing meat and dairy can be an issue for strict kosher users. If the profile mentions kosher, note dairy-meat combinations such as meat with cheese, sour cream or cream as a possible conflict.
+
+Pescatarian: fish and seafood can be acceptable, but meat and poultry conflict. Vegetarian: meat, poultry, fish and seafood conflict. Vegan: meat, poultry, fish, seafood, dairy, eggs and honey conflict.
+
+Gluten-free: wheat flour, pasta, bread, breadcrumbs, semolina, wheat groats, regular soy sauce and breaded products can conflict. Lactose-free or dairy-free: milk, cream, sour cream, cheese, yogurt, cottage cheese, butter, whey and casein can conflict depending on strictness.
+
+Low-carb or keto: sugar, honey, flour, bread, pasta, rice, potatoes and sweet desserts are usually the main carbohydrate sources to evaluate. High-protein: evaluate protein per portion and whether the main dish has a meaningful protein source. Weight loss: evaluate calories per recommended portion, fat-dense ingredients and frying oil.

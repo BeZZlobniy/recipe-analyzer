@@ -28,7 +28,7 @@ class UsdaClient:
             return local_hits[: settings.usda_page_size]
 
         try:
-            request_timeout = None if settings.web_fallback_timeout_sec is None or int(settings.web_fallback_timeout_sec) <= 0 else settings.web_fallback_timeout_sec
+            request_timeout = self._request_timeout()
             response = requests.post(
                 f"{self.base_url}/foods/search",
                 params={"api_key": settings.usda_api_key},
@@ -51,7 +51,7 @@ class UsdaClient:
             return None
 
         try:
-            request_timeout = None if settings.web_fallback_timeout_sec is None or int(settings.web_fallback_timeout_sec) <= 0 else settings.web_fallback_timeout_sec
+            request_timeout = self._request_timeout()
             response = requests.get(
                 f"{self.base_url}/food/{fdc_id}",
                 params={"api_key": settings.usda_api_key},
@@ -62,6 +62,10 @@ class UsdaClient:
         except Exception:
             return None
         return payload if isinstance(payload, dict) else None
+
+    def _request_timeout(self) -> int | None:
+        timeout = settings.usda_request_timeout_sec
+        return None if timeout is None or int(timeout) <= 0 else int(timeout)
 
     def _search_foundation_dataset(self, query: str) -> tuple[list[dict[str, Any]], float]:
         query_tokens = self._tokens(query)

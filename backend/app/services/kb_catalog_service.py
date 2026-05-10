@@ -4,7 +4,6 @@ import hashlib
 import json
 import re
 import shutil
-from pathlib import Path
 
 from app.core.config import settings
 from app.core.utils import ensure_data_dir, maybe_fix_mojibake, normalize_spaces, normalize_text
@@ -14,18 +13,23 @@ class KnowledgeBaseCatalogService:
     EXPECTED_FILES = [
         "kb_common_allergens.txt",
         "kb_cooking_method_health_impact.txt",
+        "kb_custom_food_restrictions.txt",
         "kb_diabetes.txt",
+        "kb_diet_patterns_extended.txt",
         "kb_gluten_free.txt",
+        "kb_gout_and_purines.txt",
         "kb_hidden_allergen_sources.txt",
         "kb_high_protein.txt",
         "kb_hyperlipidemia.txt",
         "kb_hypertension.txt",
+        "kb_kidney_and_gi_conditions.txt",
         "kb_lactose_intolerance.txt",
         "kb_low_carb.txt",
         "kb_low_sodium.txt",
         "kb_mediterranean_diet.txt",
         "kb_nutrition_thresholds.txt",
         "kb_portion_size_rules.txt",
+        "kb_profile_personalization.txt",
         "kb_recipe_substitutions.txt",
         "kb_sat_fat_and_sodium_rules.txt",
         "kb_vegan.txt",

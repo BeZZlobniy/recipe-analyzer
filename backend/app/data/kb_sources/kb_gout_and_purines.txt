@@ -1,0 +1,7 @@
+Gout, high uric acid, podagra, подагра, высокий уровень мочевой кислоты.
+
+For recipe personalization, gout-related context is mainly about purine load and alcohol, not sodium by itself. Main food risks: large portions of red meat, pork, beef, lamb, organ meats, rich meat broths, some fish, anchovies, sardines, mackerel, shellfish, and beer/alcohol. Poultry is usually a lower-risk meat option than red meat, but portion size still matters.
+
+If a recipe contains pork, beef, mixed minced meat, organ meats, rich broth, or oily fish, mark it as a disease-related caution for gout when the profile mentions gout, uric acid, purines, подагра, мочевая кислота or пурины. Do not describe sodium as the main gout risk unless the same profile also mentions hypertension, kidney disease, edema, low sodium, or salt restriction.
+
+Practical substitutions: replace pork or beef with smaller portions of chicken, turkey, tofu, legumes if tolerated, mushrooms or vegetables depending on the user's other restrictions. Prefer stewing, baking, or boiling over frying in much oil. For a strict gout-focused recommendation, suggest smaller meat portions and more vegetables rather than only reducing salt.

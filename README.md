@@ -1,228 +1,60 @@
-# Recipe Analyzer MVP
+# Recipe Analyzer
 
-Локальное веб-приложение для персонализированного анализа рецептов с учетом профиля пользователя.
+Локальное веб-приложение для персонализированного анализа рецептов. Система извлекает ингредиенты из свободного текста, сопоставляет их с USDA FoodData Central, рассчитывает КБЖУ и формирует RAG-отчет с учетом профиля пользователя.
 
-## Что умеет система
+## Возможности
 
-- принимает рецепт в свободной текстовой форме;
-- извлекает ингредиенты, количества и единицы измерения;
-- сопоставляет ингредиенты с USDA FoodData Central;
-- детерминированно рассчитывает калорийность и БЖУ;
-- формирует персонализированный аналитический отчет через RAG;
-- сохраняет историю анализов и показывает сводную статистику на dashboard.
+- Разбор рецепта из свободного текста: название, ингредиенты, количества, единицы, шаги.
+- Нормализация ингредиентов через Qwen/Ollama с эвристическим резервным парсером.
+- Сопоставление ингредиентов с локальным USDA Foundation JSON и, при наличии ключа, USDA API.
+- Расчет калорий, белков, жиров, углеводов, клетчатки и натрия.
+- Персонализация по цели, типу питания, аллергиям, заболеваниям, предпочтениям и дополнительным ограничениям.
+- Отдельный профильный блок анализа: цель, аллергии, заболевания, предпочтения, тип питания и ограничения.
+- Рекомендация целого количества порций: `1 порция = весь рецепт`, `2 порции = рецепт / 2` и так далее.
+- История анализов, детальный просмотр результата и dashboard.
+- Локальная RAG-база знаний из `backend/app/data/kb_sources`.
+- Поддержка GPU для embeddings через `EMBEDDING_DEVICE=auto|cuda|cpu`; скрипты установки ставят CUDA PyTorch при наличии NVIDIA GPU.
 
-## Backend pipeline
+## Pipeline
 
-1. `Normalization`
-   - очистка текста рецепта;
-   - извлечение ингредиентов;
-   - получение `name_ru`, `name_en`, количества и единиц.
-2. `Ingredient Resolution`
-   - поиск кандидатов сначала в локальном USDA Foundation JSON;
-   - fallback в USDA API;
-   - ранжирование и выбор наиболее подходящего продукта.
-3. `Deterministic Nutrition`
-   - перевод количества ингредиента в массу;
-   - расчет калорий, белков, жиров, углеводов, клетчатки и натрия;
-   - оценка качества анализа.
-4. `Final RAG Analysis`
-   - извлечение релевантного контекста из локальной базы знаний;
-   - генерация summary, warnings, recommendations и compatibility.
+1. `input_cleaner` очищает текст рецепта от шума.
+2. `fallback_parser` строит устойчивый эвристический разбор рецепта.
+3. Qwen через Ollama уточняет структуру рецепта и английские `name_en` для USDA.
+4. `normalization.py` объединяет LLM-результат и эвристику, чтобы не терять количества.
+5. `ingredient_resolution.py` ищет USDA-кандидатов, ранжирует их и при необходимости просит Qwen выбрать лучший продукт.
+6. `nutrition.py` считает нутриенты и метрики качества сопоставления.
+7. `portions.py` определяет рекомендуемое количество порций под целевые калории.
+8. `retrieval.py` достает RAG-контекст из локальной базы знаний.
+9. `rag/service.py` формирует итоговый персонализированный анализ и профильные блоки.
 
-## Технологический стек
+## Стек
 
-- `backend`: FastAPI, SQLAlchemy, SQLite
-- `frontend`: React, TypeScript, Vite
-- `LLM`: Ollama, `qwen2.5:7b`
-- `nutrition source`: USDA Foundation JSON + USDA API fallback
-- `RAG knowledge base`: локальные `.txt` источники, агрегированные в JSON
+- Backend: FastAPI, SQLAlchemy, SQLite, Pydantic.
+- Frontend: React, TypeScript, Vite.
+- LLM: Ollama, по умолчанию `qwen2.5:7b`.
+- Embeddings: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`.
+- Nutrition source: локальный USDA Foundation JSON + опциональный USDA API.
+- Tests: pytest, TypeScript build.
 
-## Актуальная структура проекта
-
-```text
-Листинг Б — Актуальная структура приложения
-
-recipe-analyzer/
-  README.md                              # общее описание проекта, стек, запуск
-  .gitignore                             # исключения Git
-  app.db                                 # локальная SQLite БД, создается/обновляется при работе
-  setup-app.ps1                          # первичная настройка окружения
-  run-app.ps1                            # запуск backend и frontend
-  run-app.bat                            # альтернативный запуск в Windows
-
-  backend/
-    README.md                            # описание backend-части
-    requirements.txt                     # Python-зависимости
-    pytest.ini                           # конфигурация pytest
-
-    app/
-      main.py                            # create_app(), startup, подключение роутов
-
-      api/
-        routes/
-          auth.py                        # авторизация: login/logout/me
-          profiles.py                    # CRUD профилей пользователя
-          analyze.py                     # запуск анализа рецепта
-          history.py                     # история и детали анализов
-          dashboard.py                   # агрегаты и статистика dashboard
-
-      core/
-        config.py                        # настройки приложения, .env, пути, модели, флаги
-        db.py                            # engine, SessionLocal, bootstrap_database()
-        deps.py                          # зависимости FastAPI, доступ к БД/пользователю
-        schemas.py                       # Pydantic-схемы API
-        security.py                      # хеширование паролей, работа с auth
-        utils.py                         # нормализация текста, вспомогательные функции
-
-      data/
-        FoodData_Central_foundation_food_json_2025-12-18.json
-                                          # локальный USDA Foundation dataset
-        knowledge_base.json              # собранная локальная база знаний для retrieval
-        kb_sources/                      # исходные текстовые документы базы знаний
-          kb_common_allergens.txt        # распространенные аллергены
-          kb_hidden_allergen_sources.txt # скрытые источники аллергенов
-          kb_lactose_intolerance.txt     # непереносимость лактозы
-          kb_gluten_free.txt             # безглютеновое питание
-          kb_diabetes.txt                # диабет и ограничения
-          kb_hypertension.txt            # гипертония и натрий
-          kb_hyperlipidemia.txt          # липидный профиль и жиры
-          kb_low_sodium.txt              # низкосолевая диета
-          kb_low_carb.txt                # низкоуглеводное питание
-          kb_high_protein.txt            # высокобелковое питание
-          kb_mediterranean_diet.txt      # средиземноморская диета
-          kb_vegetarian.txt              # вегетарианство
-          kb_vegan.txt                   # веганство
-          kb_weight_loss.txt             # снижение веса
-          kb_nutrition_thresholds.txt    # пороги и ориентиры по нутриентам
-          kb_portion_size_rules.txt      # правила интерпретации порций
-          kb_recipe_substitutions.txt    # возможные замены ингредиентов
-          kb_sat_fat_and_sodium_rules.txt
-                                          # насыщенные жиры и натрий
-          kb_cooking_method_health_impact.txt
-                                          # влияние способа приготовления
-
-      models/
-        user.py                          # модель пользователя
-        profile.py                       # модель профиля пользователя
-        recipe_analysis.py               # модель результата анализа рецепта
-        product.py                       # каноническая карточка продукта
-        product_alias.py                 # альтернативные названия продукта
-        product_search_entry.py          # поисковые ключи продукта
-        external_lookup_cache.py         # кэш внешних USDA-запросов
-
-      modules/
-        analysis/
-          service.py                     # оркестрация backend-пайплайна анализа
-          nutrition.py                   # расчет нутриентов и метрик качества
-          nutrition_rules.py             # правила перевода единиц, оценка массы, fallback
-          portions.py                    # оценка числа порций
-
-        rag/
-          normalization.py               # объединение эвристик и LLM-нормализации
-          ingredient_catalog.py          # нормализация и англоязычные варианты ингредиентов
-          ingredient_resolution.py       # сопоставление ингредиентов с USDA
-          usda_client.py                 # работа с USDA API
-          usda_resolution_utils.py       # вспомогательная логика ранжирования кандидатов
-          retrieval.py                   # lexical/embedding retrieval по knowledge base
-          service.py                     # формирование контекста и итогового анализа
-
-        structuring/
-          input_cleaner.py               # очистка входного текста рецепта
-          fallback_parser.py             # эвристический разбор рецепта
-          schemas.py                     # внутренние структуры SimpleRecipe/StructuredRecipe
-
-      services/
-        ollama_service.py                # взаимодействие с Ollama / Qwen
-        kb_catalog_service.py            # сборка knowledge_base.json из kb_sources
-
-    scripts/
-      cli_analyze.py                     # CLI-запуск анализа рецепта
-      generate_thesis_artifacts.py       # генерация артефактов для ВКР
-
-    tests/
-      conftest.py                        # тестовые фикстуры
-      integration/
-        test_api.py                      # интеграционные тесты API-сценариев
-      unit/
-        test_parsing.py                  # unit-тесты парсинга рецепта
-        test_nutrition.py                # unit-тесты расчета нутриентов
-
-    user_profiles/
-      sample_user.json                   # пример профиля для CLI/демо
-
-    reports/                             # локально генерируемые отчеты (обычно не versioned)
-
-  frontend/
-    index.html                           # HTML-шаблон Vite
-    package.json                         # зависимости и npm-скрипты
-    package-lock.json                    # lockfile npm
-    tsconfig.json                        # базовая TS-конфигурация
-    tsconfig.app.json                    # TS-конфигурация приложения
-    vite.config.ts                       # конфигурация Vite
-
-    src/
-      main.tsx                           # точка входа frontend
-      App.tsx                            # маршрутизация приложения
-      styles.css                         # глобальные стили
-
-      api/
-        client.ts                        # базовый HTTP-клиент
-        index.ts                         # функции работы с backend API
-
-      auth/
-        AuthContext.tsx                  # контекст аутентификации и сессии
-
-      components/
-        Layout.tsx                       # общий layout приложения
-        ProtectedRoute.tsx               # защита приватных маршрутов
-        StatCard.tsx                     # карточки статистики
-        Charts.tsx                       # визуализация агрегированных данных
-
-      pages/
-        LoginPage.tsx                    # страница входа
-        DashboardPage.tsx                # dashboard и сводная аналитика
-        ProfilesPage.tsx                 # управление профилями
-        NewAnalysisPage.tsx              # запуск нового анализа
-        HistoryPage.tsx                  # история анализов
-        AnalysisDetailsPage.tsx          # детальный просмотр результата
-
-      types/
-        api.ts                           # TypeScript-типы API
-
-      utils/
-        labels.ts                        # подписи, отображение служебных значений
-
-```
-
-## Ключевые файлы реализации
-
-### Backend
-
-- `backend/app/modules/analysis/service.py`
-- `backend/app/modules/rag/normalization.py`
-- `backend/app/modules/rag/ingredient_resolution.py`
-- `backend/app/modules/analysis/nutrition.py`
-- `backend/app/modules/rag/service.py`
-
-### Frontend
-
-- `frontend/src/App.tsx`
-- `frontend/src/auth/AuthContext.tsx`
-- `frontend/src/pages/NewAnalysisPage.tsx`
-- `frontend/src/pages/AnalysisDetailsPage.tsx`
-- `frontend/src/pages/DashboardPage.tsx`
-- `frontend/src/pages/ProfilesPage.tsx`
-
-## Запуск
-
-Быстрый запуск:
+## Быстрый Запуск
 
 ```powershell
 .\setup-app.ps1
 .\run-app.ps1
 ```
 
-Ручной запуск backend:
+Скрипты создают Python venv, ставят backend/frontend зависимости, копируют `backend/.env.example` в `backend/.env`, при наличии NVIDIA GPU ставят CUDA-сборку PyTorch и запускают backend/frontend.
+
+Адреса после запуска:
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8000`
+- Swagger: `http://localhost:8000/docs`
+- Demo login: `admin` / `admin`
+
+## Ручной Запуск
+
+Backend:
 
 ```powershell
 cd backend
@@ -233,7 +65,7 @@ copy .env.example .env
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Ручной запуск frontend:
+Frontend:
 
 ```powershell
 cd frontend
@@ -241,18 +73,211 @@ npm install
 npm run dev
 ```
 
-## Demo user
+## Настройки
 
-- username: `admin`
-- password: `admin`
+Основные переменные в `backend/.env`:
 
-## Demo recipes
+```env
+SECRET_KEY=recipe-analyzer-dev-secret
+DATABASE_URL=sqlite:///./app.db
+CORS_ORIGINS=["http://localhost:5173"]
 
-В истории анализов сохранены показательные кейсы, а их исходные тексты и JSON-результаты лежат в `backend/demo/`:
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:7b
+OLLAMA_NORMALIZATION_MODEL=qwen2.5:7b
+OLLAMA_TIMEOUT_SEC=0
 
-1. полезный рецепт с высокой совместимостью;
-2. калорийный рецепт с низкой совместимостью по ограничениям и цели;
-3. два промежуточных рецепта со средней совместимостью.
+EMBEDDING_MODEL=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+EMBEDDING_DEVICE=auto
+ENABLE_EMBEDDING_RETRIEVAL=true
 
+USDA_REQUEST_TIMEOUT_SEC=0
+USDA_API_KEY=your_usda_api_key
+```
 
-Файлы локальных отчетов, временных баз данных и сгенерированных embedding-артефактов в репозиторий не включаются.
+`EMBEDDING_DEVICE=auto` выбирает CUDA, если PyTorch видит GPU, иначе CPU. Для принудительного GPU укажите `EMBEDDING_DEVICE=cuda`; приложение упадет при старте, если CUDA недоступна.
+
+`USDA_API_KEY` не обязателен: без него используется локальный Foundation dataset. API нужен только как внешний источник кандидатов, если локальный поиск слабый.
+
+## Демо-Данные
+
+При старте backend выполняется `bootstrap_database()`:
+
+- Создается demo user `admin`.
+- Создаются 5 тестовых профилей: вегетарианец без лактозы, набор массы, контроль сахара, низкая соль, веган без глютена.
+- Собирается `knowledge_base.json` из `kb_sources`.
+- Локальная база продуктов наполняется по мере анализа через USDA resolution/cache.
+
+Тестовые рецепты для прогонов лежат в `backend/app/data/1.txt` ... `10.txt`.
+
+## Полезные Скрипты
+
+Из папки `backend`:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_recipe_suite.py --limit 10
+```
+
+Прогоняет рецепты `app/data/1.txt..10.txt` по демо-профилям и сохраняет отчет в `backend/reports/recipe_suite_latest.json`.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\benchmark_local_ai.py
+```
+
+Проверяет скорость embeddings/Ollama и фактическое устройство (`cpu`/`cuda`).
+
+```powershell
+.\.venv\Scripts\python.exe scripts\generate_thesis_artifacts.py
+```
+
+Генерирует таблицы и графики для отчетности в `backend/reports/thesis`.
+
+`scripts/cli_analyze.py` оставлен как CLI-сценарий для анализа рецепта без frontend.
+
+## Проверки
+
+Backend:
+
+```powershell
+cd backend
+.\.venv\Scripts\python.exe -m compileall app
+.\.venv\Scripts\python.exe -m pytest tests
+```
+
+Frontend:
+
+```powershell
+cd frontend
+npm run build
+npx tsc -p tsconfig.json --noEmit --noUnusedLocals --noUnusedParameters
+```
+
+## Структура
+
+```text
+recipe-analyzer/
+  README.md
+  setup-app.ps1
+  run-app.ps1
+  run-app.bat
+  app.db
+
+  backend/
+    requirements.txt
+    pytest.ini
+    .env.example
+
+    app/
+      main.py
+
+      api/routes/
+        auth.py
+        profiles.py
+        analyze.py
+        history.py
+        dashboard.py
+
+      core/
+        config.py
+        db.py
+        deps.py
+        schemas.py
+        security.py
+        utils.py
+
+      data/
+        1.txt ... 10.txt
+        FoodData_Central_foundation_food_json_2025-12-18.json
+        knowledge_base.json
+        knowledge_base_embeddings.npy
+        knowledge_base_embeddings_meta.json
+        kb_sources/
+
+      models/
+        user.py
+        profile.py
+        recipe_analysis.py
+        product.py
+        external_lookup_cache.py
+
+      modules/
+        analysis/
+          service.py
+          nutrition.py
+          nutrition_rules.py
+          personalization.py
+          portions.py
+
+        rag/
+          normalization.py
+          ingredient_catalog.py
+          ingredient_resolution.py
+          retrieval.py
+          service.py
+          usda_client.py
+          usda_resolution_utils.py
+
+        structuring/
+          input_cleaner.py
+          fallback_parser.py
+          schemas.py
+
+      services/
+        ollama_service.py
+        qwen_prompts.py
+        kb_catalog_service.py
+
+    scripts/
+      cli_analyze.py
+      run_recipe_suite.py
+      benchmark_local_ai.py
+      generate_thesis_artifacts.py
+
+    tests/
+      integration/test_api.py
+      unit/test_nutrition.py
+      unit/test_parsing.py
+
+    demo/
+    reports/
+    user_profiles/
+
+  frontend/
+    package.json
+    vite.config.ts
+    tsconfig.json
+    src/
+      api/
+      auth/
+      components/
+        Charts.tsx
+        Layout.tsx
+        ProfileAssessmentPanel.tsx
+        ProtectedRoute.tsx
+        StatCard.tsx
+      pages/
+        LoginPage.tsx
+        DashboardPage.tsx
+        ProfilesPage.tsx
+        NewAnalysisPage.tsx
+        HistoryPage.tsx
+        AnalysisDetailsPage.tsx
+      types/api.ts
+      utils/
+        labels.ts
+        nutritionDisplay.ts
+      App.tsx
+      main.tsx
+      styles.css
+```
+
+## Что Не Коммитить
+
+Обычно не нужно включать в VCS:
+
+- `backend/.env`
+- `backend/.venv/`
+- `frontend/node_modules/`
+- локальные отчеты в `backend/reports/`
+- временные SQLite базы
+- сгенерированные embedding-артефакты, если они пересобираются локально

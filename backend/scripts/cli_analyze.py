@@ -151,16 +151,27 @@ def render_report_markdown(
 
     summary = str(result.get("summary") or "-")
     servings = result.get("servings", "-")
-    serving_reason = result.get("serving_estimation_reason") or "-"
-    serving_confidence = result.get("serving_confidence") or "-"
-    suggested_range = result.get("suggested_servings_range") or "-"
-    portion_advice = result.get("portion_advice") or "-"
+    portion_guidance = result.get("portion_guidance") or {}
+    estimated_portions = portion_guidance.get("estimated_recipe_servings") or servings
+    recommended_portions = portion_guidance.get("recommended_recipe_servings") or servings
+    portion_advice = portion_guidance.get("summary") or "-"
 
     detected_issues = result.get("detected_issues", []) or []
     recommendations = result.get("recommendations", []) or []
     warnings = result.get("warnings", []) or []
     notes = result.get("notes", []) or []
-    ingredients = filter_report_ingredients(result.get("normalized_ingredients", []) or [])
+    detailed_ingredients = result.get("detailed_ingredients", []) or []
+    ingredients = filter_report_ingredients(
+        result.get("normalized_ingredients", []) or [
+            {
+                "name": (item.get("ingredient") or {}).get("name_canonical"),
+                "amount": item.get("estimated_grams"),
+                "unit": "г" if item.get("estimated_grams") is not None else None,
+            }
+            for item in detailed_ingredients
+            if isinstance(item, dict)
+        ]
+    )
     rag_context = result.get("rag_context", []) or []
 
     lines: List[str] = [
@@ -175,10 +186,9 @@ def render_report_markdown(
         f"- Compatibility: diet={result.get('diet_compatibility')}, restriction={result.get('restriction_compatibility')}, goal={result.get('goal_compatibility')}",
         "",
         "## Servings",
-        f"- Estimated servings: {servings}",
-        f"- Suggested range: {suggested_range}",
-        f"- Confidence: {serving_confidence}",
-        f"- Reason: {serving_reason}",
+        f"- Recommended servings: {servings}",
+        f"- Estimated recipe divisor: {estimated_portions}",
+        f"- Recommended recipe divisor: {recommended_portions}",
         f"- Portion advice: {portion_advice}",
         "",
         "## Nutrition Total",

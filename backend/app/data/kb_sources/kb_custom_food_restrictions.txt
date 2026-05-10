@@ -1,0 +1,11 @@
+Custom food restrictions and preferences in recipe personalization.
+
+Free-text restrictions must be matched semantically against recipe ingredients and cooking methods. Examples: "не ем свинину", "без свинины", "no pork" conflict with pork, bacon, ham, lard, salo, pancetta, sausages containing pork, and mixed minced meat if pork is included. This is a restriction/preference conflict, not a diet-type conflict, unless the diet type itself is halal, kosher, vegetarian, vegan or another strict pattern.
+
+"Не люблю острое", "без острого", "острое нельзя" conflict with chili, hot pepper, red hot pepper, adjika, tabasco, wasabi, hot sauce, spicy seasoning and large amounts of pepper. Black pepper in small amounts is usually a mild caution rather than a hard conflict unless the profile says pepper is forbidden.
+
+"Меньше жареного", "минимум жареного", "без фритюра" should be evaluated by cooking method. Pan-frying in a lot of oil, deep-frying, and repeated frying are conflicts. Sauteing a small amount of onion can be a mild caution, not a major conflict, unless the user asked to avoid all fried foods.
+
+"Меньше соли" or "малосольное" should be evaluated through sodium, added salt, pickles, marinades, salty cheese, processed meat, bouillon cubes and seasoning mixes. Explain the source and suggest reducing salt or replacing salty products.
+
+Recommendations should be concrete: replace the conflicting ingredient, reduce the amount, change the cooking method, or split the recipe into more portions. Do not mark unrelated profile sections as incompatible just because a custom restriction was found.

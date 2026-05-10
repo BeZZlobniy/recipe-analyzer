@@ -9,18 +9,24 @@ from app.modules.analysis.nutrition_rules import (
     is_minor_ingredient,
     resolve_nutrients,
 )
+from app.modules.analysis.personalization import personalization_service
 from app.modules.structuring.schemas import StructuredIngredient
 
 
 class NutritionService:
     DEFAULT_TARGETS = DEFAULT_TARGETS
 
-    def calculate(self, ingredients: list[StructuredIngredient], matches: list[dict[str, Any]], profile: dict[str, Any]) -> dict[str, Any]:
+    def calculate(
+        self,
+        ingredients: list[StructuredIngredient],
+        matches: list[dict[str, Any]],
+        profile: dict[str, Any],
+    ) -> dict[str, Any]:
         totals_raw = {key: 0.0 for key in self.DEFAULT_TARGETS}
         detailed: list[dict[str, Any]] = []
         warnings: list[str] = []
         unresolved_ingredients: list[str] = []
-        servings = max(int(profile.get("servings") or 4), 1)
+        servings = max(int(profile.get("servings") or 1), 1)
         matched_by_name = {item["ingredient"]["name_canonical"]: item for item in matches}
 
         explicit_amount_count = 0
@@ -81,8 +87,8 @@ class NutritionService:
 
         targets = self._targets_from_profile(profile)
         nutrition_total = self._format_values(totals_raw, targets)
-        nutrition_per_serving = self._format_values({key: value / servings for key, value in totals_raw.items()}, targets)
-        issues = self.generate_issues(nutrition_per_serving, ingredients, profile)
+        nutrition_per_serving = self.recalculate_per_serving(nutrition_total, servings)
+
         resolution_stats = {
             "ingredient_count": len(ingredients),
             "explicit_amount_count": explicit_amount_count,
@@ -100,47 +106,26 @@ class NutritionService:
             "nutrition_per_serving": nutrition_per_serving,
             "detailed_ingredients": detailed,
             "warnings": list(dict.fromkeys(warnings)),
-            "detected_issues": issues,
-            "compatibility": self.compatibility_scores(issues),
             "analysis_quality": analysis_quality,
             "resolution_stats": resolution_stats,
             "unresolved_ingredients": list(dict.fromkeys(unresolved_ingredients)),
+            "profile_context": personalization_service.build_profile_context(profile),
+            "nutrition_targets": targets,
         }
 
-    def generate_issues(self, nutrition_per_serving: dict[str, Any], ingredients: list[StructuredIngredient], profile: dict[str, Any]) -> list[str]:
-        issues: list[str] = []
-        sodium_pct = float(nutrition_per_serving.get("sodium", {}).get("percent_of_target", 0) or 0)
-        fat_pct = float(nutrition_per_serving.get("fat", {}).get("percent_of_target", 0) or 0)
-        calories_pct = float(nutrition_per_serving.get("calories", {}).get("percent_of_target", 0) or 0)
-        names = " ".join(item.name_canonical for item in ingredients)
-        if sodium_pct >= 80:
-            issues.append("Натрий на порцию близок к верхней границе нормы.")
-        if fat_pct >= 45:
-            issues.append("Доля жиров на порцию высокая.")
-        if calories_pct >= 45:
-            issues.append("Калорийность порции высокая для выбранной цели.")
-
-        restrictions = " ".join(self._profile_restrictions(profile))
-        diet_type = normalize_text(profile.get("diet_type"))
-        if "лактоз" in restrictions and any(token in names for token in ("сыр", "сметан", "молок", "слив")):
-            issues.append("При ограничении по лактозе обнаружены молочные ингредиенты.")
-        if ("вегетари" in diet_type or "vegetarian" in diet_type) and any(token in names for token in ("говядин", "куриц", "рыб", "бекон", "свинин")):
-            issues.append("Для вегетарианского профиля обнаружены мясные или рыбные ингредиенты.")
-        if ("веган" in diet_type or "vegan" in diet_type) and any(token in names for token in ("яйц", "сыр", "сметан", "молок", "слив", "мед")):
-            issues.append("Для веганского профиля обнаружены продукты животного происхождения.")
-        return list(dict.fromkeys(issues))
-
-    def compatibility_scores(self, issues: list[str]) -> dict[str, str]:
-        diet_penalty = restriction_penalty = goal_penalty = 0
-        for issue in issues:
-            low = issue.lower()
-            if "вегетариан" in low or "веган" in low:
-                diet_penalty += 2
-            if "лактоз" in low or "аллер" in low or "натрий" in low:
-                restriction_penalty += 1
-            if "калорий" in low or "жиров" in low:
-                goal_penalty += 1
-        return {"diet": self._level(diet_penalty), "restriction": self._level(restriction_penalty), "goal": self._level(goal_penalty)}
+    def recalculate_per_serving(self, nutrition_total: dict[str, Any], servings: int, targets: dict[str, float] | None = None) -> dict[str, Any]:
+        divisor = max(int(servings or 1), 1)
+        effective_targets = targets or {
+            key: float(item.get("target") or self.DEFAULT_TARGETS[key])
+            for key, item in nutrition_total.items()
+            if key in self.DEFAULT_TARGETS
+        }
+        per_serving_values = {
+            key: float(item.get("value") or 0) / divisor
+            for key, item in nutrition_total.items()
+            if key in effective_targets
+        }
+        return self._format_values(per_serving_values, effective_targets)
 
     def _scale_nutrients(self, nutrients_per_100g: dict[str, Any], grams: float) -> dict[str, float | None]:
         ratio = grams / 100.0
@@ -151,7 +136,8 @@ class NutritionService:
 
     def _targets_from_profile(self, profile: dict[str, Any]) -> dict[str, float]:
         targets = dict(self.DEFAULT_TARGETS)
-        if profile.get("goal") and "белк" in normalize_text(profile.get("goal")) and profile.get("weight_kg"):
+        goal_text = normalize_text(profile.get("goal"))
+        if goal_text and any(token in goal_text for token in ("белк", "protein", "мыш", "gain")) and profile.get("weight_kg"):
             targets["protein"] = max(100.0, float(profile["weight_kg"]) * 1.6)
         return targets
 
@@ -172,8 +158,8 @@ class NutritionService:
         trusted_ratio = resolution_stats["trusted_nutrition_count"] / total
         unresolved_ratio = resolution_stats["unresolved_count"] / total
         meaningful_fallback_ratio = resolution_stats["meaningful_fallback_count"] / total
-        degraded = matched_ratio < 0.6 or trusted_ratio < 0.5 or unresolved_ratio > 0.4 or meaningful_fallback_ratio > 0.4
         score = round((explicit_ratio * 0.2 + matched_ratio * 0.35 + trusted_ratio * 0.35 + (1 - meaningful_fallback_ratio) * 0.1) * 100, 2)
+        degraded = score < 70 or matched_ratio < 0.6 or trusted_ratio < 0.5 or unresolved_ratio > 0.4
         return {
             "score": score,
             "status": "degraded" if degraded else "ok",
@@ -187,19 +173,10 @@ class NutritionService:
     def _quality_warnings(self, quality: dict[str, Any], resolution_stats: dict[str, int]) -> list[str]:
         warnings: list[str] = []
         if quality["status"] == "degraded":
-            warnings.append("Качество расчета снижено: часть ключевых ингредиентов не была надежно сопоставлена с продуктовой базой.")
-        if resolution_stats["meaningful_fallback_count"] >= max(2, resolution_stats["ingredient_count"] // 3):
+            warnings.append("Качество расчёта снижено: часть ключевых ингредиентов не была надёжно сопоставлена с продуктовой базой.")
+        if quality["score"] < 85 and resolution_stats["meaningful_fallback_count"] >= max(2, resolution_stats["ingredient_count"] // 3):
             warnings.append("Для части значимых ингредиентов масса определена эвристически, а не по явному количеству.")
         return warnings
-
-    def _level(self, penalty: int) -> str:
-        return "low" if penalty >= 2 else "medium" if penalty == 1 else "high"
-
-    def _profile_restrictions(self, profile: dict[str, Any]) -> list[str]:
-        parts = [*(profile.get("allergies_json") or []), *(profile.get("diseases_json") or []), *(profile.get("preferences_json") or [])]
-        if profile.get("restrictions_text"):
-            parts.append(profile["restrictions_text"])
-        return [normalize_text(item) for item in parts if normalize_text(item)]
 
 
 nutrition_service = NutritionService()

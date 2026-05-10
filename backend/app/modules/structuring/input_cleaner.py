@@ -15,6 +15,7 @@ class RecipeInputCleaner:
     )
     RECIPE_START_MARKERS = (
         "ингредиенты",
+        "продукты",
         "состав",
         "инструкции",
         "приготовление",
@@ -37,7 +38,7 @@ class RecipeInputCleaner:
 
     def _strip_meta_prefix(self, text: str) -> str:
         lowered = normalize_text(text)
-        if any(marker in lowered for marker in ("ингредиенты", "приготовление", "инструкции")):
+        if any(marker in lowered for marker in ("ингредиенты", "продукты", "приготовление", "инструкции")):
             lines = [line for line in text.split("\n")]
             for index, line in enumerate(lines):
                 low = normalize_text(line)

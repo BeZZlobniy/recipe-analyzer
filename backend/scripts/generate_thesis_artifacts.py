@@ -3,8 +3,9 @@ from __future__ import annotations
 import csv
 import json
 import sqlite3
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
+from statistics import mean
 from typing import Any
 
 import matplotlib
@@ -27,74 +28,194 @@ def read_analyses() -> list[dict[str, Any]]:
 
     con = sqlite3.connect(DB_PATH)
     con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    rows = cur.execute(
+    rows = con.execute(
         """
-        SELECT id, title, summary, diet_compatibility, restriction_compatibility, goal_compatibility, analysis_result_json
-        FROM recipe_analyses
-        ORDER BY id
+        SELECT
+            ra.id,
+            ra.title,
+            ra.summary,
+            ra.diet_compatibility,
+            ra.restriction_compatibility,
+            ra.goal_compatibility,
+            ra.analysis_result_json,
+            ra.profile_id,
+            up.name AS profile_name,
+            up.diet_type,
+            up.goal
+        FROM recipe_analyses ra
+        JOIN user_profiles up ON up.id = ra.profile_id
+        ORDER BY ra.id
         """
     ).fetchall()
+    con.close()
 
     analyses: list[dict[str, Any]] = []
     for row in rows:
         payload = row["analysis_result_json"]
         result = json.loads(payload) if isinstance(payload, str) else payload
+        result = result or {}
         analyses.append(
             {
                 "id": row["id"],
+                "profile_id": row["profile_id"],
+                "profile": row["profile_name"],
+                "diet_type": row["diet_type"],
+                "goal": row["goal"],
                 "title": row["title"],
                 "summary": row["summary"],
-                "diet_compatibility": row["diet_compatibility"],
-                "restriction_compatibility": row["restriction_compatibility"],
-                "goal_compatibility": row["goal_compatibility"],
-                "result": result or {},
+                "diet_compatibility": row["diet_compatibility"] or (result.get("compatibility") or {}).get("diet"),
+                "restriction_compatibility": row["restriction_compatibility"] or (result.get("compatibility") or {}).get("restriction"),
+                "goal_compatibility": row["goal_compatibility"] or (result.get("compatibility") or {}).get("goal"),
+                "result": result,
             }
         )
-    con.close()
     return analyses
 
 
-def _metric_value(result: dict[str, Any], group: str, metric: str) -> float:
-    value = result.get(group, {}).get(metric, {}).get("value", 0)
-    return float(value or 0)
+def metric(result: dict[str, Any], group: str, key: str) -> float:
+    return float(((result.get(group) or {}).get(key) or {}).get("value") or 0)
 
 
-def flatten_analyses(analyses: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    flattened: list[dict[str, Any]] = []
+def flatten(analyses: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
     for item in analyses:
         result = item["result"]
-        quality = result.get("analysis_quality", {})
-        compatibility = result.get("compatibility", {})
-
-        flattened.append(
+        quality = result.get("analysis_quality") or {}
+        detailed = result.get("detailed_ingredients") or []
+        structured = (result.get("structured_recipe") or {}).get("ingredients") or []
+        rows.append(
             {
-                "id": item["id"],
-                "title": item["title"],
-                "summary": item["summary"],
-                "calories_total": _metric_value(result, "nutrition_total", "calories"),
-                "calories_per_serving": _metric_value(result, "nutrition_per_serving", "calories"),
-                "protein_per_serving": _metric_value(result, "nutrition_per_serving", "protein"),
-                "fat_per_serving": _metric_value(result, "nutrition_per_serving", "fat"),
-                "carbohydrates_per_serving": _metric_value(result, "nutrition_per_serving", "carbohydrates"),
-                "fiber_per_serving": _metric_value(result, "nutrition_per_serving", "fiber"),
-                "sodium_per_serving": _metric_value(result, "nutrition_per_serving", "sodium"),
-                "quality_score": float(quality.get("score", 0) or 0),
-                "explicit_amount_ratio": float(quality.get("explicit_amount_ratio", 0) or 0),
-                "matched_ratio": float(quality.get("matched_ratio", 0) or 0),
-                "trusted_nutrition_ratio": float(quality.get("trusted_nutrition_ratio", 0) or 0),
-                "unresolved_ratio": float(quality.get("unresolved_ratio", 0) or 0),
-                "meaningful_fallback_ratio": float(quality.get("meaningful_fallback_ratio", 0) or 0),
-                "diet_compatibility": item["diet_compatibility"] or compatibility.get("diet", ""),
-                "restriction_compatibility": item["restriction_compatibility"] or compatibility.get("restriction", ""),
-                "goal_compatibility": item["goal_compatibility"] or compatibility.get("goal", ""),
+                "analysis_id": item["id"],
+                "profile": item["profile"],
+                "diet_type": item["diet_type"],
+                "goal": item["goal"],
+                "recipe": item["title"],
+                "ingredients": len(structured),
+                "llm_ingredients": sum(1 for ing in structured if isinstance(ing, dict) and ing.get("source") == "llm_normalized"),
+                "heuristic_ingredients": sum(1 for ing in structured if isinstance(ing, dict) and ing.get("source") == "heuristic_fallback"),
+                "fallback_grams": sum(1 for detail in detailed if isinstance(detail, dict) and detail.get("used_fallback_grams")),
+                "unresolved": len(result.get("unresolved_ingredients") or []),
+                "rag_context": len(result.get("rag_context") or []),
+                "quality_score": float(quality.get("score") or 0),
+                "matched_ratio": float(quality.get("matched_ratio") or 0),
+                "trusted_nutrition_ratio": float(quality.get("trusted_nutrition_ratio") or 0),
+                "explicit_amount_ratio": float(quality.get("explicit_amount_ratio") or 0),
+                "calories_total": metric(result, "nutrition_total", "calories"),
+                "calories_per_serving": metric(result, "nutrition_per_serving", "calories"),
+                "protein_per_serving": metric(result, "nutrition_per_serving", "protein"),
+                "fat_per_serving": metric(result, "nutrition_per_serving", "fat"),
+                "carbs_per_serving": metric(result, "nutrition_per_serving", "carbs"),
+                "sodium_per_serving": metric(result, "nutrition_per_serving", "sodium"),
+                "recommended_servings": (result.get("portion_guidance") or {}).get("recommended_recipe_servings") or result.get("servings") or 1,
+                "diet_compatibility": item["diet_compatibility"] or "unknown",
+                "restriction_compatibility": item["restriction_compatibility"] or "unknown",
+                "goal_compatibility": item["goal_compatibility"] or "unknown",
+                "issues": result.get("detected_issues") or [],
+                "recommendations": result.get("recommendations") or [],
             }
         )
-    return flattened
+    return rows
 
 
-def ensure_dirs() -> None:
-    CHART_DIR.mkdir(parents=True, exist_ok=True)
+def avg(values: list[float]) -> float:
+    return round(mean(values), 2) if values else 0.0
+
+
+def pct(part: int, total: int) -> str:
+    return f"{round(part / max(total, 1) * 100, 1)}%"
+
+
+def group_by(rows: list[dict[str, Any]], key: str) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        grouped[str(row[key])].append(row)
+    return dict(grouped)
+
+
+def summary_table(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    total_ingredients = sum(int(row["ingredients"]) for row in rows)
+    heuristic = sum(int(row["heuristic_ingredients"]) for row in rows)
+    fallback_grams = sum(int(row["fallback_grams"]) for row in rows)
+    unresolved = sum(int(row["unresolved"]) for row in rows)
+    return [
+        {"Показатель": "Количество анализов", "Значение": len(rows)},
+        {"Показатель": "Уникальные рецепты", "Значение": len({row["recipe"] for row in rows})},
+        {"Показатель": "Профили пользователей", "Значение": len({row["profile"] for row in rows})},
+        {"Показатель": "Всего ингредиентов", "Значение": total_ingredients},
+        {"Показатель": "LLM-normalized ingredients", "Значение": pct(total_ingredients - heuristic, total_ingredients)},
+        {"Показатель": "Heuristic fallback ingredients", "Значение": pct(heuristic, total_ingredients)},
+        {"Показатель": "Fallback grams", "Значение": pct(fallback_grams, total_ingredients)},
+        {"Показатель": "Unresolved ingredients", "Значение": pct(unresolved, total_ingredients)},
+        {"Показатель": "Средний RAG context", "Значение": avg([float(row["rag_context"]) for row in rows])},
+        {"Показатель": "Средний quality score", "Значение": avg([float(row["quality_score"]) for row in rows])},
+    ]
+
+
+def profile_table(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    table: list[dict[str, Any]] = []
+    for profile, items in group_by(rows, "profile").items():
+        low_diet = sum(1 for row in items if row["diet_compatibility"] == "low")
+        low_restriction = sum(1 for row in items if row["restriction_compatibility"] == "low")
+        low_goal = sum(1 for row in items if row["goal_compatibility"] == "low")
+        table.append(
+            {
+                "Профиль": profile,
+                "Анализов": len(items),
+                "Средний quality": avg([float(row["quality_score"]) for row in items]),
+                "Средние ккал/порция": avg([float(row["calories_per_serving"]) for row in items]),
+                "Diet low": low_diet,
+                "Restrictions low": low_restriction,
+                "Goal low": low_goal,
+            }
+        )
+    return table
+
+
+def recipe_table(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    table: list[dict[str, Any]] = []
+    for recipe, items in group_by(rows, "recipe").items():
+        table.append(
+            {
+                "Рецепт": recipe,
+                "Анализов": len(items),
+                "Ингредиентов": int(items[0]["ingredients"]),
+                "Средний quality": avg([float(row["quality_score"]) for row in items]),
+                "Ккал/порция": avg([float(row["calories_per_serving"]) for row in items]),
+                "Fallback grams": int(items[0]["fallback_grams"]),
+                "Unresolved": int(items[0]["unresolved"]),
+            }
+        )
+    return table
+
+
+def compatibility_table(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    table: list[dict[str, Any]] = []
+    dimensions = [
+        ("Тип питания", "diet_compatibility"),
+        ("Ограничения/аллергии", "restriction_compatibility"),
+        ("Цель", "goal_compatibility"),
+    ]
+    for label, key in dimensions:
+        counts = Counter(row[key] for row in rows)
+        table.append(
+            {
+                "Ось совместимости": label,
+                "High": counts.get("high", 0),
+                "Medium": counts.get("medium", 0),
+                "Low": counts.get("low", 0),
+            }
+        )
+    return table
+
+
+def issue_table(rows: list[dict[str, Any]], limit: int = 12) -> list[dict[str, Any]]:
+    counter: Counter[str] = Counter()
+    for row in rows:
+        for issue in row["issues"]:
+            text = str(issue).strip()
+            if text and "явных конфликтов" not in text.lower():
+                counter[text] += 1
+    return [{"Проблема": issue, "Количество": count} for issue, count in counter.most_common(limit)]
 
 
 def write_json(path: Path, payload: Any) -> None:
@@ -112,105 +233,16 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def write_markdown_table(path: Path, rows: list[dict[str, Any]]) -> None:
     if not rows:
+        path.write_text("", encoding="utf-8")
         return
     headers = list(rows[0].keys())
-    lines = [
-        "| " + " | ".join(headers) + " |",
-        "| " + " | ".join(["---"] * len(headers)) + " |",
-    ]
+    lines = ["| " + " | ".join(headers) + " |", "| " + " | ".join(["---"] * len(headers)) + " |"]
     for row in rows:
-        lines.append("| " + " | ".join(str(row[header]) for header in headers) + " |")
+        lines.append("| " + " | ".join(str(row[header]).replace("|", "/") for header in headers) + " |")
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def _average(rows: list[dict[str, Any]], key: str) -> float:
-    return round(sum(float(row[key]) for row in rows) / max(len(rows), 1), 2)
-
-
-def write_methodology_note(path: Path, rows: list[dict[str, Any]]) -> None:
-    text = f"""Методологическая записка для подраздела 3.2.1
-
-Тестирование проводилось на демонстрационной выборке из {len(rows)} рецептов, различающихся по калорийности и совместимости с пользовательским профилем.
-
-В рамках проверки оценивались:
-- корректность маршрутов frontend/backend;
-- устойчивость полного конвейера анализа;
-- полнота сопоставления ингредиентов с USDA;
-- отсутствие unresolved ingredients в демонстрационных кейсах;
-- реалистичность пищевой ценности;
-- корректность compatibility по трем осям.
-
-Средний quality score по демонстрационной выборке: {_average(rows, "quality_score")}.
-Средняя калорийность на рецепт: {_average(rows, "calories_total")} ккал.
-Средняя калорийность на порцию: {_average(rows, "calories_per_serving")} ккал.
-Средний explicit_amount_ratio: {_average(rows, "explicit_amount_ratio")}.
-Средний meaningful_fallback_ratio: {_average(rows, "meaningful_fallback_ratio")}.
-"""
-    path.write_text(text, encoding="utf-8")
-
-
-def write_comparison_note(path: Path) -> None:
-    text = """Сравнительная записка для подраздела 3.2.2
-
-Для сравнительного анализа предлагается использовать следующие классы решений:
-- ручные калькуляторы калорий;
-- rule-based решения без LLM;
-- LLM-only решения;
-- разработанную гибридную систему.
-
-Ключевые преимущества разработанной системы:
-- поддержка свободного текста рецепта;
-- автоматическое извлечение ингредиентов;
-- deterministic nutrition layer на базе USDA;
-- персонализация по пользовательскому профилю;
-- хранение истории и построение dashboard;
-- наличие внутренних quality metrics анализа.
-"""
-    path.write_text(text, encoding="utf-8")
-
-
-def write_comparison_table(path: Path) -> None:
-    rows = [
-        {
-            "Критерий": "Свободный текст рецепта",
-            "Ручной калькулятор": "нет",
-            "Rule-based only": "частично",
-            "LLM-only": "да",
-            "Разработанная система": "да",
-        },
-        {
-            "Критерий": "Автоматическое извлечение ингредиентов",
-            "Ручной калькулятор": "нет",
-            "Rule-based only": "частично",
-            "LLM-only": "да",
-            "Разработанная система": "да",
-        },
-        {
-            "Критерий": "Верифицируемый источник нутриентов",
-            "Ручной калькулятор": "частично",
-            "Rule-based only": "зависит от реализации",
-            "LLM-only": "нет",
-            "Разработанная система": "да",
-        },
-        {
-            "Критерий": "Персонализация по профилю",
-            "Ручной калькулятор": "ограниченно",
-            "Rule-based only": "частично",
-            "LLM-only": "частично",
-            "Разработанная система": "да",
-        },
-        {
-            "Критерий": "История и dashboard",
-            "Ручной калькулятор": "редко",
-            "Rule-based only": "нет",
-            "LLM-only": "редко",
-            "Разработанная система": "да",
-        },
-    ]
-    write_markdown_table(path, rows)
-
-
-def _configure_plot(ax: plt.Axes) -> None:
+def chart_style(ax: plt.Axes) -> None:
     ax.set_facecolor("#fffdf9")
     ax.grid(axis="x", color="#d9d0c3", linewidth=0.8, alpha=0.8)
     ax.set_axisbelow(True)
@@ -220,178 +252,128 @@ def _configure_plot(ax: plt.Axes) -> None:
     ax.spines["bottom"].set_color("#b7aa98")
 
 
-def write_bar_chart(path: Path, title: str, rows: list[dict[str, Any]], value_key: str, unit: str, color: str) -> None:
-    titles = [str(row["title"]) for row in rows]
-    values = [float(row[value_key]) for row in rows]
-
-    fig, ax = plt.subplots(figsize=(13, 7), dpi=180)
+def save_barh(path: Path, title: str, labels: list[str], values: list[float], unit: str, color: str) -> None:
+    fig, ax = plt.subplots(figsize=(14, max(7, len(labels) * 0.35)), dpi=180)
     fig.patch.set_facecolor("#f7f2e9")
-    _configure_plot(ax)
-
-    bars = ax.barh(titles, values, color=color, edgecolor="#4b3621", linewidth=0.8)
+    chart_style(ax)
+    bars = ax.barh(labels, values, color=color, edgecolor="#4b3621", linewidth=0.7)
     ax.invert_yaxis()
-    ax.set_title(title, fontsize=18, fontweight="bold", pad=16)
-    ax.set_xlabel(unit, fontsize=12)
-
+    ax.set_title(title, fontsize=17, fontweight="bold", pad=14)
+    ax.set_xlabel(unit)
     max_value = max(values, default=1) or 1
-    ax.set_xlim(0, max_value * 1.18)
-    ax.xaxis.set_major_locator(MaxNLocator(nbins=6))
-
+    ax.set_xlim(0, max_value * 1.2)
     for bar, value in zip(bars, values):
-        ax.text(
-            bar.get_width() + max_value * 0.015,
-            bar.get_y() + bar.get_height() / 2,
-            f"{value:.2f} {unit}",
-            va="center",
-            ha="left",
-            fontsize=11,
-            color="#2d2116",
-            fontweight="bold",
-        )
-
+        ax.text(bar.get_width() + max_value * 0.015, bar.get_y() + bar.get_height() / 2, f"{value:.2f}", va="center", fontsize=9)
     plt.tight_layout()
     fig.savefig(path, format="png", dpi=180, bbox_inches="tight")
     plt.close(fig)
 
 
-def write_grouped_compatibility_chart(path: Path, rows: list[dict[str, Any]]) -> None:
-    levels = ["high", "medium", "low"]
-    labels = {
-        "high": "Высокая",
-        "medium": "Средняя",
-        "low": "Низкая",
-    }
-    dimensions = [
-        ("Совместимость с типом питания", "diet_compatibility"),
-        ("Совместимость с ограничениями", "restriction_compatibility"),
-        ("Совместимость с целью", "goal_compatibility"),
-    ]
-    colors = {
-        "high": "#497d4e",
-        "medium": "#d1a33c",
-        "low": "#b5533d",
-    }
-
-    counts = {title: Counter(row[key] for row in rows) for title, key in dimensions}
-    fig, ax = plt.subplots(figsize=(13, 7), dpi=180)
-    fig.patch.set_facecolor("#f7f2e9")
-    _configure_plot(ax)
-
-    x_positions = range(len(dimensions))
-    width = 0.22
+def save_compatibility_chart(path: Path, rows: list[dict[str, Any]]) -> None:
+    table = compatibility_table(rows)
+    levels = ["High", "Medium", "Low"]
+    colors = {"High": "#497d4e", "Medium": "#d1a33c", "Low": "#b5533d"}
+    x = list(range(len(table)))
+    width = 0.23
     offsets = [-width, 0, width]
-
+    fig, ax = plt.subplots(figsize=(12, 6), dpi=180)
+    fig.patch.set_facecolor("#f7f2e9")
+    chart_style(ax)
     for offset, level in zip(offsets, levels):
-        values = [counts[title].get(level, 0) for title, _ in dimensions]
-        bars = ax.bar(
-            [x + offset for x in x_positions],
-            values,
-            width=width,
-            label=labels[level],
-            color=colors[level],
-            edgecolor="#4b3621",
-            linewidth=0.8,
-        )
+        values = [int(row[level]) for row in table]
+        bars = ax.bar([pos + offset for pos in x], values, width=width, label=level, color=colors[level], edgecolor="#4b3621", linewidth=0.7)
         for bar, value in zip(bars, values):
-            ax.text(
-                bar.get_x() + bar.get_width() / 2,
-                value + 0.05,
-                str(value),
-                ha="center",
-                va="bottom",
-                fontsize=11,
-                color="#2d2116",
-                fontweight="bold",
-            )
-
-    ax.set_title("Распределение совместимости по осям", fontsize=18, fontweight="bold", pad=16)
-    ax.set_xticks(list(x_positions))
-    ax.set_xticklabels([title for title, _ in dimensions], rotation=0, fontsize=11)
-    ax.set_ylabel("Количество рецептов", fontsize=12)
+            ax.text(bar.get_x() + bar.get_width() / 2, value + 0.2, str(value), ha="center", fontsize=10)
+    ax.set_title("Распределение совместимости по 100 анализам", fontsize=17, fontweight="bold", pad=14)
+    ax.set_xticks(x)
+    ax.set_xticklabels([row["Ось совместимости"] for row in table])
+    ax.set_ylabel("Количество анализов")
     ax.yaxis.set_major_locator(MaxNLocator(integer=True))
-    ax.legend(frameon=False, fontsize=11)
-
+    ax.legend(frameon=False)
     plt.tight_layout()
     fig.savefig(path, format="png", dpi=180, bbox_inches="tight")
     plt.close(fig)
 
 
-def remove_legacy_svg() -> None:
-    for name in (
-        "calories_total.svg",
-        "calories_per_serving.svg",
-        "quality_score.svg",
-        "compatibility_distribution.svg",
-    ):
-        legacy = CHART_DIR / name
-        if legacy.exists():
-            legacy.unlink()
+def save_profile_quality_chart(path: Path, table: list[dict[str, Any]]) -> None:
+    save_barh(
+        path,
+        "Средний quality score по профилям",
+        [row["Профиль"] for row in table],
+        [float(row["Средний quality"]) for row in table],
+        "баллы",
+        "#4d8451",
+    )
 
 
-def write_overview_markdown(path: Path, rows: list[dict[str, Any]]) -> None:
-    lines = [
-        "# Материалы для раздела 3.2",
-        "",
-        "Скрипт автоматически собрал метрики и графики по демонстрационным рецептам из `backend/app.db`.",
-        "",
-        "## Сгенерированные файлы",
-        "",
-        "- `demo_metrics.json` — полный набор численных метрик по рецептам;",
-        "- `demo_metrics.csv` — табличный экспорт;",
-        "- `demo_metrics.md` — markdown-таблица для вставки в черновик;",
-        "- `comparison_table.md` — сравнительная таблица для 3.2.2;",
-        "- `methodology_note.txt` — служебная записка для 3.2.1;",
-        "- `comparison_note.txt` — служебная записка для 3.2.2;",
-        "- `charts/calories_total.png` — столбчатая диаграмма по калорийности рецептов;",
-        "- `charts/quality_score.png` — столбчатая диаграмма по quality score;",
-        "- `charts/compatibility_distribution.png` — график распределения compatibility.",
-        "",
-        "## Демонстрационные кейсы",
-        "",
-    ]
-    for row in rows:
-        lines.append(
-            f"- **{row['title']}**: {row['calories_total']:.2f} ккал/рецепт, "
-            f"{row['calories_per_serving']:.2f} ккал/порция, "
-            f"quality {row['quality_score']:.2f}, compatibility "
-            f"{row['diet_compatibility']}/{row['restriction_compatibility']}/{row['goal_compatibility']}."
-        )
-    path.write_text("\n".join(lines), encoding="utf-8")
+def write_notes(rows: list[dict[str, Any]], tables: dict[str, list[dict[str, Any]]]) -> None:
+    text = f"""Комплексная статистика демонстрационного прогона
+
+Объем выборки: {len(rows)} анализов ({len({row['recipe'] for row in rows})} рецептов × {len({row['profile'] for row in rows})} профилей).
+
+Ключевые показатели:
+- средний quality score: {avg([float(row['quality_score']) for row in rows])};
+- средний RAG context: {avg([float(row['rag_context']) for row in rows])};
+- доля heuristic fallback ingredients: {tables['summary'][5]['Значение']};
+- доля unresolved ingredients: {tables['summary'][7]['Значение']};
+- средняя калорийность на порцию: {avg([float(row['calories_per_serving']) for row in rows])} ккал.
+
+Материалы для вставки в диплом:
+- `tables/summary.md` — общая сводка;
+- `tables/by_profile.md` — качество и конфликты по профилям;
+- `tables/by_recipe.md` — качество и нутриентная устойчивость по рецептам;
+- `tables/compatibility.md` — распределение совместимости;
+- `tables/top_issues.md` — наиболее частые проблемы;
+- `charts/*.png` — графики для раздела с экспериментальной проверкой.
+"""
+    (REPORT_DIR / "README.md").write_text(text, encoding="utf-8")
 
 
 def main() -> None:
-    ensure_dirs()
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    table_dir = REPORT_DIR / "tables"
+    table_dir.mkdir(parents=True, exist_ok=True)
+    CHART_DIR.mkdir(parents=True, exist_ok=True)
+
     analyses = read_analyses()
-    rows = flatten_analyses(analyses)
+    rows = flatten(analyses)
     if not rows:
         raise SystemExit("No analyses found in backend/app.db")
 
-    rows_for_md = [
-        {
-            "Рецепт": row["title"],
-            "Ккал/рецепт": f"{row['calories_total']:.2f}",
-            "Ккал/порция": f"{row['calories_per_serving']:.2f}",
-            "Quality score": f"{row['quality_score']:.2f}",
-            "Matched ratio": f"{row['matched_ratio']:.2f}",
-            "Unresolved ratio": f"{row['unresolved_ratio']:.2f}",
-            "Тип питания": row["diet_compatibility"],
-            "Ограничения": row["restriction_compatibility"],
-            "Цель": row["goal_compatibility"],
-        }
-        for row in rows
-    ]
+    tables = {
+        "summary": summary_table(rows),
+        "by_profile": profile_table(rows),
+        "by_recipe": recipe_table(rows),
+        "compatibility": compatibility_table(rows),
+        "top_issues": issue_table(rows),
+    }
 
-    remove_legacy_svg()
-    write_json(REPORT_DIR / "demo_metrics.json", rows)
-    write_csv(REPORT_DIR / "demo_metrics.csv", rows)
-    write_markdown_table(REPORT_DIR / "demo_metrics.md", rows_for_md)
-    write_methodology_note(REPORT_DIR / "methodology_note.txt", rows)
-    write_comparison_note(REPORT_DIR / "comparison_note.txt")
-    write_comparison_table(REPORT_DIR / "comparison_table.md")
-    write_bar_chart(CHART_DIR / "calories_total.png", "Калорийность демонстрационных рецептов", rows, "calories_total", "ккал", "#bd5a3c")
-    write_bar_chart(CHART_DIR / "quality_score.png", "Значения quality score по рецептам", rows, "quality_score", "балл", "#4d8451")
-    write_grouped_compatibility_chart(CHART_DIR / "compatibility_distribution.png", rows)
-    write_overview_markdown(REPORT_DIR / "README.md", rows)
+    write_json(REPORT_DIR / "analysis_metrics.json", rows)
+    write_csv(REPORT_DIR / "analysis_metrics.csv", rows)
+    for name, table in tables.items():
+        write_csv(table_dir / f"{name}.csv", table)
+        write_markdown_table(table_dir / f"{name}.md", table)
+
+    recipe_rows = tables["by_recipe"]
+    save_barh(
+        CHART_DIR / "calories_per_serving_by_recipe.png",
+        "Средняя калорийность на порцию по рецептам",
+        [row["Рецепт"] for row in recipe_rows],
+        [float(row["Ккал/порция"]) for row in recipe_rows],
+        "ккал",
+        "#bd5a3c",
+    )
+    save_barh(
+        CHART_DIR / "quality_by_recipe.png",
+        "Средний quality score по рецептам",
+        [row["Рецепт"] for row in recipe_rows],
+        [float(row["Средний quality"]) for row in recipe_rows],
+        "баллы",
+        "#4d8451",
+    )
+    save_profile_quality_chart(CHART_DIR / "quality_by_profile.png", tables["by_profile"])
+    save_compatibility_chart(CHART_DIR / "compatibility_distribution.png", rows)
+    write_notes(rows, tables)
     print(f"Generated thesis artifacts in: {REPORT_DIR}")
 
 

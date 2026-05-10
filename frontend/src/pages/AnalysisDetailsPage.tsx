@@ -1,14 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { analysisApi, profilesApi } from "../api";
-import type { AnalysisDetail, Profile } from "../types/api";
-import { formatNutrientKey, formatNutrientUnit } from "../utils/labels";
+import { ProfileAssessmentPanel } from "../components/ProfileAssessmentPanel";
+import type { AnalysisDetail, DetailedIngredient, Profile } from "../types/api";
+import {
+  buildDisplayedNutrition,
+  clampDivisor,
+  formatDisplayLabel,
+  formatDisplayUnit,
+  formatRecipeDivisor,
+  getInitialRecipeDivisor,
+  getRecipeDivisorMax,
+  hasSaltByTaste,
+} from "../utils/nutritionDisplay";
+import { isUserFacingWarning, uniqueTextList } from "../utils/text";
 
 export function AnalysisDetailsPage() {
   const { analysisId } = useParams();
   const [detail, setDetail] = useState<AnalysisDetail | null>(null);
   const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [portions, setPortions] = useState(1);
+  const [portionDivisor, setPortionDivisor] = useState(1);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -21,34 +32,32 @@ export function AnalysisDetailsPage() {
     }
     void analysisApi
       .historyItem(Number(analysisId))
-      .then(setDetail)
+      .then((payload) => {
+        setDetail(payload);
+        setPortionDivisor(getInitialRecipeDivisor(payload.analysis_result));
+      })
       .catch((err) => setError(err instanceof Error ? err.message : "Не удалось загрузить анализ"));
   }, [analysisId]);
 
   const result = detail?.analysis_result ?? null;
   const profile = profiles.find((item) => item.id === detail?.profile_id) ?? null;
   const visibleWarnings = useMemo(
-    () => (result?.warnings ?? []).filter((item) => !/^Что учитывать:|^Тема:|^Рекомендации:/i.test(item)),
+    () => (result?.warnings ?? []).filter(isUserFacingWarning),
     [result],
   );
-  const sodiumByTaste = useMemo(
-    () =>
-      Boolean(
-        result?.detailed_ingredients?.some((item) => {
-          const ingredient = item.ingredient as { name_canonical?: string; amount_text?: string } | undefined;
-          return ingredient?.name_canonical === "соль" && ingredient?.amount_text === "по вкусу";
-        }),
-      ),
+  const sodiumByTaste = useMemo(() => hasSaltByTaste(result), [result]);
+  const displayedNutrition = useMemo(
+    () => buildDisplayedNutrition(result, portionDivisor, sodiumByTaste),
+    [result, portionDivisor, sodiumByTaste],
+  );
+  const keyIssues = useMemo(
+    () => uniqueTextList(result?.detected_issues ?? []).filter((item) => !/^Явных конфликтов/i.test(item)),
     [result],
   );
-  const scaledNutrition = useMemo(
-    () =>
-      Object.entries(result?.nutrition_total ?? {}).map(([key, value]) => ({
-        key,
-        value: key === "sodium" && sodiumByTaste ? "по вкусу" : Number((value.value / portions).toFixed(2)),
-      })),
-    [result, portions, sodiumByTaste],
-  );
+  const keyRecommendations = useMemo(() => {
+    const portionSummary = result?.portion_guidance?.summary ?? "";
+    return uniqueTextList(result?.recommendations ?? []).filter((item) => item !== portionSummary);
+  }, [result]);
 
   if (error) {
     return <div className="page">{error}</div>;
@@ -57,6 +66,10 @@ export function AnalysisDetailsPage() {
   if (!detail || !result) {
     return <div className="page">Загрузка...</div>;
   }
+
+  const maxDivisor = getRecipeDivisorMax(result);
+  const portionSummary = result.portion_guidance?.summary;
+  const showPortionSummary = Boolean(portionSummary && !result.summary.includes(portionSummary));
 
   return (
     <div className="page">
@@ -76,65 +89,115 @@ export function AnalysisDetailsPage() {
             <div className="listRow"><strong>Аллергии:</strong><span>{profile?.allergies_json?.length ? profile.allergies_json.join(", ") : "нет"}</span></div>
             <div className="listRow"><strong>Заболевания:</strong><span>{profile?.diseases_json?.length ? profile.diseases_json.join(", ") : "нет"}</span></div>
             <div className="listRow"><strong>Ограничения:</strong><span>{profile?.restrictions_text || "не заданы"}</span></div>
+            <div className="listRow"><strong>Базовое деление рецепта:</strong><span>{formatRecipeDivisor(result.portion_guidance?.estimated_recipe_servings ?? 1)}</span></div>
+            <div className="listRow"><strong>Рекомендуемое деление:</strong><span>{formatRecipeDivisor(getInitialRecipeDivisor(result))}</span></div>
+            {result.target_recipe_calories ? (
+              <div className="listRow"><strong>Целевые калории:</strong><span>{result.target_recipe_calories} ккал</span></div>
+            ) : null}
           </div>
+          {showPortionSummary ? <div className="muted">{portionSummary}</div> : null}
         </div>
       </div>
+
+      {result.profile_assessment ? <ProfileAssessmentPanel assessment={result.profile_assessment} /> : null}
 
       <div className="grid twoCols">
         <div className="card">
           <h3>Структурированные ингредиенты</h3>
-          <ul>{detail.structured_recipe.ingredients.map((item) => <li key={item.name_raw}>{item.name_raw} → {item.name_canonical}</li>)}</ul>
+          {result.detailed_ingredients.length > 0 ? (
+            <div className="ingredientList">
+              {result.detailed_ingredients.map((item, index) => (
+                <div className="ingredientCard" key={`${item.ingredient.name_canonical}-${index}`}>
+                  <div className="ingredientHeader">
+                    <strong>{item.ingredient.name_raw} → {item.ingredient.name_canonical}</strong>
+                    <span className={`pill ${item.match_confidence ?? "medium"}`}>{item.match_confidence ?? "medium"}</span>
+                  </div>
+                  <div className="muted">
+                    Использовано в анализе: {item.matched_name || "не сопоставлено"}{typeof item.estimated_grams === "number" ? `, ${item.estimated_grams.toFixed(2)} г` : ""}
+                  </div>
+                  <div className="ingredientNutritionGrid">
+                    <div><span>Ккал</span><strong>{formatIngredientNutrient(item, "calories")}</strong></div>
+                    <div><span>Белки</span><strong>{formatIngredientNutrient(item, "protein")} г</strong></div>
+                    <div><span>Жиры</span><strong>{formatIngredientNutrient(item, "fat")} г</strong></div>
+                    <div><span>Углеводы</span><strong>{formatIngredientNutrient(item, "carbs")} г</strong></div>
+                    <div><span>Клетчатка</span><strong>{formatIngredientNutrient(item, "fiber")} г</strong></div>
+                    <div><span>Натрий</span><strong>{formatIngredientNutrient(item, "sodium")} мг</strong></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="muted">Детализация ингредиентов недоступна.</p>
+          )}
         </div>
         <div className="card">
           <div className="rowBetween">
             <h3>Пищевая ценность</h3>
-            <strong>{portions} {pluralizePortions(portions)}</strong>
+            <strong>{formatRecipeDivisor(portionDivisor)}</strong>
           </div>
           <label>
-            Показать для количества порций
-            <input type="range" min="1" max="10" value={portions} onChange={(event) => setPortions(Number(event.target.value))} />
+            Показать значения, если разделить рецепт на
+            <input
+              type="range"
+              min="1"
+              max={String(maxDivisor)}
+              step="1"
+              value={portionDivisor}
+              onChange={(event) => setPortionDivisor(Number(event.target.value))}
+            />
           </label>
-          <ul>{scaledNutrition.map((item) => <li key={item.key}>{formatDisplayLabel(item.key, item.value)}: {item.value} {formatDisplayUnit(item.key, item.value)}</li>)}</ul>
+          <div className="portionInputRow">
+            <input
+              type="number"
+              min="1"
+              max={String(maxDivisor)}
+              step="1"
+              value={portionDivisor}
+              onChange={(event) => setPortionDivisor(clampDivisor(event.target.value, maxDivisor))}
+            />
+            <span className="muted">1 порция = 1/{portionDivisor} рецепта</span>
+          </div>
+          <div className="nutritionGrid">
+            {displayedNutrition.map((item) => (
+              <div className="nutritionTile" key={item.key}>
+                <span>{formatDisplayLabel(item.key, item.value)}</span>
+                <strong>{item.value} {formatDisplayUnit(item.key, item.value)}</strong>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       <div className="grid twoCols">
         <div className="card">
           <h3>Проблемы и рекомендации</h3>
-          {result.detected_issues.length > 0 ? <ul>{result.detected_issues.map((item) => <li key={item}>{item}</li>)}</ul> : <p className="muted">Явных проблем не выявлено.</p>}
-          <ul>{result.recommendations.map((item) => <li key={item}>{item}</li>)}</ul>
+          <h4>Проблемы</h4>
+          {keyIssues.length > 0 ? (
+            <ul>{keyIssues.map((item) => <li key={item}>{item}</li>)}</ul>
+          ) : (
+            <p className="muted">Явных проблем не выявлено.</p>
+          )}
+          <h4>Рекомендации</h4>
+          {keyRecommendations.length > 0 ? (
+            <ul>{keyRecommendations.map((item) => <li key={item}>{item}</li>)}</ul>
+          ) : (
+            <p className="muted">Дополнительных рекомендаций нет.</p>
+          )}
         </div>
         <div className="card">
           <h3>Предупреждения</h3>
-          {visibleWarnings.length > 0 ? <ul>{visibleWarnings.map((item) => <li key={item}>{item}</li>)}</ul> : <p className="muted">Предупреждений нет.</p>}
+          {visibleWarnings.length > 0 ? (
+            <ul>{visibleWarnings.map((item) => <li key={item}>{item}</li>)}</ul>
+          ) : (
+            <p className="muted">Предупреждений нет.</p>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-function pluralizePortions(value: number) {
-  const mod10 = value % 10;
-  const mod100 = value % 100;
-  if (mod10 === 1 && mod100 !== 11) {
-    return "порция";
-  }
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
-    return "порции";
-  }
-  return "порций";
-}
-
-function formatDisplayLabel(key: string, value: string | number) {
-  if (key === "sodium" && value === "по вкусу") {
-    return "Соль";
-  }
-  return formatNutrientKey(key);
-}
-
-function formatDisplayUnit(key: string, value: string | number) {
-  if (key === "sodium" && value === "по вкусу") {
-    return "";
-  }
-  return formatNutrientUnit(key);
+function formatIngredientNutrient(item: DetailedIngredient, key: "calories" | "protein" | "fat" | "carbs" | "fiber" | "sodium") {
+  const value = item.nutrients?.[key];
+  return typeof value === "number" ? value.toFixed(2) : "—";
 }

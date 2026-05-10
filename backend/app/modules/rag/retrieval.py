@@ -16,6 +16,7 @@ class RetrievalService:
         self.kb_path = find_data_file("knowledge_base.json")
         self.emb_path = find_data_file("knowledge_base_embeddings.npy")
         self.meta_path = find_data_file("knowledge_base_embeddings_meta.json")
+        self.device = settings.resolve_embedding_device()
         self._kb: list[dict[str, Any]] | None = None
         self._embeddings: np.ndarray | None = None
         self._model: SentenceTransformer | None = None
@@ -184,7 +185,7 @@ class RetrievalService:
 
     def _get_model(self) -> SentenceTransformer:
         if self._model is None:
-            self._model = SentenceTransformer(settings.embedding_model)
+            self._model = SentenceTransformer(settings.embedding_model, device=self.device)
         return self._model
 
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from sqlalchemy import delete, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -28,28 +28,12 @@ class RagIngredientResolutionService:
     def resolve(self, db: Session, recipe_text: str, recipe: StructuredRecipe) -> list[dict[str, Any]]:
         resolved: list[dict[str, Any]] = []
         for ingredient in recipe.ingredients:
+            ingredient_payload = ingredient.model_dump()
             queries = build_queries(ingredient.name_canonical, ingredient.name_en)[: settings.usda_max_queries_per_ingredient]
             top_candidates = self._search_candidates(db, queries)
-            selection = self._select_candidate(recipe_text, recipe.title, ingredient.model_dump(), top_candidates)
+            selection = self._select_candidate(recipe_text, recipe.title, ingredient_payload, top_candidates)
             product = db.get(Product, selection["selected_product_id"]) if selection.get("selected_product_id") else None
-            matched_product = serialize_product(product)
-            resolved.append(
-                {
-                    "ingredient": ingredient.model_dump(),
-                    "match_status": "matched" if matched_product else "unresolved",
-                    "matched_name": matched_product.get("display_name_ru") if matched_product else None,
-                    "matched_source": matched_product.get("source") if matched_product else None,
-                    "match_method": selection.get("match_method", "unresolved"),
-                    "match_confidence": selection.get("confidence", "low"),
-                    "selection_reason": selection.get("reason"),
-                    "nutrition_source": matched_product.get("source") if matched_product and matched_product.get("nutrients_per_100g") else "unknown",
-                    "nutrition_confidence": "medium" if matched_product else "low",
-                    "matched_product": matched_product,
-                    "top_candidates": top_candidates,
-                    "usda_queries": queries,
-                    "canonical_query_en": next((item for item in queries if item.isascii()), None),
-                }
-            )
+            resolved.append(self._resolution_payload(ingredient_payload, selection, product, top_candidates, queries))
         return resolved
 
     def _search_candidates(self, db: Session, queries: list[str]) -> list[dict[str, Any]]:
@@ -61,15 +45,7 @@ class RagIngredientResolutionService:
                     continue
                 current = scored.get(product.id)
                 if current is None or score > current["score"]:
-                    scored[product.id] = {
-                        "product_id": product.id,
-                        "score": score,
-                        "strategy": "usda_search",
-                        "display_name_ru": product.display_name_ru,
-                        "display_name_en": product.display_name_en,
-                        "category": product.category,
-                        "source": product.source,
-                    }
+                    scored[product.id] = self._candidate_payload(product, score)
         return sorted(scored.values(), key=lambda item: item["score"], reverse=True)[: settings.usda_page_size]
 
     def _products_for_query(self, db: Session, query: str) -> list[Product]:
@@ -156,33 +132,25 @@ class RagIngredientResolutionService:
         candidate_products: list[dict[str, Any]],
     ) -> dict[str, Any]:
         if not candidate_products:
-            return {"selected_product_id": None, "confidence": "low", "reason": "Кандидаты USDA не найдены.", "match_method": "unresolved"}
+            return self._unresolved("Кандидаты USDA не найдены.")
+        candidate_products = [
+            item
+            for item in candidate_products
+            if is_exact_candidate(ingredient_payload, item) or is_safe_candidate(ingredient_payload, item)
+        ]
+        if not candidate_products:
+            return self._unresolved("USDA shortlist не содержит безопасного кандидата.")
         top = candidate_products[0]
         second_score = candidate_products[1]["score"] if len(candidate_products) > 1 else 0.0
 
         if is_exact_candidate(ingredient_payload, top):
-            return {
-                "selected_product_id": top["product_id"],
-                "confidence": "high",
-                "reason": "Выбран точный кандидат USDA по английскому названию ингредиента.",
-                "match_method": "usda_exact_name",
-            }
+            return self._selected(top, "high", "Выбран точный кандидат USDA по английскому названию ингредиента.", "usda_exact_name")
         if len(candidate_products) == 1 and is_safe_candidate(ingredient_payload, top):
-            return {
-                "selected_product_id": top["product_id"],
-                "confidence": "medium",
-                "reason": "USDA вернула один релевантный кандидат.",
-                "match_method": "usda_single_candidate",
-            }
+            return self._selected(top, "medium", "USDA вернула один релевантный кандидат.", "usda_single_candidate")
         if is_safe_candidate(ingredient_payload, top) and top["score"] >= 4.0 and top["score"] - second_score >= 0.3:
-            return {
-                "selected_product_id": top["product_id"],
-                "confidence": "medium",
-                "reason": "Выбран лучший релевантный USDA-кандидат без необходимости LLM-разрешения.",
-                "match_method": "usda_rank_fallback",
-            }
+            return self._selected(top, "medium", "Выбран лучший релевантный USDA-кандидат без необходимости LLM-разрешения.", "usda_rank_fallback")
         if top["score"] < 2.8:
-            return {"selected_product_id": None, "confidence": "low", "reason": "USDA shortlist слишком слабый для надежного выбора.", "match_method": "unresolved"}
+            return self._unresolved("USDA shortlist слишком слабый для надежного выбора.")
 
         try:
             payload = ollama_service.resolve_product_candidate(
@@ -194,21 +162,65 @@ class RagIngredientResolutionService:
         except Exception:
             payload = None
         if isinstance(payload, dict) and payload.get("selected_product_id") is not None:
+            selected = next((item for item in candidate_products if item["product_id"] == payload.get("selected_product_id")), None)
+            if selected is None or not is_safe_candidate(ingredient_payload, selected):
+                return self._unresolved("LLM выбрала неподходящий USDA-кандидат.")
             payload["match_method"] = "llm_usda_resolution"
             return payload
         if top["score"] >= 4.5 and is_safe_candidate(ingredient_payload, top):
-            return {
-                "selected_product_id": top["product_id"],
-                "confidence": "low",
-                "reason": "LLM недоступна, выбран лучший USDA-кандидат по рейтингу.",
-                "match_method": "usda_rank_fallback",
-            }
-        return {"selected_product_id": None, "confidence": "low", "reason": "LLM не выбрала надежный USDA-кандидат.", "match_method": "unresolved"}
+            return self._selected(top, "low", "LLM недоступна, выбран лучший USDA-кандидат по рейтингу.", "usda_rank_fallback")
+        return self._unresolved("LLM не выбрала надежный USDA-кандидат.")
 
-    def clear_legacy_off_data(self, db: Session) -> None:
-        db.execute(delete(ExternalLookupCache).where(ExternalLookupCache.provider.like("openfoodfacts%")))
-        db.execute(delete(Product).where(Product.source == "openfoodfacts"))
-        db.commit()
+    def _candidate_payload(self, product: Product, score: float) -> dict[str, Any]:
+        return {
+            "product_id": product.id,
+            "score": score,
+            "strategy": "usda_search",
+            "display_name_ru": product.display_name_ru,
+            "display_name_en": product.display_name_en,
+            "category": product.category,
+            "source": product.source,
+        }
 
+    def _resolution_payload(
+        self,
+        ingredient: dict[str, Any],
+        selection: dict[str, Any],
+        product: Product | None,
+        top_candidates: list[dict[str, Any]],
+        queries: list[str],
+    ) -> dict[str, Any]:
+        matched_product = serialize_product(product)
+        return {
+            "ingredient": ingredient,
+            "match_status": "matched" if matched_product else "unresolved",
+            "matched_name": matched_product.get("display_name_ru") if matched_product else None,
+            "matched_source": matched_product.get("source") if matched_product else None,
+            "match_method": selection.get("match_method", "unresolved"),
+            "match_confidence": selection.get("confidence", "low"),
+            "selection_reason": selection.get("reason"),
+            "nutrition_source": matched_product.get("source") if matched_product and matched_product.get("nutrients_per_100g") else "unknown",
+            "nutrition_confidence": "medium" if matched_product else "low",
+            "matched_product": matched_product,
+            "top_candidates": top_candidates,
+            "usda_queries": queries,
+            "canonical_query_en": next((item for item in queries if item.isascii()), None),
+        }
+
+    def _selected(self, candidate: dict[str, Any], confidence: str, reason: str, method: str) -> dict[str, Any]:
+        return {
+            "selected_product_id": candidate["product_id"],
+            "confidence": confidence,
+            "reason": reason,
+            "match_method": method,
+        }
+
+    def _unresolved(self, reason: str) -> dict[str, Any]:
+        return {
+            "selected_product_id": None,
+            "confidence": "low",
+            "reason": reason,
+            "match_method": "unresolved",
+        }
 
 rag_ingredient_resolution_service = RagIngredientResolutionService()

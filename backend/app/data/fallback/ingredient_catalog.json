@@ -1,0 +1,618 @@
+{
+  "translation_overrides": {
+    "пармезан": "parmesan cheese",
+    "сыр пармезан": "parmesan cheese",
+    "салат романо": "romaine lettuce raw",
+    "айсберг": "iceberg lettuce raw",
+    "перец": "black pepper",
+    "черный перец": "black pepper",
+    "сахар": "granulated sugar",
+    "гречневая крупа": "buckwheat groats",
+    "панировочные сухари": "breadcrumbs",
+    "лимонный сок": "lemon juice raw",
+    "помидоры черри": "tomatoes raw",
+    "баклажаны": "eggplant raw",
+    "грецкие орехи": "walnuts",
+    "орехи грецкие": "walnuts",
+    "орехи": "walnuts",
+    "лимон": "lemon raw",
+    "сок лимона": "lemon juice raw",
+    "мед": "honey",
+    "багет": "baguette",
+    "плавленый сыр": "processed cheese",
+    "огурцы": "cucumber raw",
+    "майонез": "mayonnaise",
+    "хлеб": "white bread",
+    "зеленый лук": "spring onions",
+    "ваниль": "vanilla extract",
+    "ванильный сахар": "vanilla sugar",
+    "картофель": "potatoes raw",
+    "капуста белокочанная": "cabbage raw",
+    "морковь": "carrots raw",
+    "томатная паста": "tomato paste",
+    "томатное пюре": "tomato puree",
+    "томатный сок": "tomato juice",
+    "сок томатный": "tomato juice",
+    "куриное филе вареное": "chicken breast cooked",
+    "куриное филе отварное": "chicken breast cooked",
+    "бульон куриный": "chicken broth",
+    "кукуруза консервированная": "corn canned",
+    "тмин молотый": "cumin",
+    "орегано сушеный": "oregano",
+    "листы лазаньи": "lasagna noodles",
+    "сыр моцарелла": "mozzarella cheese",
+    "фарш говяжий": "ground beef",
+    "говяжий фарш": "ground beef",
+    "сельдерей": "celery raw",
+    "сыр сулугуни": "cheese",
+    "сметана": "sour cream",
+    "сметана жирностью": "sour cream",
+    "паприка молотая": "paprika",
+    "шампиньоны королевские": "mushrooms",
+    "мясо": "meat",
+    "говядина": "beef",
+    "свинина": "pork",
+    "макароны": "macaroni dry pasta",
+    "сыр твердый": "cheddar cheese",
+    "масло подсолнечное": "sunflower oil",
+    "лавровый лист": "bay leaf",
+    "крупа манная": "semolina flour",
+    "курица": "chicken raw",
+    "скумбрия": "mackerel raw",
+    "скумбрия замороженная": "mackerel raw",
+    "гвоздика": "cloves",
+    "кориандр": "coriander seed",
+    "уксус яблочный": "apple cider vinegar",
+    "зира": "cumin",
+    "сливки": "cream",
+    "фасоль": "beans canned",
+    "кукуруза": "corn canned",
+    "кинза": "cilantro raw",
+    "мускатный орех": "nutmeg"
+  },
+  "direct_fallbacks": {
+    "куриное филе": "chicken breast",
+    "помидоры": "tomatoes raw",
+    "белый хлеб": "white bread",
+    "оливковое масло": "olive oil",
+    "растительное масло": "vegetable oil",
+    "сливочное масло": "butter",
+    "молоко": "milk",
+    "мука": "wheat flour",
+    "мука пшеничная": "wheat flour",
+    "мука пшеничная просеянная": "wheat flour",
+    "пшеничная мука": "wheat flour",
+    "яблоко": "apple raw",
+    "яблоки": "apple raw",
+    "соль": "salt",
+    "яйцо": "egg raw",
+    "чеснок": "garlic",
+    "анчоусы": "anchovies",
+    "горчица": "mustard",
+    "лапша": "pasta",
+    "шампиньоны": "mushrooms",
+    "лук": "onion raw",
+    "лук репчатый": "onion raw",
+    "репчатый лук": "onion raw",
+    "укроп": "dill",
+    "петрушка": "parsley",
+    "вода": "water",
+    "вода теплая": "water",
+    "базилик": "basil",
+    "дрожжи сухие": "dry yeast",
+    "сухие дрожжи": "dry yeast",
+    "дрожжи сухие быстродействующие": "dry yeast",
+    "перец черный молотый": "black pepper",
+    "черный перец молотый": "black pepper",
+    "моцарелла": "mozzarella cheese",
+    "макароны": "macaroni dry pasta",
+    "сыр твердый": "cheddar cheese",
+    "сметана жирностью": "sour cream",
+    "масло подсолнечное": "sunflower oil",
+    "лавровый лист": "bay leaf",
+    "крупа манная": "semolina flour",
+    "курица": "chicken raw",
+    "скумбрия": "mackerel raw",
+    "скумбрия замороженная": "mackerel raw",
+    "гвоздика": "cloves",
+    "кориандр": "coriander seed",
+    "уксус яблочный": "apple cider vinegar",
+    "баклажаны": "eggplant raw",
+    "грецкие орехи": "walnuts",
+    "орехи грецкие": "walnuts",
+    "орехи": "walnuts",
+    "панировочные сухари": "breadcrumbs",
+    "лимон": "lemon raw",
+    "сок лимона": "lemon juice raw",
+    "мед": "honey",
+    "багет": "baguette",
+    "плавленый сыр": "processed cheese",
+    "огурцы": "cucumber raw",
+    "майонез": "mayonnaise",
+    "хлеб": "white bread",
+    "зеленый лук": "spring onions",
+    "ваниль": "vanilla extract",
+    "ванильный сахар": "vanilla sugar",
+    "картофель": "potatoes raw",
+    "капуста белокочанная": "cabbage raw",
+    "морковь": "carrots raw",
+    "томатная паста": "tomato paste",
+    "томатное пюре": "tomato puree",
+    "томатный сок": "tomato juice",
+    "сок томатный": "tomato juice",
+    "куриное филе вареное": "chicken breast cooked",
+    "куриное филе отварное": "chicken breast cooked",
+    "бульон куриный": "chicken broth",
+    "кукуруза консервированная": "corn canned",
+    "тмин молотый": "cumin",
+    "орегано сушеный": "oregano",
+    "листы лазаньи": "lasagna noodles",
+    "сыр моцарелла": "mozzarella cheese",
+    "фарш говяжий": "ground beef",
+    "говяжий фарш": "ground beef",
+    "сельдерей": "celery raw",
+    "сыр сулугуни": "cheese",
+    "сметана": "sour cream",
+    "паприка молотая": "paprika",
+    "шампиньоны королевские": "mushrooms",
+    "мясо": "meat",
+    "говядина": "beef",
+    "свинина": "pork",
+    "зира": "cumin",
+    "сливки": "cream",
+    "фасоль": "beans canned",
+    "кукуруза": "corn canned",
+    "кинза": "cilantro raw",
+    "мускатный орех": "nutmeg"
+  },
+  "extra_hints": {
+    "лапша": [
+      "spaghetti",
+      "dry pasta"
+    ],
+    "яйцо": [
+      "whole egg"
+    ],
+    "мука": [
+      "all-purpose flour",
+      "flour"
+    ],
+    "мука пшеничная": [
+      "all-purpose flour",
+      "flour"
+    ],
+    "мука пшеничная просеянная": [
+      "all-purpose flour",
+      "flour"
+    ],
+    "пшеничная мука": [
+      "all-purpose flour",
+      "flour"
+    ],
+    "помидоры": [
+      "tomato raw",
+      "tomato"
+    ],
+    "помидоры черри": [
+      "cherry tomatoes"
+    ],
+    "яблоко": [
+      "apples raw",
+      "apple"
+    ],
+    "яблоки": [
+      "apples raw",
+      "apple"
+    ],
+    "гречневая крупа": [
+      "buckwheat"
+    ],
+    "шампиньоны": [
+      "champignon mushrooms"
+    ],
+    "лук": [
+      "yellow onion"
+    ],
+    "лук репчатый": [
+      "yellow onion"
+    ],
+    "панировочные сухари": [
+      "bread crumbs"
+    ],
+    "моцарелла": [
+      "fresh mozzarella"
+    ],
+    "макароны": [
+      "macaroni dry",
+      "pasta dry"
+    ],
+    "сыр твердый": [
+      "cheddar cheese",
+      "hard cheese"
+    ],
+    "сметана жирностью": [
+      "sour cream regular"
+    ],
+    "масло подсолнечное": [
+      "sunflower oil",
+      "vegetable oil"
+    ],
+    "лавровый лист": [
+      "bay leaves"
+    ],
+    "крупа манная": [
+      "semolina",
+      "farina"
+    ],
+    "курица": [
+      "chicken broilers raw",
+      "chicken meat raw"
+    ],
+    "скумбрия замороженная": [
+      "mackerel fish raw",
+      "mackerel"
+    ],
+    "гвоздика": [
+      "cloves ground"
+    ],
+    "кориандр": [
+      "coriander seed"
+    ],
+    "уксус яблочный": [
+      "vinegar cider"
+    ],
+    "баклажаны": [
+      "eggplant",
+      "aubergine"
+    ],
+    "грецкие орехи": [
+      "walnut"
+    ],
+    "орехи грецкие": [
+      "walnut"
+    ],
+    "орехи": [
+      "walnut"
+    ],
+    "багет": [
+      "french bread"
+    ],
+    "плавленый сыр": [
+      "pasteurized process cheese"
+    ],
+    "огурцы": [
+      "cucumber with peel"
+    ],
+    "майонез": [
+      "mayonnaise regular"
+    ],
+    "зеленый лук": [
+      "scallions raw",
+      "green onions"
+    ],
+    "картофель": [
+      "potato raw",
+      "potatoes"
+    ],
+    "капуста белокочанная": [
+      "white cabbage",
+      "cabbage"
+    ],
+    "морковь": [
+      "carrot raw",
+      "carrots"
+    ],
+    "томатная паста": [
+      "tomato paste canned"
+    ],
+    "томатное пюре": [
+      "tomato puree canned"
+    ],
+    "сок томатный": [
+      "tomato juice canned"
+    ],
+    "куриное филе вареное": [
+      "chicken breast cooked roasted"
+    ],
+    "бульон куриный": [
+      "chicken broth ready-to-serve"
+    ],
+    "кукуруза консервированная": [
+      "sweet corn canned"
+    ],
+    "листы лазаньи": [
+      "lasagna noodles dry"
+    ],
+    "сыр моцарелла": [
+      "mozzarella part skim"
+    ],
+    "фарш говяжий": [
+      "ground beef raw"
+    ],
+    "сметана": [
+      "sour cream regular"
+    ],
+    "сыр сулугуни": [
+      "cheese mozzarella"
+    ],
+    "зира": [
+      "cumin seed"
+    ],
+    "сливки": [
+      "cream heavy"
+    ],
+    "фасоль": [
+      "white beans canned"
+    ],
+    "кукуруза": [
+      "sweet corn canned"
+    ],
+    "кинза": [
+      "coriander leaves raw"
+    ],
+    "мускатный орех": [
+      "nutmeg ground"
+    ]
+  },
+  "en_normalizations": {
+    "romano lettuce": "romaine lettuce raw",
+    "romaine lettuce": "romaine lettuce raw",
+    "parmesan": "parmesan cheese",
+    "pepper": "black pepper",
+    "black pepper": "black pepper",
+    "egg": "egg raw",
+    "eggs": "egg raw",
+    "tomato": "tomatoes raw",
+    "tomatoes": "tomatoes raw",
+    "cherry tomatoes": "tomatoes raw",
+    "apple": "apple raw",
+    "apples": "apple raw",
+    "lemon juice": "lemon juice raw",
+    "buckwheat": "buckwheat groats",
+    "sugar": "granulated sugar",
+    "butter": "butter",
+    "melted butter": "butter",
+    "mozzarella": "mozzarella cheese",
+    "macaroni": "macaroni dry pasta",
+    "pasta": "pasta dry",
+    "lasagna sheet": "pasta dry",
+    "lasagna sheets": "pasta dry",
+    "lasagna noodles": "pasta dry",
+    "cheddar": "cheddar cheese",
+    "semolina": "semolina flour",
+    "mackerel": "mackerel raw",
+    "cloves": "cloves",
+    "coriander": "coriander seed",
+    "sunflower oil": "sunflower oil",
+    "beef": "beef raw",
+    "chicken": "chicken raw",
+    "cottage cheese": "cottage cheese",
+    "fish": "fish raw",
+    "onion": "onion raw",
+    "red onion": "onion raw",
+    "pork": "pork raw",
+    "sour cream": "sour cream",
+    "vegetable oil": "vegetable oil",
+    "wheat flour": "wheat flour",
+    "eggplant": "eggplant raw",
+    "aubergine": "eggplant raw",
+    "walnut": "walnuts",
+    "potato": "potatoes raw",
+    "potatoes": "potatoes raw",
+    "carrot": "carrots raw",
+    "carrots": "carrots raw",
+    "cabbage": "cabbage raw",
+    "corn": "corn canned",
+    "mozzarella cheese": "mozzarella cheese"
+  },
+  "en_stopwords": [
+    "chopped",
+    "diced",
+    "for",
+    "fresh",
+    "garnish",
+    "grated",
+    "melted",
+    "optional",
+    "raw",
+    "sliced"
+  ],
+  "transliterated_ru_tokens": [
+    "baklazhan",
+    "baklazhany",
+    "govyadina",
+    "grechka",
+    "ikra",
+    "kartofel",
+    "kefir",
+    "kuritsa",
+    "luk",
+    "manka",
+    "moloko",
+    "morkov",
+    "ogurec",
+    "ogurets",
+    "petrushka",
+    "pomidor",
+    "pomidoriy",
+    "ris",
+    "ryba",
+    "sahar",
+    "sakhap",
+    "sakharnyy",
+    "shampinon",
+    "shampinony",
+    "sir",
+    "skumbriya",
+    "smetana",
+    "sol",
+    "svinina",
+    "syr",
+    "tvorog",
+    "ukrop",
+    "uksus",
+    "yaitso",
+    "yaytso"
+  ],
+  "invalid_model_name_tokens": [
+    "food",
+    "ingredient",
+    "none",
+    "null",
+    "product",
+    "unknown",
+    "unknowningredient"
+  ],
+  "model_translation_blocklist_by_canonical": {
+    "крупа манная": [
+      "buckwheat",
+      "buckwheat groats",
+      "oatmeal",
+      "oats",
+      "rice",
+      "rice flour"
+    ],
+    "свинина": [
+      "beef",
+      "chicken",
+      "fish",
+      "turkey"
+    ],
+    "говядина": [
+      "chicken",
+      "fish",
+      "pork",
+      "turkey"
+    ],
+    "курица": [
+      "beef",
+      "fish",
+      "pork"
+    ],
+    "скумбрия": [
+      "beef",
+      "chicken",
+      "pork",
+      "turkey"
+    ],
+    "сметана": [
+      "cottage cheese",
+      "cream cheese",
+      "milk",
+      "yogurt"
+    ]
+  },
+  "heuristic_patterns": [
+    {
+      "contains_all": [
+        "говядин",
+        "свинин"
+      ],
+      "fallback": "ground beef and pork",
+      "hints": [
+        "ground beef",
+        "ground pork",
+        "beef",
+        "pork"
+      ]
+    },
+    {
+      "contains": [
+        "говядин"
+      ],
+      "fallback": "beef",
+      "hints": [
+        "beef raw",
+        "ground beef"
+      ]
+    },
+    {
+      "contains": [
+        "свинин"
+      ],
+      "fallback": "pork",
+      "hints": [
+        "pork raw",
+        "ground pork"
+      ]
+    },
+    {
+      "contains_all": [
+        "кур",
+        "фарш"
+      ],
+      "fallback": "ground chicken",
+      "hints": [
+        "ground chicken"
+      ]
+    },
+    {
+      "contains": [
+        "фарш"
+      ],
+      "fallback": "ground meat",
+      "hints": [
+        "ground meat"
+      ]
+    },
+    {
+      "contains": [
+        "лук репчат"
+      ],
+      "fallback": "onion raw",
+      "hints": [
+        "yellow onion"
+      ]
+    },
+    {
+      "equals": [
+        "лук"
+      ],
+      "fallback": "onion raw",
+      "hints": [
+        "yellow onion"
+      ]
+    },
+    {
+      "contains_all": [
+        "растительн",
+        "масло"
+      ],
+      "fallback": "vegetable oil",
+      "hints": [
+        "cooking oil"
+      ]
+    },
+    {
+      "contains": [
+        "дрожж"
+      ],
+      "fallback": "dry yeast",
+      "hints": [
+        "active dry yeast"
+      ]
+    },
+    {
+      "contains": [
+        "мука"
+      ],
+      "fallback": "wheat flour",
+      "hints": []
+    },
+    {
+      "contains_all": [
+        "перец",
+        "чер"
+      ],
+      "fallback": "black pepper",
+      "hints": []
+    },
+    {
+      "starts_with": [
+        "вода"
+      ],
+      "fallback": "water",
+      "hints": []
+    }
+  ]
+}

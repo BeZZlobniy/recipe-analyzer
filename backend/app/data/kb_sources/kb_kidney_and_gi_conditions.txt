@@ -1,0 +1,9 @@
+Kidney and digestive conditions in recipe personalization.
+
+Kidney disease, renal disease, chronic kidney disease, CKD, ХПН, почечные ограничения: evaluate sodium, very salty products, processed meats, cheese, pickles, marinades, sauces, potassium-rich foods if the profile explicitly mentions potassium, phosphorus-rich foods if the profile explicitly mentions phosphorus, and total protein if the user has a protein restriction. Do not apply kidney restrictions unless the profile mentions kidney, renal, CKD, ХПН, почки, нефрология, potassium, phosphorus or similar terms.
+
+GERD, reflux, gastritis, heartburn, рефлюкс, гастрит, изжога: common trigger foods are very spicy pepper, chili, hot sauces, large amounts of garlic or onion, high-fat fried foods, tomato-heavy acidic sauces, vinegar, citrus, coffee and chocolate. If these conditions are in the profile, explain the trigger ingredient and suggest a milder cooking method or smaller portion.
+
+IBS, irritable bowel syndrome, СРК, low FODMAP, FODMAP: common triggers can include onion, garlic, wheat, some dairy with lactose, beans, certain sweeteners and large portions of high-FODMAP vegetables. If IBS or FODMAP is in the profile, flag the ingredient as a possible trigger, not as a universal prohibition, and recommend checking personal tolerance.
+
+For medical conditions not covered by a specific KB note, reason from the raw profile text and RAG snippets. Separate direct contraindications from soft cautions. If evidence is uncertain, phrase it as "possible risk" and recommend checking the user's medical plan.

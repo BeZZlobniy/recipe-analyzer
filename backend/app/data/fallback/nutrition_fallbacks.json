@@ -1,0 +1,514 @@
+{
+  "unit_to_grams": {
+    "г": 1.0,
+    "кг": 1000.0,
+    "мл": 1.0,
+    "л": 1000.0,
+    "ст. л.": 15.0,
+    "ст. л": 15.0,
+    "ч. л.": 5.0,
+    "ч. л": 5.0,
+    "стакан": 250.0,
+    "пучок": 30.0,
+    "щепотка": 1.0,
+    "щепотки": 1.0
+  },
+  "piece_hints": {
+    "перец черный": 0.05,
+    "перец чёрный": 0.05,
+    "гвоздика": 0.1,
+    "кориандр": 0.05,
+    "лавровый": 0.2,
+    "скумбр": 300.0,
+    "перец болгар": 160.0,
+    "курица": 1200.0,
+    "картоф": 140.0,
+    "свекл": 180.0,
+    "морков": 90.0,
+    "лук": 60.0,
+    "луковиц": 60.0,
+    "яблок": 160.0,
+    "яйц": 50.0,
+    "чеснок": 4.0
+  },
+  "volume_hints": {
+    "греч": 200.0,
+    "рис": 200.0,
+    "круп": 200.0,
+    "вода": 250.0,
+    "молок": 250.0
+  },
+  "estimate_db": {
+    "соль": {
+      "grams": 1.5,
+      "nutrients_per_100g": {
+        "calories": 0,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 40000.0
+      }
+    },
+    "перец": {
+      "grams": 0.5,
+      "nutrients_per_100g": {
+        "calories": 251,
+        "protein": 10.4,
+        "fat": 3.3,
+        "carbs": 64,
+        "fiber": 25.3,
+        "sodium": 20
+      }
+    },
+    "чеснок": {
+      "grams": 5.0,
+      "nutrients_per_100g": {
+        "calories": 149,
+        "protein": 6.4,
+        "fat": 0.5,
+        "carbs": 33.1,
+        "fiber": 2.1,
+        "sodium": 17
+      }
+    },
+    "лимонный сок": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 22,
+        "protein": 0.4,
+        "fat": 0.2,
+        "carbs": 6.9,
+        "fiber": 0.3,
+        "sodium": 1
+      }
+    },
+    "оливковое масло": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 884,
+        "protein": 0,
+        "fat": 100,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 2
+      }
+    },
+    "растительное масло": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 884,
+        "protein": 0,
+        "fat": 100,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 0
+      }
+    },
+    "сливочное масло": {
+      "grams": 10.0,
+      "nutrients_per_100g": {
+        "calories": 717,
+        "protein": 0.9,
+        "fat": 81.1,
+        "carbs": 0.1,
+        "fiber": 0,
+        "sodium": 11
+      }
+    },
+    "вода": {
+      "grams": 250.0,
+      "nutrients_per_100g": {
+        "calories": 0,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 0
+      }
+    },
+    "макароны": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 371,
+        "protein": 13.0,
+        "fat": 1.5,
+        "carbs": 75.0,
+        "fiber": 3.2,
+        "sodium": 6
+      }
+    },
+    "сыр твердый": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 402,
+        "protein": 25.0,
+        "fat": 33.0,
+        "carbs": 1.3,
+        "fiber": 0,
+        "sodium": 621
+      }
+    },
+    "сметана": {
+      "grams": 50.0,
+      "nutrients_per_100g": {
+        "calories": 196,
+        "protein": 2.4,
+        "fat": 19.4,
+        "carbs": 3.6,
+        "fiber": 0,
+        "sodium": 80
+      }
+    },
+    "масло подсолнечное": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 884,
+        "protein": 0,
+        "fat": 100,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 0
+      }
+    },
+    "шампиньоны": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 22,
+        "protein": 3.1,
+        "fat": 0.3,
+        "carbs": 3.3,
+        "fiber": 1.0,
+        "sodium": 5
+      }
+    },
+    "крупа манная": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 360,
+        "protein": 12.7,
+        "fat": 1.1,
+        "carbs": 72.8,
+        "fiber": 3.9,
+        "sodium": 1
+      }
+    },
+    "свинина": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 242,
+        "protein": 27.3,
+        "fat": 13.9,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 62
+      }
+    },
+    "курица": {
+      "grams": 1000.0,
+      "nutrients_per_100g": {
+        "calories": 215,
+        "protein": 18.6,
+        "fat": 15.1,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 70
+      }
+    },
+    "скумбрия": {
+      "grams": 300.0,
+      "nutrients_per_100g": {
+        "calories": 205,
+        "protein": 18.6,
+        "fat": 13.9,
+        "carbs": 0,
+        "fiber": 0,
+        "sodium": 90
+      }
+    },
+    "уксус яблочный": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 21,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 0.9,
+        "fiber": 0,
+        "sodium": 5
+      }
+    },
+    "лавровый лист": {
+      "grams": 0.2,
+      "nutrients_per_100g": {
+        "calories": 313,
+        "protein": 7.6,
+        "fat": 8.4,
+        "carbs": 75,
+        "fiber": 26.3,
+        "sodium": 23
+      }
+    },
+    "гвоздика": {
+      "grams": 0.1,
+      "nutrients_per_100g": {
+        "calories": 274,
+        "protein": 6.0,
+        "fat": 13.0,
+        "carbs": 65.5,
+        "fiber": 33.9,
+        "sodium": 277
+      }
+    },
+    "кориандр": {
+      "grams": 0.1,
+      "nutrients_per_100g": {
+        "calories": 298,
+        "protein": 12.4,
+        "fat": 17.8,
+        "carbs": 55.0,
+        "fiber": 41.9,
+        "sodium": 35
+      }
+    },
+    "приправа для курицы": {
+      "grams": 8.0,
+      "nutrients_per_100g": {
+        "calories": 250,
+        "protein": 8.0,
+        "fat": 4.0,
+        "carbs": 45.0,
+        "fiber": 15.0,
+        "sodium": 7000
+      }
+    },
+    "базилик": {
+      "grams": 3.0,
+      "nutrients_per_100g": {
+        "calories": 23,
+        "protein": 3.2,
+        "fat": 0.6,
+        "carbs": 2.7,
+        "fiber": 1.6,
+        "sodium": 4
+      }
+    },
+    "укроп": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 43,
+        "protein": 3.5,
+        "fat": 1.1,
+        "carbs": 7.0,
+        "fiber": 2.1,
+        "sodium": 61
+      }
+    },
+    "петрушка": {
+      "grams": 15.0,
+      "nutrients_per_100g": {
+        "calories": 36,
+        "protein": 3.0,
+        "fat": 0.8,
+        "carbs": 6.3,
+        "fiber": 3.3,
+        "sodium": 56
+      }
+    },
+    "тмин молотый": {
+      "grams": 1.0,
+      "nutrients_per_100g": {
+        "calories": 375,
+        "protein": 17.8,
+        "fat": 22.3,
+        "carbs": 44.2,
+        "fiber": 10.5,
+        "sodium": 168
+      }
+    },
+    "орегано сушеный": {
+      "grams": 1.0,
+      "nutrients_per_100g": {
+        "calories": 265,
+        "protein": 9.0,
+        "fat": 4.3,
+        "carbs": 68.9,
+        "fiber": 42.5,
+        "sodium": 25
+      }
+    },
+    "паприка молотая": {
+      "grams": 1.0,
+      "nutrients_per_100g": {
+        "calories": 282,
+        "protein": 14.1,
+        "fat": 12.9,
+        "carbs": 54.0,
+        "fiber": 34.9,
+        "sodium": 68
+      }
+    },
+    "ваниль": {
+      "grams": 1.0,
+      "nutrients_per_100g": {
+        "calories": 288,
+        "protein": 0.1,
+        "fat": 0.1,
+        "carbs": 12.7,
+        "fiber": 0,
+        "sodium": 9
+      }
+    },
+    "ванилин": {
+      "grams": 0.5,
+      "nutrients_per_100g": {
+        "calories": 288,
+        "protein": 0.1,
+        "fat": 0.1,
+        "carbs": 12.7,
+        "fiber": 0,
+        "sodium": 9
+      }
+    },
+    "орехи грецкие": {
+      "grams": 30.0,
+      "nutrients_per_100g": {
+        "calories": 654,
+        "protein": 15.2,
+        "fat": 65.2,
+        "carbs": 13.7,
+        "fiber": 6.7,
+        "sodium": 2
+      }
+    },
+    "орехи": {
+      "grams": 30.0,
+      "nutrients_per_100g": {
+        "calories": 607,
+        "protein": 20.0,
+        "fat": 54.0,
+        "carbs": 21.0,
+        "fiber": 7.0,
+        "sodium": 5
+      }
+    },
+    "панировочные сухари": {
+      "grams": 30.0,
+      "nutrients_per_100g": {
+        "calories": 395,
+        "protein": 13.4,
+        "fat": 5.3,
+        "carbs": 72.0,
+        "fiber": 4.5,
+        "sodium": 732
+      }
+    },
+    "зира": {
+      "grams": 1.0,
+      "nutrients_per_100g": {
+        "calories": 375,
+        "protein": 17.8,
+        "fat": 22.3,
+        "carbs": 44.2,
+        "fiber": 10.5,
+        "sodium": 168
+      }
+    },
+    "сливки": {
+      "grams": 50.0,
+      "nutrients_per_100g": {
+        "calories": 340,
+        "protein": 2.8,
+        "fat": 36.0,
+        "carbs": 2.8,
+        "fiber": 0,
+        "sodium": 27
+      }
+    },
+    "картофель": {
+      "grams": 140.0,
+      "nutrients_per_100g": {
+        "calories": 77,
+        "protein": 2.0,
+        "fat": 0.1,
+        "carbs": 17.5,
+        "fiber": 2.2,
+        "sodium": 6
+      }
+    },
+    "капуста белокочанная": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 25,
+        "protein": 1.3,
+        "fat": 0.1,
+        "carbs": 5.8,
+        "fiber": 2.5,
+        "sodium": 18
+      }
+    },
+    "мускатный орех": {
+      "grams": 1.0,
+      "nutrients_per_100g": {
+        "calories": 525,
+        "protein": 5.8,
+        "fat": 36.3,
+        "carbs": 49.3,
+        "fiber": 20.8,
+        "sodium": 16
+      }
+    },
+    "томатный сок": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 17,
+        "protein": 0.8,
+        "fat": 0.1,
+        "carbs": 4.2,
+        "fiber": 0.4,
+        "sodium": 10
+      }
+    },
+    "кукуруза": {
+      "grams": 100.0,
+      "nutrients_per_100g": {
+        "calories": 86,
+        "protein": 3.2,
+        "fat": 1.2,
+        "carbs": 19.0,
+        "fiber": 2.7,
+        "sodium": 15
+      }
+    },
+    "зелень": {
+      "grams": 10.0,
+      "nutrients_per_100g": {
+        "calories": 36,
+        "protein": 3.0,
+        "fat": 0.8,
+        "carbs": 6.3,
+        "fiber": 3.3,
+        "sodium": 56
+      }
+    }
+  },
+  "minor_amount_markers": [
+    "для жарки",
+    "для подачи",
+    "по вкусу",
+    "по желанию",
+    "щепотка"
+  ],
+  "minor_ingredient_tokens": [
+    "базилик",
+    "перец",
+    "петрушка",
+    "пряности",
+    "соль",
+    "специи",
+    "укроп"
+  ],
+  "broad_meat_estimate_overrides": [
+    "курица",
+    "свинина"
+  ]
+}

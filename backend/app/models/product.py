@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from sqlalchemy import DateTime, Float, Integer, JSON, String, Text
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base
 
@@ -27,6 +27,3 @@ class Product(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
-
-    aliases = relationship("ProductAlias", back_populates="product", cascade="all, delete-orphan")
-    search_entries = relationship("ProductSearchEntry", back_populates="product", cascade="all, delete-orphan")

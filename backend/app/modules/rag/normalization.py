@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from app.core.utils import dedupe_texts, normalize_text
@@ -10,13 +11,19 @@ from app.services.ollama_service import ollama_service
 
 
 class RecipeNormalizationService:
+    def __init__(self) -> None:
+        self._llm_recipe_cache: dict[str, SimpleRecipePayload] = {}
+
     def normalize(self, recipe_text: str) -> tuple[StructuredRecipe, str]:
         clean_recipe_text = input_cleaner.clean(recipe_text)
+        raw_title = fallback_recipe_parser.guess_title(fallback_recipe_parser.prepare_lines(recipe_text))
         heuristic_recipe = fallback_recipe_parser.build_recipe(clean_recipe_text)
-        llm_recipe = self._parse_llm_recipe(ollama_service.structure_recipe_json(clean_recipe_text))
+        llm_recipe = self._get_llm_recipe(clean_recipe_text)
         llm_recipe_acceptable = self._is_acceptable_llm_recipe(llm_recipe, heuristic_recipe, clean_recipe_text)
+        if llm_recipe and llm_recipe_acceptable:
+            self._llm_recipe_cache[clean_recipe_text] = llm_recipe
 
-        effective_recipe = llm_recipe if llm_recipe and not heuristic_recipe.ingredients else heuristic_recipe
+        effective_recipe = llm_recipe if llm_recipe_acceptable else heuristic_recipe
         ingredient_source = "llm_normalized" if effective_recipe is llm_recipe else "heuristic_fallback"
 
         if llm_recipe:
@@ -28,8 +35,9 @@ class RecipeNormalizationService:
             for item in effective_recipe.ingredients
             for structured in fallback_recipe_parser.to_structured_ingredients(item, ingredient_source)
         ]
+        resolved_title = fallback_recipe_parser.resolve_title(effective_recipe, clean_recipe_text)
         recipe = StructuredRecipe(
-            title=fallback_recipe_parser.resolve_title(effective_recipe, clean_recipe_text),
+            title=self._choose_title(resolved_title, raw_title),
             servings_declared=fallback_recipe_parser.extract_servings(clean_recipe_text),
             ingredients=structured_ingredients,
             steps=dedupe_texts(effective_recipe.instructions or heuristic_recipe.instructions),
@@ -37,6 +45,40 @@ class RecipeNormalizationService:
             source_recipe_text=clean_recipe_text,
         )
         return recipe, clean_recipe_text
+
+    def _get_llm_recipe(self, clean_recipe_text: str) -> SimpleRecipePayload | None:
+        cached = self._llm_recipe_cache.get(clean_recipe_text)
+        if cached is not None:
+            return cached
+        return self._parse_llm_recipe(ollama_service.structure_recipe_json(clean_recipe_text))
+
+    def _choose_title(self, resolved_title: str, raw_title: str) -> str:
+        title = resolved_title.strip()
+        raw = raw_title.strip()
+        title_low = normalize_text(title)
+        raw_low = normalize_text(raw)
+        if raw and raw_low not in {"рецепт", "продукты", "ингредиенты", "*"} and title_low != raw_low:
+            return raw
+        ingredient_title_tokens = {
+            "чеснок",
+            "соль",
+            "перец",
+            "петрушка",
+            "кинза",
+            "базилик",
+            "укроп",
+            "зелень",
+            "лавровый лист",
+        }
+        if raw and title_low in ingredient_title_tokens:
+            return raw
+        if title_low in {"рецепт", "продукты", "ингредиенты", "*"}:
+            return raw or title
+        if title_low.startswith("(") or "для формы" in title_low:
+            return raw or title
+        if fallback_recipe_parser.parse_ingredient_line(title):
+            return raw or title
+        return title or raw
 
     def _backfill_missing_quantities(
         self,
@@ -134,10 +176,97 @@ class RecipeNormalizationService:
     def _parse_llm_recipe(self, payload: dict[str, Any] | None) -> SimpleRecipePayload | None:
         if not isinstance(payload, dict) or not isinstance(payload.get("recipe"), dict):
             return None
+        payload = self._coerce_llm_recipe_payload(payload["recipe"])
         try:
-            return SimpleRecipePayload.model_validate(payload["recipe"])
+            return SimpleRecipePayload.model_validate(payload)
         except Exception:
             return None
+
+    def _coerce_llm_recipe_payload(self, recipe: dict[str, Any]) -> dict[str, Any]:
+        coerced: dict[str, Any] = {"title": "", "ingredients": [], "instructions": [], "tags": []}
+        for key, value in recipe.items():
+            normalized_key = self._normalize_llm_key(key)
+            if normalized_key in {"title", "instructions", "tags"}:
+                coerced[normalized_key] = value
+            elif normalized_key == "ingredients" and isinstance(value, list):
+                coerced["ingredients"] = [item for item in (self._coerce_llm_ingredient(entry) for entry in value) if item]
+        return coerced
+
+    def _coerce_llm_ingredient(self, item: Any) -> dict[str, Any] | None:
+        if not isinstance(item, dict):
+            return None
+        coerced: dict[str, Any] = {"optional": False}
+        for key, value in item.items():
+            normalized_key = self._normalize_llm_key(key)
+            if normalized_key in {
+                "name",
+                "name_ru",
+                "name_en",
+                "quantity",
+                "quantity_text",
+                "quantity_value",
+                "quantity_unit",
+                "optional",
+                "llm_grams",
+                "gram_confidence",
+            }:
+                coerced[normalized_key] = value
+        if not coerced.get("name") and coerced.get("name_ru"):
+            coerced["name"] = coerced["name_ru"]
+        if not coerced.get("name_ru") and coerced.get("name"):
+            coerced["name_ru"] = coerced["name"]
+        return coerced if coerced.get("name") or coerced.get("name_ru") else None
+
+    def _normalize_llm_key(self, key: Any) -> str:
+        text = normalize_text(str(key))
+        compact = re.sub(r"[^a-zа-яё]+", "_", text).strip("_")
+        if compact in {
+            "title",
+            "name",
+            "name_ru",
+            "name_en",
+            "quantity",
+            "quantity_text",
+            "quantity_value",
+            "quantity_unit",
+            "optional",
+            "llm_grams",
+            "gram_confidence",
+            "ingredients",
+            "instructions",
+            "tags",
+        }:
+            return compact
+        compact_no_sep = compact.replace("_", "")
+        if "ingredient" in compact or "ингредиент" in compact:
+            return "ingredients"
+        if "instruction" in compact or "шаг" in compact or "инструкц" in compact:
+            return "instructions"
+        if "tag" in compact or "тег" in compact:
+            return "tags"
+        if "title" in compact or "назван" in compact or "блюд" in compact:
+            return "title"
+        if "gram_confidence" in compact or ("gram" in compact and "confidence" in compact) or "конфиден" in compact:
+            return "gram_confidence"
+        if "llm" in compact and "gram" in compact:
+            return "llm_grams"
+        if compact_no_sep in {"nameen", "nameenglish"} or ("name" in compact and "en" in compact):
+            return "name_en"
+        if compact_no_sep in {"nameru", "namerus"} or ("name" in compact and "ru" in compact):
+            return "name_ru"
+        if "quantity" in compact or "количеств" in compact:
+            if "text" in compact or "текст" in compact:
+                return "quantity_text"
+            if "value" in compact or "знач" in compact:
+                return "quantity_value"
+            if "unit" in compact or "единиц" in compact:
+                return "quantity_unit"
+            return "quantity"
+        if "optional" in compact or "опцион" in compact:
+            return "optional"
+        if compact.startswith("name") or "название" in compact:
+            return "name"
+        return compact
 
     def _is_acceptable_llm_recipe(
         self,
@@ -154,16 +283,17 @@ class RecipeNormalizationService:
             return False
         if heuristic_count >= 4 and llm_count < max(3, int(heuristic_count * 0.6)):
             return False
-        if not title or title in {"рецепт", "ингредиенты", "приготовление", "для салата", "для соуса"} or len(title) <= 3:
-            return False
+        if title in {"рецепт", "ингредиенты", "приготовление", "для салата", "для соуса"}:
+            title = ""
         unknown_en = sum(1 for item in llm_recipe.ingredients if normalize_text(item.name_en or "").startswith("unknown-"))
-        broken_names = sum(1 for item in llm_recipe.ingredients if len(normalize_text(item.name)) <= 1)
-        if llm_count and (unknown_en / llm_count > 0.2 or broken_names / llm_count > 0.2):
+        broken_names = sum(
+            1
+            for item in llm_recipe.ingredients
+            if len(normalize_text(item.name)) <= 2 or self._has_mixed_script_token(normalize_text(item.name))
+        )
+        if llm_count and (unknown_en / llm_count > 0.2 or broken_names > 0):
             return False
         recipe_tokens = {token for token in normalize_text(clean_recipe_text).split() if len(token) >= 3}
-        title_tokens = {token for token in title.split() if len(token) >= 4}
-        if title_tokens and len(title_tokens & recipe_tokens) < max(1, len(title_tokens) // 2):
-            return False
         supported_ingredients = 0
         for item in llm_recipe.ingredients:
             name_tokens = {token for token in normalize_text(item.name).split() if len(token) >= 4}
@@ -172,6 +302,14 @@ class RecipeNormalizationService:
         if llm_count >= 4 and supported_ingredients < max(2, int(llm_count * 0.5)):
             return False
         return True
+
+    def _has_mixed_script_token(self, value: str) -> bool:
+        for token in value.split():
+            has_cyrillic = bool(re.search(r"[а-яё]", token))
+            has_latin = bool(re.search(r"[a-z]", token))
+            if has_cyrillic and has_latin:
+                return True
+        return False
 
 
 recipe_normalization_service = RecipeNormalizationService()

@@ -41,3 +41,10 @@ def test_build_recipe_collects_title_ingredients_and_steps():
     assert recipe.ingredients[0].quantity == "500 мл"
     assert recipe.instructions
     assert recipe.instructions[-1] == "Обжарить на сковороде."
+
+
+def test_sanitize_name_preserves_meat_qualifier_from_parentheses():
+    cleaned = fallback_recipe_parser.sanitize_name("Мясо (говядина и свинина)")
+
+    assert "говядина" in cleaned
+    assert "свинина" in cleaned

@@ -47,8 +47,25 @@ textarea { min-height: 110px; resize: vertical; }
 .donut::after { content: ""; position: absolute; inset: 28px; background: var(--panel); border-radius: 50%; }
 .legend { display: grid; gap: 8px; }
 .compatibilityGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: start; }
+.assessmentGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: stretch; margin-top: 14px; }
+.assessmentCard { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: #fff; display: grid; gap: 10px; align-content: start; }
+.assessmentCard.conflict { border-color: rgba(180,67,67,0.38); background: rgba(180,67,67,0.05); }
+.assessmentCard.ok { border-color: rgba(63,125,78,0.32); }
+.assessmentCard.not_applicable { background: #fbf7ef; color: var(--muted); }
+.assessmentHeader { display: flex; justify-content: space-between; align-items: start; gap: 10px; }
+.assessmentHeader h4 { margin: 0; }
+.assessmentCard p { margin: 0; }
+.assessmentCard ul { margin: 0; padding-left: 18px; }
+.statusBadge { display: inline-flex; white-space: nowrap; border-radius: 999px; padding: 4px 9px; font-size: 0.78rem; background: var(--panel-strong); color: var(--muted); }
+.statusBadge.ok { background: rgba(63,125,78,0.15); color: var(--good); }
+.statusBadge.warning { background: rgba(209,154,29,0.15); color: #8d690d; }
+.statusBadge.conflict { background: rgba(180,67,67,0.15); color: var(--bad); }
 .list { display: grid; gap: 12px; }
 .listCard, .listRow { border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: #fff; }
+.listRow { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+.listRow span { text-align: right; }
+.compactList { gap: 8px; }
+.compactList .listRow { padding: 10px 12px; border-radius: 14px; }
 .linkCard:hover { border-color: var(--accent); }
 .actions, .pillRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
 .pill { display: inline-flex; padding: 4px 10px; border-radius: 999px; font-size: 0.85rem; background: var(--panel-strong); }
@@ -66,10 +83,41 @@ textarea { min-height: 110px; resize: vertical; }
 .recipeInput { min-height: 320px; margin: 14px 0; }
 .resultPreview ul, .card ul { margin: 8px 0 0; padding-left: 18px; }
 .preBlock { white-space: pre-wrap; background: #f8f2e7; padding: 14px; border-radius: 18px; }
+.analysisComposerGrid { grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.6fr); align-items: start; }
+.analysisInputCard { display: grid; gap: 12px; }
+.analysisProfileCard { position: sticky; top: 24px; }
+.emptyResultCard { border-style: dashed; background: rgba(255, 253, 248, 0.72); }
+.analysisResultStack { display: grid; gap: 20px; }
+.resultHero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 0.45fr); gap: 22px; align-items: center; background: linear-gradient(145deg, #fffdf8, #f7eadc); }
+.resultHero h2 { margin: 4px 0 8px; font-size: clamp(1.5rem, 2vw, 2.2rem); }
+.resultHero p { margin: 0; line-height: 1.55; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.74rem; font-weight: 700; color: var(--accent); }
+.resultMetricGrid { display: grid; gap: 10px; }
+.metricTile, .nutritionTile { border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: rgba(255, 255, 255, 0.72); }
+.metricTile span, .nutritionTile span { display: block; color: var(--muted); font-size: 0.86rem; margin-bottom: 4px; }
+.metricTile strong { font-size: 1.35rem; }
+.resultDetailGrid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; }
+.portionInputRow { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; margin: 10px 0 14px; }
+.nutritionGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.nutritionTile strong { font-size: 1.05rem; }
+.ingredientList { display: grid; gap: 12px; }
+.ingredientCard { border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: #fff; display: grid; gap: 10px; }
+.ingredientHeader { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.ingredientNutritionGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.ingredientNutritionGrid div { background: #fbf7ef; border-radius: 12px; padding: 8px 10px; }
+.ingredientNutritionGrid span { display: block; color: var(--muted); font-size: 0.78rem; }
+.ingredientNutritionGrid strong { font-size: 0.95rem; }
 
 @media (max-width: 960px) {
   .shell { grid-template-columns: 1fr; }
   .sidebar { position: sticky; top: 0; z-index: 10; }
-  .twoCols, .statsGrid, .formGrid { grid-template-columns: 1fr; }
-  .compatibilityGrid { grid-template-columns: 1fr; }
+  .twoCols, .statsGrid, .formGrid, .analysisComposerGrid, .resultHero, .resultDetailGrid { grid-template-columns: 1fr; }
+  .compatibilityGrid, .assessmentGrid { grid-template-columns: 1fr; }
+  .analysisProfileCard { position: static; }
+  .portionInputRow { grid-template-columns: 1fr; }
+  .ingredientNutritionGrid, .nutritionGrid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 961px) and (max-width: 1280px) {
+  .assessmentGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

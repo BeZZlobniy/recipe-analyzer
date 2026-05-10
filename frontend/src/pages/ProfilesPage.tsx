@@ -17,6 +17,22 @@ type ProfileFormState = {
   restrictions_text: string;
 };
 
+const DIET_OPTIONS = [
+  "balanced",
+  "vegetarian",
+  "vegan",
+  "pescatarian",
+  "mediterranean",
+  "low_carb",
+  "low_sodium",
+  "high_protein",
+  "gluten_free",
+  "lactose_free",
+  "halal",
+];
+
+const GOAL_OPTIONS = ["maintenance", "fat_loss", "muscle_gain"];
+
 const emptyProfile: ProfileFormState = {
   name: "",
   sex: "female",
@@ -106,18 +122,58 @@ export function ProfilesPage() {
             <label>Возраст<input type="number" value={form.age} onChange={(event) => setForm({ ...form, age: Number(event.target.value) })} /></label>
             <label>Вес<input type="number" value={form.weight_kg} onChange={(event) => setForm({ ...form, weight_kg: Number(event.target.value) })} /></label>
             <label>Рост<input type="number" value={form.height_cm} onChange={(event) => setForm({ ...form, height_cm: Number(event.target.value) })} /></label>
-            <label>Тип питания<input value={form.diet_type} onChange={(event) => setForm({ ...form, diet_type: event.target.value })} /></label>
-            <label>Цель<input value={form.goal} onChange={(event) => setForm({ ...form, goal: event.target.value })} /></label>
-            <label>Аллергии<textarea value={form.allergies_text} onChange={(event) => setForm({ ...form, allergies_text: event.target.value })} /></label>
-            <label>Заболевания<textarea value={form.diseases_text} onChange={(event) => setForm({ ...form, diseases_text: event.target.value })} /></label>
-            <label>Предпочтения<textarea value={form.preferences_text} onChange={(event) => setForm({ ...form, preferences_text: event.target.value })} /></label>
-            <label className="fullWidth">Ограничения<textarea value={form.restrictions_text} onChange={(event) => setForm({ ...form, restrictions_text: event.target.value })} /></label>
+            <label>
+              Тип питания
+              <input list="diet-options" value={form.diet_type} onChange={(event) => setForm({ ...form, diet_type: event.target.value })} />
+              <datalist id="diet-options">
+                {DIET_OPTIONS.map((option) => <option key={option} value={option} />)}
+              </datalist>
+            </label>
+            <label>
+              Цель
+              <input list="goal-options" value={form.goal} onChange={(event) => setForm({ ...form, goal: event.target.value })} />
+              <datalist id="goal-options">
+                {GOAL_OPTIONS.map((option) => <option key={option} value={option} />)}
+              </datalist>
+            </label>
+            <label>
+              Аллергии
+              <textarea
+                value={form.allergies_text}
+                onChange={(event) => setForm({ ...form, allergies_text: event.target.value })}
+                placeholder="например: лактоза, глютен, орехи"
+              />
+            </label>
+            <label>
+              Заболевания
+              <textarea
+                value={form.diseases_text}
+                onChange={(event) => setForm({ ...form, diseases_text: event.target.value })}
+                placeholder="например: диабет, гипертония"
+              />
+            </label>
+            <label>
+              Предпочтения
+              <textarea
+                value={form.preferences_text}
+                onChange={(event) => setForm({ ...form, preferences_text: event.target.value })}
+                placeholder="например: не люблю острое, больше белка"
+              />
+            </label>
+            <label className="fullWidth">
+              Дополнительные ограничения
+              <textarea
+                value={form.restrictions_text}
+                onChange={(event) => setForm({ ...form, restrictions_text: event.target.value })}
+                placeholder="свободный текст, если есть особые условия"
+              />
+            </label>
             <button type="submit">{submitLabel}</button>
           </form>
         </div>
 
         <div className="card">
-          <h3>Сохраненные профили</h3>
+          <h3>Сохранённые профили</h3>
           <div className="list">
             {profiles.map((profile) => (
               <div key={profile.id} className="listCard">

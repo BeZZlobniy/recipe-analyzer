@@ -3,7 +3,7 @@ from __future__ import annotations
 from app.api.routes import analyze as analyze_route
 
 
-def _fake_analysis_result(recipe_text: str) -> dict:
+def _fake_analysis_result(recipe_text: str, target_recipe_calories: float | None = None) -> dict:
     return {
         "title": "Тестовый рецепт",
         "clean_recipe_text": recipe_text,
@@ -59,6 +59,16 @@ def _fake_analysis_result(recipe_text: str) -> dict:
         "recommendations": ["demo recommendation"],
         "warnings": [],
         "compatibility": {"diet": "high", "restriction": "medium", "goal": "low"},
+        "servings": 2,
+        "target_recipe_calories": target_recipe_calories,
+        "portion_guidance": {
+            "estimated_recipe_servings": 2,
+            "recommended_recipe_servings": 2,
+            "calories_total": 320.0,
+            "calories_per_recommended_serving": 160.0,
+            "target_recipe_calories": target_recipe_calories,
+            "summary": "Для цели 300 ккал рецепт стоит разделить примерно на 2 порции." if target_recipe_calories else None,
+        },
     }
 
 
@@ -113,12 +123,12 @@ def test_analyze_history_and_dashboard_flow(monkeypatch, authenticated_client, s
     monkeypatch.setattr(
         analyze_route.analysis_service,
         "analyze_recipe",
-        lambda db, recipe_text, profile: _fake_analysis_result(recipe_text),
+        lambda db, recipe_text, profile, target_recipe_calories=None: _fake_analysis_result(recipe_text, target_recipe_calories),
     )
 
     analyze_response = authenticated_client.post(
         "/api/analyze",
-        json={"profile_id": seeded_user["profile_id"], "recipe_text": "Яйцо - 2 шт."},
+        json={"profile_id": seeded_user["profile_id"], "recipe_text": "Яйцо - 2 шт.", "target_recipe_calories": 300},
     )
 
     assert analyze_response.status_code == 200
@@ -126,6 +136,9 @@ def test_analyze_history_and_dashboard_flow(monkeypatch, authenticated_client, s
     analysis_id = analysis_payload["analysis_id"]
     assert analysis_payload["title"] == "Тестовый рецепт"
     assert analysis_payload["nutrition_per_serving"]["calories"]["value"] == 160.0
+    assert analysis_payload["target_recipe_calories"] == 300
+    assert analysis_payload["portion_guidance"]["target_recipe_calories"] == 300
+    assert analysis_payload["portion_guidance"]["recommended_recipe_servings"] == 2
 
     history_response = authenticated_client.get("/api/history")
 
@@ -139,6 +152,7 @@ def test_analyze_history_and_dashboard_flow(monkeypatch, authenticated_client, s
     detail_payload = detail_response.json()
     assert detail_payload["analysis_result"]["summary"] == "Тестовый анализ выполнен успешно."
     assert detail_payload["analysis_result"]["compatibility"]["goal"] == "low"
+    assert detail_payload["analysis_result"]["portion_guidance"]["target_recipe_calories"] == 300
 
     dashboard_response = authenticated_client.get("/api/dashboard")
 

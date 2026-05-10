@@ -1,0 +1,303 @@
+{
+  "diet_aliases": {
+    "balanced": [
+      "balanced",
+      "сбаланс",
+      "обычн"
+    ],
+    "vegetarian": [
+      "vegetarian",
+      "вегетари"
+    ],
+    "vegan": [
+      "vegan",
+      "веган"
+    ],
+    "pescatarian": [
+      "pescatar",
+      "пескетари"
+    ],
+    "mediterranean": [
+      "mediterranean",
+      "средиземномор"
+    ],
+    "low_carb": [
+      "low carb",
+      "низкоуглев",
+      "кето",
+      "keto"
+    ],
+    "low_sodium": [
+      "low sodium",
+      "низкосолев",
+      "меньше соли",
+      "малосол"
+    ],
+    "high_protein": [
+      "high protein",
+      "высокобел",
+      "больше белка"
+    ],
+    "gluten_free": [
+      "gluten free",
+      "безглютен"
+    ],
+    "lactose_free": [
+      "lactose free",
+      "безлактоз",
+      "без молоч"
+    ],
+    "halal": [
+      "halal",
+      "халяль"
+    ]
+  },
+  "goal_aliases": {
+    "maintenance": [
+      "maintenance",
+      "поддерж",
+      "healthy",
+      "здоров",
+      "норма"
+    ],
+    "fat_loss": [
+      "fat loss",
+      "weight loss",
+      "cutting",
+      "похуд",
+      "снижен",
+      "дефицит"
+    ],
+    "muscle_gain": [
+      "muscle gain",
+      "bulk",
+      "gain",
+      "набор мыш",
+      "набор масс"
+    ]
+  },
+  "rag_query_terms": {
+    "vegetarian": "vegetarian diet",
+    "vegan": "vegan diet",
+    "pescatarian": "pescatarian diet",
+    "mediterranean": "mediterranean diet",
+    "low_carb": "low carb",
+    "low_sodium": "low sodium",
+    "high_protein": "high protein diet",
+    "gluten_free": "gluten free",
+    "lactose_free": "lactose intolerance",
+    "halal": "halal diet",
+    "diabetes": "diabetes meal planning",
+    "hypertension": "hypertension low sodium",
+    "hyperlipidemia": "hyperlipidemia saturated fat",
+    "gout": "gout uric acid purine foods",
+    "kidney": "kidney disease sodium potassium phosphorus protein",
+    "gerd": "GERD reflux gastritis trigger foods",
+    "ibs": "IBS low FODMAP trigger foods",
+    "avoid_spicy": "spicy food avoidance",
+    "avoid_pork": "no pork pork-free diet",
+    "avoid_fried": "fried food avoidance cooking method",
+    "fat_loss": "weight loss",
+    "muscle_gain": "high protein",
+    "maintenance": "healthy eating",
+    "dairy": "lactose intolerance dairy allergy",
+    "gluten": "gluten free",
+    "eggs": "egg allergy",
+    "fish": "fish allergy",
+    "shellfish": "shellfish allergy",
+    "nuts": "tree nut allergy",
+    "peanuts": "peanut allergy",
+    "soy": "soy allergy",
+    "sesame": "sesame allergy"
+  },
+  "allergy_aliases": {
+    "dairy": [
+      "lactose",
+      "dairy",
+      "milk",
+      "молоч",
+      "лактоз",
+      "казеин",
+      "сыворот"
+    ],
+    "gluten": [
+      "gluten",
+      "wheat",
+      "пшен",
+      "глютен"
+    ],
+    "eggs": [
+      "egg",
+      "яйц",
+      "albumin",
+      "meringue"
+    ],
+    "fish": [
+      "fish",
+      "рыб",
+      "лосос",
+      "тунец",
+      "анчоус",
+      "скумбр",
+      "морепродукт"
+    ],
+    "shellfish": [
+      "shellfish",
+      "shrimp",
+      "кревет",
+      "мид",
+      "устриц",
+      "кальмар",
+      "морепродукт"
+    ],
+    "nuts": [
+      "tree nut",
+      "nut",
+      "орех",
+      "миндал",
+      "кешью",
+      "фундук",
+      "грец",
+      "пекан",
+      "фисташ"
+    ],
+    "peanuts": [
+      "peanut",
+      "арахис"
+    ],
+    "soy": [
+      "soy",
+      "соя",
+      "тофу",
+      "miso",
+      "edamame"
+    ],
+    "sesame": [
+      "sesame",
+      "кунжут",
+      "tahini"
+    ]
+  },
+  "disease_aliases": {
+    "diabetes": [
+      "diabetes",
+      "диабет",
+      "гликем"
+    ],
+    "hypertension": [
+      "hypertension",
+      "гипертон",
+      "давлен"
+    ],
+    "hyperlipidemia": [
+      "hyperlipidemia",
+      "гиперлип",
+      "липид",
+      "холестерин"
+    ],
+    "gout": [
+      "gout",
+      "подагр",
+      "мочев",
+      "uric acid",
+      "пурин"
+    ],
+    "kidney": [
+      "kidney",
+      "renal",
+      "почек",
+      "почеч",
+      "хпн",
+      "нефр"
+    ],
+    "gerd": [
+      "gerd",
+      "reflux",
+      "рефлюкс",
+      "гастрит",
+      "изжог"
+    ],
+    "ibs": [
+      "ibs",
+      "срк",
+      "кишеч",
+      "fodmap",
+      "фодмап"
+    ]
+  },
+  "profile_query_templates": {
+    "diet_type": [
+      "diet rule allowed forbidden ingredients {value}",
+      "правила типа питания запрещенные ингредиенты {value}",
+      "recipe compatibility substitutions for diet {value}"
+    ],
+    "goal": [
+      "nutrition goal recipe assessment {value}",
+      "цель питания порция калории белки жиры углеводы {value}",
+      "meal planning calories protein fat carbs {value}"
+    ],
+    "allergy": [
+      "food allergy hidden sources cross contact {value}",
+      "аллергия скрытые источники ингредиенты замены {value}",
+      "allergen ingredient substitutions recipe {value}"
+    ],
+    "disease": [
+      "medical nutrition therapy recipe restrictions {value}",
+      "заболевание питание продукты ограничить рецепт {value}",
+      "dietary risks nutrients to limit condition {value}"
+    ],
+    "preference": [
+      "food preference recipe adaptation {value}",
+      "пищевое предпочтение исключить ингредиент замена {value}",
+      "avoid ingredient flavor restriction substitutions {value}"
+    ],
+    "restriction": [
+      "personal food restriction forbidden ingredients {value}",
+      "персональное ограничение запрещенные продукты рецепт {value}",
+      "recipe adaptation for custom restriction {value}"
+    ],
+    "target_calories": [
+      "portion size rules target calories",
+      "recipe servings calorie target"
+    ]
+  },
+  "preference_aliases": {
+    "avoid_spicy": [
+      "spicy",
+      "не люблю острое",
+      "без остр",
+      "острое нельзя",
+      "острое не люблю"
+    ],
+    "low_carb": [
+      "low carb",
+      "меньше углеводов",
+      "низкоуглев"
+    ],
+    "low_sodium": [
+      "low sodium",
+      "меньше соли",
+      "малосол",
+      "низкосолев"
+    ],
+    "high_protein": [
+      "high protein",
+      "больше белка",
+      "высокобел"
+    ],
+    "avoid_pork": [
+      "не ем свинину",
+      "без свинины",
+      "исключить свинину",
+      "no pork",
+      "pork free"
+    ],
+    "avoid_fried": [
+      "минимум жарен",
+      "без жарен",
+      "меньше жарен",
+      "avoid fried",
+      "less fried"
+    ]
+  }
+}

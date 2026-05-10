@@ -58,12 +58,40 @@ class ProfileResponse(ProfileBase):
 class AnalyzeRequest(BaseModel):
     profile_id: int
     recipe_text: str = Field(min_length=1)
+    target_recipe_calories: float | None = Field(default=None, gt=0)
 
 
 class CompatibilityResponse(BaseModel):
     diet: str
     restriction: str
     goal: str
+
+
+class ProfileAssessmentBlockResponse(BaseModel):
+    key: str
+    title: str
+    status: str
+    compatibility: str
+    summary: str
+    evidence: list[str] = Field(default_factory=list)
+    recommendations: list[str] = Field(default_factory=list)
+
+
+class ProfileAssessmentResponse(BaseModel):
+    goal_alignment: ProfileAssessmentBlockResponse
+    allergy_issues: ProfileAssessmentBlockResponse
+    disease_issues: ProfileAssessmentBlockResponse
+    preference_alignment: ProfileAssessmentBlockResponse
+    additional_restrictions: ProfileAssessmentBlockResponse
+
+
+class PortionGuidanceResponse(BaseModel):
+    estimated_recipe_servings: int
+    recommended_recipe_servings: int
+    calories_total: float
+    calories_per_recommended_serving: float
+    target_recipe_calories: float | None = None
+    summary: str | None = None
 
 
 class AnalyzeResponse(BaseModel):
@@ -84,6 +112,10 @@ class AnalyzeResponse(BaseModel):
     recommendations: list[str]
     warnings: list[str]
     compatibility: CompatibilityResponse
+    profile_assessment: ProfileAssessmentResponse
+    servings: int
+    target_recipe_calories: float | None = None
+    portion_guidance: PortionGuidanceResponse
 
 
 class HistoryItemResponse(BaseModel):
