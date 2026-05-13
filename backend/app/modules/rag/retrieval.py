@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from typing import Any
 
 import numpy as np
@@ -9,6 +10,9 @@ from sentence_transformers import SentenceTransformer
 
 from app.core.config import settings
 from app.core.utils import find_data_file, normalize_text
+
+
+SOURCE_HINT_PREFIX = "kb_source:"
 
 
 class RetrievalService:
@@ -25,12 +29,15 @@ class RetrievalService:
         kb = self._load_kb()
         if not kb:
             return []
+        source_hints, clean_queries = self._extract_source_hints(queries)
+        queries = clean_queries or queries
         candidate_window = max(top_k * 3, 6)
         embedding_results = self._embedding_search(queries, candidate_window) if settings.enable_embedding_retrieval else []
         lexical_results = self._lexical_search(queries, candidate_window)
         merged = self._merge_rankings(embedding_results, lexical_results)
         filtered = self._filter_relevance(list(merged.values()), queries)
-        return self._select_balanced_results(filtered, lexical_results, top_k)
+        selected = self._select_balanced_results(filtered, lexical_results, top_k)
+        return self._ensure_source_hints(selected, source_hints, queries, top_k)
 
     def _embedding_search(self, queries: list[str], top_k: int) -> list[dict[str, Any]]:
         try:
@@ -156,6 +163,93 @@ class RetrievalService:
                 break
 
         return selected[:top_k]
+
+    def _extract_source_hints(self, queries: list[str]) -> tuple[list[str], list[str]]:
+        hints: list[str] = []
+        clean_queries: list[str] = []
+        for query in queries:
+            text = str(query or "").strip()
+            if not text:
+                continue
+            if text.startswith(SOURCE_HINT_PREFIX):
+                source = text.removeprefix(SOURCE_HINT_PREFIX).strip()
+                if source:
+                    hints.append(source)
+                continue
+            clean_queries.append(text)
+        return list(dict.fromkeys(hints)), clean_queries
+
+    def _ensure_source_hints(
+        self,
+        selected: list[dict[str, Any]],
+        source_hints: list[str],
+        queries: list[str],
+        top_k: int,
+    ) -> list[dict[str, Any]]:
+        if not source_hints or top_k <= 0:
+            return selected[:top_k]
+
+        result = list(selected[:top_k])
+        hinted_sources = set(source_hints)
+        present_sources = {str(item.get("source") or "") for item in result}
+
+        for source in source_hints[:top_k]:
+            if source in present_sources:
+                continue
+            candidate = self._best_chunk_for_source(source, queries)
+            if candidate is None:
+                continue
+            if len(result) < top_k:
+                result.append(candidate)
+            else:
+                replace_index = self._lowest_priority_replacement_index(result, hinted_sources)
+                if replace_index is None:
+                    break
+                result[replace_index] = candidate
+            present_sources.add(source)
+
+        return sorted(result, key=lambda item: float(item.get("score") or 0), reverse=True)[:top_k]
+
+    def _best_chunk_for_source(self, source: str, queries: list[str]) -> dict[str, Any] | None:
+        query_tokens = {token for query in queries for token in normalize_text(query).split() if len(token) >= 4}
+        best: dict[str, Any] | None = None
+        best_score = -1.0
+        for chunk in self._load_kb():
+            if chunk.get("source") != source:
+                continue
+            text = normalize_text(chunk.get("text"))
+            tags = normalize_text(" ".join(chunk.get("tags", [])))
+            overlap = sum(1 for token in query_tokens if token in text or token in tags)
+            score = 1.0 + overlap / max(len(query_tokens), 1)
+            if score > best_score:
+                best_score = score
+                best = {
+                    "id": chunk["id"],
+                    "source": chunk["source"],
+                    "text": chunk["text"],
+                    "tags": chunk.get("tags", []),
+                    "score": round(score, 4),
+                }
+        return best
+
+    def _lowest_priority_replacement_index(self, items: list[dict[str, Any]], protected_sources: set[str]) -> int | None:
+        source_counts = Counter(str(item.get("source") or "") for item in items)
+        duplicate_candidates = [
+            (index, float(item.get("score") or 0))
+            for index, item in enumerate(items)
+            if source_counts[str(item.get("source") or "")] > 1
+        ]
+        if duplicate_candidates:
+            return min(duplicate_candidates, key=lambda item: item[1])[0]
+
+        candidates = [
+            (index, float(item.get("score") or 0))
+            for index, item in enumerate(items)
+            if str(item.get("source") or "") not in protected_sources
+        ]
+        if not candidates:
+            return None
+        return min(candidates, key=lambda item: item[1])[0]
 
     def _load_kb(self) -> list[dict[str, Any]]:
         if self._kb is None:

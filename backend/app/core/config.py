@@ -38,8 +38,6 @@ class Settings(BaseSettings):
     embedding_device: str = "auto"
     enable_embedding_retrieval: bool = True
 
-    rag_top_k: int = 4
-    rag_max_queries: int = 10
     usda_request_timeout_sec: int = 30
     usda_api_key: str = ""
     usda_base_url: str = "https://api.nal.usda.gov/fdc/v1"

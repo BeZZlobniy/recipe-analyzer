@@ -26,7 +26,8 @@ class PersonalizationService:
 
         diet_code = self._first_alias([profile.get("diet_type")], DIET_ALIASES)
         goal_code = self._first_alias([profile.get("goal")], GOAL_ALIASES)
-        allergy_codes = sorted(self._collect_aliases(raw_allergies + raw_restrictions, ALLERGY_ALIASES))
+        allergy_codes = sorted(self._collect_aliases(raw_allergies, ALLERGY_ALIASES))
+        restriction_food_codes = sorted(self._collect_aliases(raw_restrictions, ALLERGY_ALIASES))
         disease_codes = sorted(self._collect_aliases(raw_diseases + raw_restrictions, DISEASE_ALIASES))
         preference_codes = sorted(self._collect_aliases(raw_preferences + raw_restrictions, PREFERENCE_ALIASES))
         profile_constraints = self._build_profile_constraints(
@@ -43,6 +44,7 @@ class PersonalizationService:
             diet_code=diet_code,
             goal_code=goal_code,
             allergy_codes=allergy_codes,
+            restriction_food_codes=restriction_food_codes,
             disease_codes=disease_codes,
             preference_codes=preference_codes,
             profile_constraints=profile_constraints,
@@ -67,6 +69,7 @@ class PersonalizationService:
             "raw_diet_type": profile.get("diet_type"),
             "raw_goal": profile.get("goal"),
             "allergy_codes": allergy_codes,
+            "restriction_food_codes": restriction_food_codes,
             "disease_codes": disease_codes,
             "preference_codes": preference_codes,
             "target_recipe_calories": target_recipe_calories,
@@ -85,13 +88,14 @@ class PersonalizationService:
         diet_code: str | None,
         goal_code: str | None,
         allergy_codes: list[str],
+        restriction_food_codes: list[str],
         disease_codes: list[str],
         preference_codes: list[str],
         profile_constraints: list[dict[str, str]],
         target_recipe_calories: float | None,
     ) -> list[str]:
         queries: list[str] = []
-        for code in [diet_code, goal_code, *allergy_codes, *disease_codes, *preference_codes]:
+        for code in [diet_code, goal_code, *allergy_codes, *restriction_food_codes, *disease_codes, *preference_codes]:
             if code and code in RAG_QUERY_TERMS:
                 queries.append(RAG_QUERY_TERMS[code])
         queries.extend(self._constraint_queries(profile_constraints))

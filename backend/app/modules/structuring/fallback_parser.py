@@ -233,13 +233,13 @@ class FallbackRecipeParser:
             return None, text, None
         match = self.QUANTITY_PATTERN.search(low)
         if not match:
-            return quantity_value_hint, text, quantity_unit_hint
+            return quantity_value_hint, text, self.normalize_unit(quantity_unit_hint)
         value = quantity_value_hint
         if value is None:
             parsed_range = parse_range(low)
             value = round(sum(parsed_range) / 2, 3) if parsed_range else self.parse_number(match.group("value"))
         unit_raw = (quantity_unit_hint or match.group("unit") or "").strip()
-        unit = self.UNIT_ALIASES.get(unit_raw, unit_raw or None)
+        unit = self.normalize_unit(unit_raw)
         return value, text, unit
 
     def extract_inline_quantity(self, ingredient_line: str) -> tuple[float | None, str | None, str | None, str]:
@@ -251,9 +251,28 @@ class FallbackRecipeParser:
         parsed_range = parse_range(low)
         value = round(sum(parsed_range) / 2, 3) if parsed_range else self.parse_number(match.group("value"))
         unit_raw = (match.group("unit") or "").strip()
-        unit = self.UNIT_ALIASES.get(unit_raw, unit_raw or None)
+        unit = self.normalize_unit(unit_raw)
         remainder = low[match.end() :].strip(" ,.;:-")
         return value, match.group(0).strip(), unit, remainder or low
+
+    def normalize_unit(self, unit_raw: str | None) -> str | None:
+        unit = normalize_text(unit_raw).strip(" .")
+        if not unit:
+            return None
+        if unit in self.UNIT_ALIASES:
+            return self.UNIT_ALIASES[unit]
+        compact = unit.replace(" ", "").strip(".")
+        if compact in {"\u0448\u0442", "\u0448\u0442\u0443\u043a\u0430", "\u0448\u0442\u0443\u043a\u0438"}:
+            return "\u0448\u0442"
+        if compact in {"\u0433", "\u0433\u0440", "\u0433\u0440\u0430\u043c\u043c", "\u0433\u0440\u0430\u043c\u043c\u0430"}:
+            return "\u0433"
+        if compact in {"\u043a\u0433", "\u043a\u0438\u043b\u043e\u0433\u0440\u0430\u043c\u043c", "\u043a\u0438\u043b\u043e\u0433\u0440\u0430\u043c\u043c\u0430"}:
+            return "\u043a\u0433"
+        if compact in {"\u043c\u043b", "\u043c\u0438\u043b\u043b\u0438\u043b\u0438\u0442\u0440", "\u043c\u0438\u043b\u043b\u0438\u043b\u0438\u0442\u0440\u0430"}:
+            return "\u043c\u043b"
+        if compact in {"\u043b", "\u043b\u0438\u0442\u0440", "\u043b\u0438\u0442\u0440\u0430"}:
+            return "\u043b"
+        return self.UNIT_ALIASES.get(unit, unit)
 
     @staticmethod
     def parse_number(value: str) -> float:

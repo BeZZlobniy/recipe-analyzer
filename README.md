@@ -1,34 +1,31 @@
 # Recipe Analyzer
 
-Локальное веб-приложение для персонализированного анализа рецептов. Система разбирает рецепт из свободного текста, сопоставляет ингредиенты с USDA FoodData Central, рассчитывает КБЖУ и формирует RAG-анализ с учетом профиля пользователя: цели, типа питания, аллергий, заболеваний, предпочтений и дополнительных ограничений.
+Локальное веб-приложение для персонализированного анализа рецептов. Система извлекает ингредиенты из свободного текста, сопоставляет их с USDA FoodData Central, рассчитывает КБЖУ и формирует RAG-отчет с учетом профиля пользователя.
 
 ## Возможности
 
-- Разбор рецепта из текста: название, порции, ингредиенты, количества, единицы измерения и шаги приготовления.
-- Нормализация русскоязычных ингредиентов через Qwen/Ollama с резервным эвристическим парсером.
-- Перевод ингредиентов на английский для поиска в USDA без простой транслитерации.
-- Сопоставление с локальным USDA Foundation dataset и опциональным USDA API.
+- Разбор рецепта из свободного текста: название, ингредиенты, количества, единицы, шаги.
+- Нормализация ингредиентов через Qwen/Ollama с эвристическим резервным парсером.
+- Сопоставление ингредиентов с локальным USDA Foundation JSON и, при наличии ключа, USDA API.
 - Расчет калорий, белков, жиров, углеводов, клетчатки и натрия.
-- Персонализация через RAG-слой, а не только через rule-based проверки.
-- Отдельные блоки итоговой оценки: цель, аллергии, заболевания, предпочтения, тип питания и ограничения.
+- Персонализация по цели, типу питания, аллергиям, заболеваниям, предпочтениям и дополнительным ограничениям.
+- Отдельный профильный блок анализа: цель, аллергии, заболевания, предпочтения, тип питания и ограничения.
 - Рекомендация целого количества порций: `1 порция = весь рецепт`, `2 порции = рецепт / 2` и так далее.
-- История анализов, подробная страница результата, dashboard и графики.
-- Тестовые профили и 20 тестовых рецептов для массового прогона.
-- Поддержка GPU для embeddings через `EMBEDDING_DEVICE=auto|cuda|cpu`.
+- История анализов, детальный просмотр результата и dashboard.
+- Локальная RAG-база знаний из `backend/app/data/kb_sources`.
+- Поддержка GPU для embeddings через `EMBEDDING_DEVICE=auto|cuda|cpu`; скрипты установки ставят CUDA PyTorch при наличии NVIDIA GPU.
 
-## Архитектура Анализа
+## Pipeline
 
-1. `input_cleaner` очищает текст рецепта от лишнего шума.
-2. `fallback_parser` строит устойчивый базовый разбор рецепта.
-3. Qwen через Ollama уточняет структуру рецепта и `name_en` для USDA.
+1. `input_cleaner` очищает текст рецепта от шума.
+2. `fallback_parser` строит устойчивый эвристический разбор рецепта.
+3. Qwen через Ollama уточняет структуру рецепта и английские `name_en` для USDA.
 4. `normalization.py` объединяет LLM-результат и эвристику, чтобы не терять количества.
 5. `ingredient_resolution.py` ищет USDA-кандидатов, ранжирует их и при необходимости просит Qwen выбрать лучший продукт.
 6. `nutrition.py` считает нутриенты и метрики качества сопоставления.
-7. `portions.py` подбирает рекомендуемое число порций под целевые калории.
-8. `retrieval.py` извлекает релевантный контекст из локальной базы знаний.
-9. `rag/service.py` формирует сегментированный персонализированный вывод.
-
-Крупные prompt-шаблоны для Qwen лежат в `backend/app/services/qwen_prompts.py`. Контекстные знания для RAG лежат в `backend/app/data/kb_sources`. Резервные справочники вынесены в JSON-файлы в `backend/app/data/fallback`.
+7. `portions.py` определяет рекомендуемое количество порций под целевые калории.
+8. `retrieval.py` достает RAG-контекст из локальной базы знаний.
+9. `rag/service.py` формирует итоговый персонализированный анализ и профильные блоки.
 
 ## Стек
 
@@ -46,7 +43,7 @@
 .\run-app.ps1
 ```
 
-Скрипт установки создает Python venv, ставит backend/frontend зависимости, копирует `backend/.env.example` в `backend/.env` и при наличии NVIDIA GPU пытается поставить CUDA-сборку PyTorch.
+Скрипты создают Python venv, ставят backend/frontend зависимости, копируют `backend/.env.example` в `backend/.env`, при наличии NVIDIA GPU ставят CUDA-сборку PyTorch и запускают backend/frontend.
 
 Адреса после запуска:
 
@@ -76,13 +73,6 @@ npm install
 npm run dev
 ```
 
-Для LLM нужен запущенный Ollama и модель:
-
-```powershell
-ollama pull qwen2.5:7b
-ollama serve
-```
-
 ## Настройки
 
 Основные переменные в `backend/.env`:
@@ -94,33 +84,29 @@ CORS_ORIGINS=["http://localhost:5173"]
 
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=qwen2.5:7b
-OLLAMA_ANALYSIS_MODEL=qwen2.5:7b
-OLLAMA_ANALYSIS_FALLBACK_MODELS=["qwen3.5:4b","qwen2.5:3b"]
 OLLAMA_NORMALIZATION_MODEL=qwen2.5:7b
-OLLAMA_NORMALIZATION_FALLBACK_MODELS=["qwen3.5:4b","qwen2.5:3b"]
-OLLAMA_TIMEOUT_SEC=180
-OLLAMA_ANALYSIS_TIMEOUT_SEC=180
+OLLAMA_TIMEOUT_SEC=0
 
 EMBEDDING_MODEL=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 EMBEDDING_DEVICE=auto
 ENABLE_EMBEDDING_RETRIEVAL=true
 
-USDA_REQUEST_TIMEOUT_SEC=30
+USDA_REQUEST_TIMEOUT_SEC=0
 USDA_API_KEY=your_usda_api_key
 ```
 
-`EMBEDDING_DEVICE=auto` выбирает CUDA, если PyTorch видит GPU, иначе CPU. Для жесткого требования GPU укажите `EMBEDDING_DEVICE=cuda`: приложение упадет при старте, если CUDA недоступна.
+`EMBEDDING_DEVICE=auto` выбирает CUDA, если PyTorch видит GPU, иначе CPU. Для принудительного GPU укажите `EMBEDDING_DEVICE=cuda`; приложение упадет при старте, если CUDA недоступна.
 
-`USDA_API_KEY` необязателен. Без него используется локальный Foundation dataset; API нужен как внешний источник кандидатов, если локальный поиск недостаточен.
+`USDA_API_KEY` не обязателен: без него используется локальный Foundation dataset. API нужен только как внешний источник кандидатов, если локальный поиск слабый.
 
 ## Демо-Данные
 
 При старте backend выполняется `bootstrap_database()`:
 
 - Создается demo user `admin`.
-- Создаются 5 тестовых профилей с разными целями, аллергиями, заболеваниями и типами питания.
-- Собирается `knowledge_base.json` из файлов `backend/app/data/kb_sources`.
-- Локальный каталог продуктов пополняется по мере анализа через USDA resolution/cache.
+- Создаются 5 тестовых профилей: вегетарианец без лактозы, набор массы, контроль сахара, низкая соль, веган без глютена.
+- Собирается `knowledge_base.json` из `kb_sources`.
+- Локальная база продуктов наполняется по мере анализа через USDA resolution/cache.
 
 Тестовые рецепты для прогонов лежат в `backend/app/data/recipes/1.txt` ... `20.txt`.
 
@@ -129,16 +115,16 @@ USDA_API_KEY=your_usda_api_key
 Из папки `backend`:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_recipe_suite.py --indexes 8,13,17,19,20 --matrix --no-save-db --output reports\recipe_suite_complex_smoke.json
+.\.venv\Scripts\python.exe scripts\run_recipe_suite.py --limit 10
 ```
 
-Прогоняет выбранные рецепты по тестовым профилям и сохраняет JSON-отчет с метриками качества, fallback и RAG.
+Прогоняет рецепты `app/data/recipes/1.txt..10.txt` по демо-профилям и сохраняет отчет в `backend/reports/recipe_suite_latest.json`.
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_recipe_suite.py --limit 20 --matrix --output reports\recipe_suite_latest.json
+.\.venv\Scripts\python.exe scripts\evaluate_recipe_suite.py --report reports\recipe_suite_latest.json
 ```
 
-Полный прогон 20 рецептов по профилям. Используется для оценки качества анализа и персонализации.
+Оценивает сохраненный suite-прогон по служебной разметке рецептов и профилей.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\benchmark_local_ai.py
@@ -152,15 +138,13 @@ USDA_API_KEY=your_usda_api_key
 
 Генерирует таблицы и графики для отчетности в `backend/reports/thesis`.
 
-`scripts/cli_analyze.py` оставлен как CLI-сценарий для анализа рецепта без frontend.
-
 ## Проверки
 
 Backend:
 
 ```powershell
 cd backend
-.\.venv\Scripts\python.exe -m py_compile app/services/qwen_prompts.py app/services/ollama_service.py app/modules/rag/service.py app/core/config.py
+.\.venv\Scripts\python.exe -m compileall app
 .\.venv\Scripts\python.exe -m pytest tests
 ```
 
@@ -169,9 +153,8 @@ Frontend:
 ```powershell
 cd frontend
 npm run build
+npx tsc -p tsconfig.json --noEmit --noUnusedLocals --noUnusedParameters
 ```
-
-Последний контрольный smoke-прогон: 5 сложных рецептов x 5 профилей = 25 анализов, `heuristic_fallback_ratio = 0.0`, `unresolved_ratio = 0.0`, `degraded_count = 0`.
 
 ## Структура
 
@@ -181,6 +164,7 @@ recipe-analyzer/
   setup-app.ps1
   run-app.ps1
   run-app.bat
+  app.db
 
   backend/
     requirements.txt
@@ -206,16 +190,20 @@ recipe-analyzer/
         utils.py
 
       data/
-        recipes/
-          1.txt ... 20.txt
+        FoodData_Central_foundation_food_json_2025-12-18.json
+        eval/
+          recipe_expectations.json
         fallback/
           ingredient_catalog.json
           nutrition_fallbacks.json
           parser_fallbacks.json
           personalization_aliases.json
+        recipes/
+          1.txt ... 20.txt
         kb_sources/
-        FoodData_Central_foundation_food_json_2025-12-18.json
         knowledge_base.json
+        knowledge_base_embeddings.npy
+        knowledge_base_embeddings_meta.json
 
       models/
         user.py
@@ -252,27 +240,61 @@ recipe-analyzer/
         kb_catalog_service.py
 
     scripts/
-      cli_analyze.py
       run_recipe_suite.py
+      evaluate_recipe_suite.py
       benchmark_local_ai.py
       generate_thesis_artifacts.py
 
     tests/
-      integration/
-      unit/
+      integration/test_api.py
+      unit/test_ingredient_catalog.py
+      unit/test_nutrition.py
+      unit/test_parsing.py
+      unit/test_rag_personalization_guard.py
+      unit/test_recipe_analysis_regressions.py
+      unit/test_recipe_suite_evaluation.py
+      unit/test_usda_resolution_utils.py
+
+    demo/
+    reports/
 
   frontend/
     package.json
     vite.config.ts
+    tsconfig.json
     src/
       api/
       auth/
       components/
+        Charts.tsx
+        Layout.tsx
+        ProfileAssessmentPanel.tsx
+        ProtectedRoute.tsx
+        StatCard.tsx
       pages/
-      types/
+        LoginPage.tsx
+        DashboardPage.tsx
+        ProfilesPage.tsx
+        NewAnalysisPage.tsx
+        HistoryPage.tsx
+        AnalysisDetailsPage.tsx
+      types/api.ts
       utils/
+        labels.ts
+        nutritionDisplay.ts
+        text.ts
       App.tsx
       main.tsx
       styles.css
 ```
 
+## Что Не Коммитить
+
+Обычно не нужно включать в VCS:
+
+- `backend/.env`
+- `backend/.venv/`
+- `frontend/node_modules/`
+- локальные отчеты в `backend/reports/`
+- временные SQLite базы
+- сгенерированные embedding-артефакты, если они пересобираются локально

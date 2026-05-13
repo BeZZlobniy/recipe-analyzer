@@ -172,6 +172,24 @@ def test_personalization_keeps_unknown_profile_constraints_for_rag():
     assert any("personal food restriction forbidden ingredients" in query for query in context["rag_queries"])
 
 
+def test_personalization_keeps_custom_food_restrictions_out_of_allergy_codes():
+    context = personalization_service.build_profile_context(
+        {
+            "diet_type": "Веган",
+            "goal": "Поддержание здорового питания",
+            "allergies_json": ["Глютен"],
+            "diseases_json": [],
+            "preferences_json": [],
+            "restrictions_text": "Без мяса, рыбы, молочных продуктов, яиц, меда и пшеничной муки.",
+        }
+    )
+
+    assert context["allergy_codes"] == ["gluten"]
+    assert "dairy" in context["restriction_food_codes"]
+    assert "eggs" in context["restriction_food_codes"]
+    assert "gluten free" in context["rag_queries"]
+
+
 def test_portion_guidance_uses_target_recipe_calories_as_recipe_divisor():
     recipe = StructuredRecipe(
         title="Беляши",

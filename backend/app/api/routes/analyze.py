@@ -44,7 +44,6 @@ def analyze_recipe(payload: AnalyzeRequest, user: User = Depends(get_current_use
         profile_data,
         target_recipe_calories=payload.target_recipe_calories,
     )
-    result["profile_assessment"] = _ensure_profile_assessment(result)
     analysis = RecipeAnalysis(
         user_id=user.id,
         profile_id=profile.id,
@@ -83,33 +82,3 @@ def analyze_recipe(payload: AnalyzeRequest, user: User = Depends(get_current_use
         target_recipe_calories=result.get("target_recipe_calories"),
         portion_guidance=PortionGuidanceResponse(**result["portion_guidance"]),
     )
-
-
-def _ensure_profile_assessment(result: dict) -> dict:
-    assessment = result.get("profile_assessment")
-    if isinstance(assessment, dict) and assessment:
-        return assessment
-    summary = result.get("summary") or "Профильная оценка недоступна для этого результата анализа."
-    return {
-        "goal_alignment": _profile_assessment_block("goal_alignment", "Соответствие цели", summary),
-        "allergy_issues": _profile_assessment_block("allergy_issues", "Аллергии", "Аллергенные конфликты в этом результате не детализированы."),
-        "disease_issues": _profile_assessment_block("disease_issues", "Заболевания", "Медицинские ограничения в этом результате не детализированы."),
-        "preference_alignment": _profile_assessment_block("preference_alignment", "Предпочтения", "Предпочтения в этом результате не детализированы."),
-        "additional_restrictions": _profile_assessment_block(
-            "additional_restrictions",
-            "Тип питания и ограничения",
-            "Тип питания и дополнительные ограничения в этом результате не детализированы.",
-        ),
-    }
-
-
-def _profile_assessment_block(key: str, title: str, summary: str) -> dict:
-    return {
-        "key": key,
-        "title": title,
-        "status": "not_applicable",
-        "compatibility": "high",
-        "summary": summary,
-        "evidence": [],
-        "recommendations": [],
-    }

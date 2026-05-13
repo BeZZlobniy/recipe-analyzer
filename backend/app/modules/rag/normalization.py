@@ -95,6 +95,7 @@ class RecipeNormalizationService:
             quantity = item.quantity_text or item.quantity
             quantity_value = item.quantity_value
             quantity_unit = item.quantity_unit
+            fallback_item = None
             if not quantity:
                 candidates = heuristic_by_name.get(normalize_text(item.name), [])
                 while candidates and not candidates[0].quantity:
@@ -106,6 +107,25 @@ class RecipeNormalizationService:
                     quantity_unit = quantity_unit or fallback_item.quantity_unit
                 else:
                     quantity = fallback_recipe_parser.find_quantity_in_text(item.name, clean_recipe_text)
+            elif not quantity_unit:
+                candidates = heuristic_by_name.get(normalize_text(item.name), [])
+                while candidates and not candidates[0].quantity:
+                    candidates.pop(0)
+                if candidates:
+                    fallback_item = candidates.pop(0)
+                    fallback_quantity = fallback_item.quantity_text or fallback_item.quantity
+                    _, _, fallback_unit = fallback_recipe_parser.parse_quantity(fallback_quantity)
+                    if fallback_unit:
+                        quantity = fallback_quantity
+                        quantity_unit = fallback_unit
+
+            parsed_value, parsed_quantity, parsed_unit = fallback_recipe_parser.parse_quantity(quantity)
+            if parsed_quantity:
+                quantity = parsed_quantity
+            if parsed_value is not None and parsed_unit:
+                quantity_value = parsed_value
+                quantity_unit = parsed_unit
+
             merged_items.append(
                 item.model_copy(
                     update={

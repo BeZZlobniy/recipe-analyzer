@@ -72,6 +72,8 @@ def normalize_model_name_en(raw_name_en: str | None) -> str | None:
 
 
 def catalog_fallback_name_en(canonical: str) -> str | None:
+    if all(token in canonical for token in ("\u0433\u0440\u0443\u0434\u0438\u043d", "\u0441\u0432\u0438\u043d")):
+        return "pork belly raw"
     fallback = _heuristic_match(canonical, "fallback")
     return CATALOG_FALLBACKS.get(canonical) or (fallback if isinstance(fallback, str) else None)
 
@@ -94,11 +96,13 @@ def is_valid_model_translation(value: str | None) -> bool:
 
 def is_conflicting_model_translation(canonical: str, model_translation: str) -> bool:
     blocked = MODEL_TRANSLATION_BLOCKLIST_BY_CANONICAL.get(canonical)
-    if not blocked:
-        return False
     normalized = normalize_text(model_translation)
     tokens = set(normalized.split())
-    return normalized in blocked or bool(tokens & blocked)
+    if blocked and (normalized in blocked or bool(tokens & blocked)):
+        return True
+    canonical_family = _meat_family_from_text(canonical)
+    translation_family = _meat_family_from_text(normalized)
+    return bool(canonical_family and translation_family and canonical_family != translation_family)
 
 
 def sanitize_name_en(value: str | None) -> str | None:
@@ -180,3 +184,19 @@ def _to_singular(text: str) -> str:
     words = text.split()
     singular_words = [replacements.get(word, word[:-1] if word.endswith("s") and len(word) > 3 else word) for word in words]
     return " ".join(singular_words)
+
+
+def _meat_family_from_text(value: str | None) -> str | None:
+    text = normalize_text(value)
+    if not text:
+        return None
+    family_markers = {
+        "pork": ("pork", "ham", "bacon", "\u0441\u0432\u0438\u043d"),
+        "beef": ("beef", "\u0433\u043e\u0432\u044f\u0434"),
+        "chicken": ("chicken", "turkey", "\u043a\u0443\u0440", "\u0438\u043d\u0434"),
+        "fish": ("fish", "mackerel", "salmon", "\u0440\u044b\u0431", "\u0441\u043a\u0443\u043c\u0431\u0440"),
+    }
+    for family, markers in family_markers.items():
+        if any(marker in text for marker in markers):
+            return family
+    return None

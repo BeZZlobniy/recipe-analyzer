@@ -57,11 +57,6 @@ class AnalysisService:
             structured_recipe,
             matched_ingredients,
             nutrition_result,
-            {
-                **profile,
-                "servings": recommended_recipe_servings,
-                "target_recipe_calories": target_recipe_calories,
-            },
         )
         rag_result = rag_service.generate_analysis(
             clean_recipe_text,

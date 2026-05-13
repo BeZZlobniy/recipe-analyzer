@@ -13,6 +13,7 @@ if str(BACKEND_DIR) not in sys.path:
 
 from app.core.config import settings
 from app.core.db import SessionLocal, bootstrap_database
+from app.core.utils import normalize_text
 from app.models.profile import UserProfile
 from app.models.recipe_analysis import RecipeAnalysis
 from app.models.user import User
@@ -27,11 +28,20 @@ PROFILE_PLAN = [
     ("Никита, веган без глютена", 650.0),
 ]
 
+PROFILE_ALIASES = {
+    "anna": "Анна, вегетарианка без лактозы",
+    "sergey": "Сергей, набор мышечной массы",
+    "maria": "Мария, контроль сахара",
+    "irina": "Ирина, низкая соль",
+    "nikita": "Никита, веган без глютена",
+}
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the local RAG analysis suite on numbered recipe files.")
     parser.add_argument("--limit", type=int, default=5)
     parser.add_argument("--indexes", type=str, default="", help="Comma-separated recipe indexes to run, e.g. 8,18,19.")
+    parser.add_argument("--profiles", type=str, default="", help="Comma-separated profile names or aliases: anna,sergey,maria,irina,nikita.")
     parser.add_argument("--recipe-dir", type=Path, default=Path("recipes"))
     parser.add_argument("--matrix", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--save-db", action=argparse.BooleanOptionalAction, default=True)
@@ -42,6 +52,7 @@ def main() -> None:
     bootstrap_database()
     recipe_dir = args.recipe_dir if args.recipe_dir.is_absolute() else settings.data_dir / args.recipe_dir
     recipe_indexes = parse_indexes(args.indexes) if args.indexes else list(range(1, args.limit + 1))
+    selected_plan = select_profile_plan(args.profiles)
     recipe_paths = [(index, recipe_dir / f"{index}.txt") for index in recipe_indexes]
     missing = [path for _, path in recipe_paths if not path.exists()]
     if missing:
@@ -60,7 +71,7 @@ def main() -> None:
         rows: list[dict[str, Any]] = []
         for index, recipe_path in recipe_paths:
             recipe_text = recipe_path.read_text(encoding="utf-8-sig")
-            plans = PROFILE_PLAN if args.matrix else [PROFILE_PLAN[(index - 1) % len(PROFILE_PLAN)]]
+            plans = selected_plan if args.matrix else [selected_plan[(index - 1) % len(selected_plan)]]
             for profile_name, target_calories in plans:
                 profile = profiles.get(profile_name)
                 if profile is None:
@@ -98,7 +109,7 @@ def main() -> None:
     report = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "recipe_count": len(recipe_paths),
-        "profile_count": len(PROFILE_PLAN) if args.matrix else 1,
+        "profile_count": len(selected_plan) if args.matrix else 1,
         "analysis_count": len(rows),
         "summary": summarize_suite(rows),
         "rows": rows,
@@ -125,6 +136,32 @@ def parse_indexes(value: str) -> list[int]:
     if not indexes:
         raise SystemExit("--indexes did not contain any recipe index")
     return indexes
+
+
+def select_profile_plan(value: str) -> list[tuple[str, float]]:
+    if not value.strip():
+        return PROFILE_PLAN
+
+    selected: list[tuple[str, float]] = []
+    for raw_token in value.split(","):
+        token = raw_token.strip()
+        if not token:
+            continue
+        token_norm = normalize_text(token)
+        canonical_name = PROFILE_ALIASES.get(token_norm)
+        if canonical_name:
+            matches = [item for item in PROFILE_PLAN if item[0] == canonical_name]
+        else:
+            matches = [item for item in PROFILE_PLAN if token_norm in normalize_text(item[0])]
+        if not matches:
+            raise SystemExit(f"Profile not found in PROFILE_PLAN: {token}")
+        for item in matches:
+            if item not in selected:
+                selected.append(item)
+
+    if not selected:
+        raise SystemExit("--profiles did not contain any profile selector")
+    return selected
 
 
 def profile_to_dict(profile: UserProfile) -> dict[str, Any]:

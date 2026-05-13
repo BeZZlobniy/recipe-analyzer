@@ -1,0 +1,226 @@
+{
+  "profiles": {
+    "anna_vegetarian_lactose_free": {
+      "name_contains": ["анна"],
+      "diet": "vegetarian",
+      "allergy_flags": ["dairy"],
+      "disease_flags": [],
+      "preference_flags": ["avoid_spicy", "high_protein"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_lactose_intolerance.txt", "kb_high_protein.txt"],
+      "noise_phrases": ["Не люблю острое", "Избегаю мяса", "Больше белка", "Сытная еда"]
+    },
+    "sergey_muscle_gain": {
+      "name_contains": ["сергей"],
+      "diet": "balanced",
+      "allergy_flags": [],
+      "disease_flags": [],
+      "preference_flags": ["high_protein", "meat_allowed"],
+      "expected_kb_sources": ["kb_high_protein.txt", "kb_nutrition_thresholds.txt"],
+      "noise_phrases": ["Высокобелковая диета", "Можно мясо", "Хочу больше белка"]
+    },
+    "maria_sugar_control": {
+      "name_contains": ["мария"],
+      "diet": "low_carb",
+      "allergy_flags": [],
+      "disease_flags": ["diabetes"],
+      "preference_flags": ["less_sugar", "more_fiber"],
+      "expected_kb_sources": ["kb_diabetes.txt", "kb_low_carb.txt", "kb_weight_loss.txt"],
+      "noise_phrases": ["Меньше сахара", "Больше клетчатки", "Ограничить сахар"]
+    },
+    "irina_low_sodium": {
+      "name_contains": ["ирина"],
+      "diet": "mediterranean",
+      "allergy_flags": ["shellfish", "fish"],
+      "disease_flags": ["hypertension"],
+      "preference_flags": ["low_sodium"],
+      "expected_kb_sources": ["kb_low_sodium.txt", "kb_hypertension.txt", "kb_mediterranean_diet.txt"],
+      "noise_phrases": ["Меньше соли", "Следить за натрием", "морепродуктов"]
+    },
+    "nikita_vegan_gluten_free": {
+      "name_contains": ["никита"],
+      "diet": "vegan",
+      "allergy_flags": ["gluten"],
+      "disease_flags": [],
+      "preference_flags": ["avoid_spicy"],
+      "expected_kb_sources": ["kb_vegan.txt", "kb_gluten_free.txt"],
+      "noise_phrases": ["Растительная еда", "Не люблю острое", "Без мяса", "пшеничной муки"]
+    }
+  },
+  "global_match_rules": [
+    {"ingredient": "укроп", "banned_match_contains": ["pickle", "pickles"]},
+    {"ingredient": "петрушка", "banned_match_contains": ["pickle", "pickles"]},
+    {"ingredient": "кинза", "banned_match_contains": ["pickle", "pickles"]},
+    {"ingredient": "лавровый лист", "banned_match_contains": ["bay scallop", "fish"]}
+  ],
+  "false_claim_patterns": [
+    "животные жиры",
+    "орехи являются животными",
+    "орехи грецкие являются животными",
+    "сухари содержат животные продукты",
+    "лук не является растительной",
+    "помидоры не являются растительной",
+    "соль не является растительной",
+    "перец не является растительной",
+    "не являются растительными",
+    "орехи (аллерген глютен)",
+    "соль содержит натрий, что может вызвать проблемы у потребителя без глютена",
+    "протеиновый суперфуд"
+  ],
+  "recipes": [
+    {
+      "index": 1,
+      "title": "Бабагануш с грецкими орехами",
+      "required_ingredients": ["баклажан", "орех", "сухар", "чеснок", "оливковое масло", "лимон", "зира", "перец", "соль"],
+      "flags": ["plant_based", "vegan_safe", "vegetarian_safe", "gluten", "nuts", "spicy", "fried_or_oil"],
+      "expected_kb_sources": ["kb_vegan.txt", "kb_vegetarian.txt", "kb_gluten_free.txt", "kb_custom_food_restrictions.txt"],
+      "amount_ranges": [
+        {"ingredient": "баклажан", "min_g": 760, "max_g": 840},
+        {"ingredient": "орех", "min_g": 90, "max_g": 110},
+        {"ingredient": "сухар", "min_g": 20, "max_g": 30}
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Домашнее мороженое \"Семифредо\" с нугой",
+      "required_ingredients": ["сливки", "яичный белок", "мед", "сахар", "ваниль", "орех"],
+      "flags": ["dairy", "egg", "honey", "nuts", "dessert", "added_sugar", "high_fat"],
+      "expected_kb_sources": ["kb_lactose_intolerance.txt", "kb_vegan.txt", "kb_diabetes.txt"]
+    },
+    {
+      "index": 3,
+      "title": "Бутерброды с сырно-огуречной намазкой и помидорами",
+      "required_ingredients": ["багет", "сыр", "огур", "майонез", "помидор", "укроп"],
+      "flags": ["vegetarian_safe", "dairy", "egg", "gluten", "processed_food"],
+      "expected_kb_sources": ["kb_lactose_intolerance.txt", "kb_gluten_free.txt", "kb_vegetarian.txt"]
+    },
+    {
+      "index": 4,
+      "title": "Ромштекс из говядины",
+      "required_ingredients": ["говядина", "яйцо", "молоко", "сухар", "сливочное масло"],
+      "flags": ["meat", "beef", "egg", "dairy", "gluten", "fried_or_oil", "high_fat"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt", "kb_gluten_free.txt"]
+    },
+    {
+      "index": 5,
+      "title": "Мясные котлеты по бабушкиному рецепту",
+      "required_ingredients": ["свинина", "говядина", "лук", "яйцо", "хлеб", "молоко", "мука", "картофель"],
+      "flags": ["meat", "pork", "beef", "egg", "dairy", "gluten", "fried_or_oil", "high_calorie"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt", "kb_gluten_free.txt"],
+      "amount_ranges": [
+        {"ingredient": "свинина", "min_g": 950, "max_g": 1050},
+        {"ingredient": "говядина", "min_g": 950, "max_g": 1050},
+        {"ingredient": "молоко", "min_g": 180, "max_g": 350},
+        {"ingredient": "соль", "min_g": 8, "max_g": 18}
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Овощное рагу с капустой и картофелем",
+      "required_ingredients": ["картофель", "капуста", "морковь", "лук", "укроп", "томатная паста", "растительное масло"],
+      "flags": ["plant_based", "vegan_safe", "vegetarian_safe", "fried_or_oil"],
+      "expected_kb_sources": ["kb_vegan.txt", "kb_vegetarian.txt", "kb_portion_size_rules.txt"]
+    },
+    {
+      "index": 7,
+      "title": "Рагу с курицей и фасолью",
+      "required_ingredients": ["куриное филе", "куриный бульон", "кукуруза", "фасоль", "лук", "чеснок", "кинза", "лимон"],
+      "flags": ["poultry", "meat", "legumes", "spicy", "high_protein"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_high_protein.txt"]
+    },
+    {
+      "index": 8,
+      "title": "Лазанья с фаршем",
+      "required_ingredients": ["листы лазаньи", "моцарелла", "фарш", "морковь", "лук", "томат", "молоко", "мука", "сливочное масло"],
+      "flags": ["meat", "beef", "dairy", "gluten", "high_fat", "high_calorie"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt", "kb_gluten_free.txt"]
+    },
+    {
+      "index": 9,
+      "title": "Картофельная запеканка со свининой, помидорами и луком",
+      "required_ingredients": ["свинина", "картофель", "помидор", "лук"],
+      "flags": ["meat", "pork", "high_calorie", "fried_or_oil"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_recipe_substitutions.txt"]
+    },
+    {
+      "index": 10,
+      "title": "Свинина, тушенная с грибами, в сметанном соусе",
+      "required_ingredients": ["свинина", "шампиньон", "сметана", "растительное масло", "лук"],
+      "flags": ["meat", "pork", "dairy", "high_fat"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt"]
+    },
+    {
+      "index": 11,
+      "title": "Запеканка из макарон с курицей и помидорами",
+      "required_ingredients": ["макароны", "куриное филе", "помидор", "сыр", "сметана"],
+      "flags": ["poultry", "meat", "dairy", "gluten", "processed_food"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt", "kb_gluten_free.txt"]
+    },
+    {
+      "index": 12,
+      "title": "Тушёная картошка с мясом, грибами и сметаной",
+      "required_ingredients": ["картофель", "свинина", "шампиньон", "лук", "сметана", "подсолнечное масло"],
+      "flags": ["meat", "pork", "dairy", "high_fat"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt"]
+    },
+    {
+      "index": 13,
+      "title": "Макароны с фрикадельками в молочном соусе, на сковороде",
+      "required_ingredients": ["макароны", "фарш", "лук", "чеснок", "молоко", "плавленый сыр"],
+      "flags": ["meat", "dairy", "gluten", "fried_or_oil"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt", "kb_gluten_free.txt"]
+    },
+    {
+      "index": 14,
+      "title": "Манные биточки",
+      "required_ingredients": ["молоко", "манная крупа", "мука", "яйцо", "сахар"],
+      "flags": ["vegetarian_safe", "dairy", "egg", "gluten", "dessert", "added_sugar", "fried_or_oil"],
+      "expected_kb_sources": ["kb_lactose_intolerance.txt", "kb_gluten_free.txt", "kb_diabetes.txt"]
+    },
+    {
+      "index": 15,
+      "title": "Чахохбили",
+      "required_ingredients": ["курица", "лук", "помидор"],
+      "flags": ["poultry", "meat", "high_protein"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_high_protein.txt"]
+    },
+    {
+      "index": 16,
+      "title": "Скумбрия домашняя маринованная",
+      "required_ingredients": ["скумбрия", "лук", "вода", "гвоздика", "перец", "кориандр", "соль", "сахар", "масло", "уксус", "лавровый лист"],
+      "flags": ["fish", "seafood", "high_sodium", "marinade", "added_sugar"],
+      "expected_kb_sources": ["kb_common_allergens.txt", "kb_low_sodium.txt", "kb_hypertension.txt"]
+    },
+    {
+      "index": 17,
+      "title": "Жареный сэндвич с ветчиной и сыром",
+      "required_ingredients": ["хлеб", "ветчина", "сыр", "лук", "яйцо", "сливочное масло"],
+      "flags": ["meat", "pork", "processed_meat", "dairy", "egg", "gluten", "fried_or_oil", "high_sodium"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_lactose_intolerance.txt", "kb_gluten_free.txt", "kb_low_sodium.txt"]
+    },
+    {
+      "index": 18,
+      "title": "Капустняк со свежей капустой, сладким перцем и пшеном",
+      "required_ingredients": ["курица", "капуста", "пшено", "картофель", "перец", "лук", "морковь", "чеснок", "томатная паста"],
+      "flags": ["poultry", "meat"],
+      "expected_kb_sources": ["kb_vegetarian.txt", "kb_vegan.txt", "kb_portion_size_rules.txt"]
+    },
+    {
+      "index": 19,
+      "title": "Яблочный штрудель",
+      "required_ingredients": ["мука", "яйцо", "сливочное масло", "яблок", "сухари", "изюм", "сахар", "корица"],
+      "flags": ["vegetarian_safe", "dairy", "egg", "gluten", "dessert", "added_sugar"],
+      "expected_kb_sources": ["kb_gluten_free.txt", "kb_lactose_intolerance.txt", "kb_diabetes.txt"]
+    },
+    {
+      "index": 20,
+      "title": "Бисквитный рулет «Домашний»",
+      "required_ingredients": ["яйцо", "сахар", "мука", "ванильный сахар", "варенье", "сметана"],
+      "flags": ["vegetarian_safe", "dairy", "egg", "gluten", "dessert", "added_sugar"],
+      "expected_kb_sources": ["kb_gluten_free.txt", "kb_lactose_intolerance.txt", "kb_diabetes.txt"],
+      "amount_ranges": [
+        {"ingredient": "варенье", "min_g": 80, "max_g": 130},
+        {"ingredient": "сметана", "min_g": 100, "max_g": 220}
+      ]
+    }
+  ]
+}

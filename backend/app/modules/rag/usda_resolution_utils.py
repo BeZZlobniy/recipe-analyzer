@@ -24,6 +24,8 @@ BLOCKED_TOKENS = {
     "seasoned",
     "prepared",
     "cured",
+    "pickle",
+    "pickles",
     "pickled",
     "bockwurst",
     "backfat",
@@ -80,6 +82,8 @@ def is_safe_candidate(ingredient_payload: dict[str, Any], candidate: dict[str, A
         return False
     if BLOCKED_TOKENS & display_tokens:
         return False
+    if _has_food_family_conflict(ingredient_payload, candidate):
+        return False
     if _has_unsafe_preparation(ingredient_tokens, display_tokens):
         return False
     return True
@@ -92,6 +96,8 @@ def is_exact_candidate(ingredient_payload: dict[str, Any], candidate: dict[str, 
         return False
     display_tokens = _tokens(display_name)
     if BLOCKED_TOKENS & display_tokens:
+        return False
+    if _has_food_family_conflict(ingredient_payload, candidate):
         return False
     if _has_unsafe_preparation(_tokens(ingredient_name_en), display_tokens):
         return False
@@ -187,3 +193,33 @@ def _has_unsafe_preparation(ingredient_tokens: set[str], display_tokens: set[str
     ground_tokens = {"ground", "minced"}
     asks_for_ground = bool(ingredient_tokens & ground_tokens)
     return bool(display_tokens & ground_tokens) and not asks_for_ground
+
+
+def _has_food_family_conflict(ingredient_payload: dict[str, Any], candidate: dict[str, Any]) -> bool:
+    ingredient_text = " ".join(
+        str(ingredient_payload.get(key) or "")
+        for key in ("name_raw", "name_canonical", "name_en")
+    )
+    candidate_text = " ".join(
+        str(candidate.get(key) or "")
+        for key in ("display_name_ru", "display_name_en")
+    )
+    ingredient_family = _food_family_from_text(ingredient_text)
+    candidate_family = _food_family_from_text(candidate_text)
+    return bool(ingredient_family and candidate_family and ingredient_family != candidate_family)
+
+
+def _food_family_from_text(value: str | None) -> str | None:
+    text = normalize_text(value)
+    if not text:
+        return None
+    family_markers = {
+        "pork": ("pork", "ham", "bacon", "\u0441\u0432\u0438\u043d"),
+        "beef": ("beef", "\u0433\u043e\u0432\u044f\u0434"),
+        "chicken": ("chicken", "turkey", "\u043a\u0443\u0440", "\u0438\u043d\u0434"),
+        "fish": ("fish", "mackerel", "salmon", "\u0440\u044b\u0431", "\u0441\u043a\u0443\u043c\u0431\u0440"),
+    }
+    for family, markers in family_markers.items():
+        if any(marker in text for marker in markers):
+            return family
+    return None
